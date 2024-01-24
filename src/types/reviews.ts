@@ -1,4 +1,4 @@
-export type TReviews = {
+type TReview = {
   id: string;
   createAt: string;
   cameraId: number;
@@ -8,6 +8,8 @@ export type TReviews = {
   review: string;
   rating: number;
 };
+
+export type TReviews = TReview[];
 
 export type TAddRewiew = {
   cameraId: number;

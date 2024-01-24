@@ -1,4 +1,11 @@
+import { useAppSelector } from '../../hooks/index';
+import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
+
 function CatalogPage(): JSX.Element {
+  const cameras = useAppSelector(getCameras);
+
+  console.log(cameras);
+
   return (
     <main>
       <div className="banner">

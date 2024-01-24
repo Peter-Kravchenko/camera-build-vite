@@ -5,6 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { fetchCameras } from './store/api-actions';
+
+store.dispatch(fetchCameras());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
