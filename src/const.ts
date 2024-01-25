@@ -1,3 +1,5 @@
+export const stars: number[] = [1, 2, 3, 4, 5];
+
 export enum AppRoute {
   Catalog = '/',
   Login = '/login',

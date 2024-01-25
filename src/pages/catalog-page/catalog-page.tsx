@@ -15,6 +15,8 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
+  const camerasToRender = cameras.slice(0, 9);
+
   if (cemerasFetchingStatus === RequestStatus.Pending) {
     return <h1>Loading...</h1>;
   }
@@ -35,7 +37,7 @@ function CatalogPage(): JSX.Element {
               </div>
               <div className="catalog__content">
                 <Sorting />
-                <CatalogCamerasList cameras={cameras} />
+                <CatalogCamerasList cameras={camerasToRender} />
                 <Pagination />
               </div>
             </div>

@@ -4,7 +4,7 @@ import { AppRoute } from '../../const';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import CatalogPage from '../../pages/catalog-page/catalog-page';
 import Layout from '../layout/layout';
-import ProductPage from '../../pages/product-page/product-page';
+import ProductPage from '../../pages/camera-page/camera-page';
 import OrderPage from '../../pages/order-page/order-page';
 
 function App(): JSX.Element {

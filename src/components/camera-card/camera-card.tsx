@@ -1,5 +1,8 @@
+import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils';
+import { AppRoute } from '../../const';
+import CamearaRating from '../camera-rating/camera-rating';
 
 type CameraCardProps = {
   camera: TCamera;
@@ -19,33 +22,15 @@ function CameraCard({ camera }: CameraCardProps): JSX.Element {
             srcSet={camera.previewImg2x}
             width={280}
             height={240}
-            alt="Ретрокамера «Das Auge IV»"
+            alt={camera.name}
           />
         </picture>
       </div>
       <div className="product-card__info">
-        <div className="rate product-card__rate">
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <p className="visually-hidden">Рейтинг: {camera.reviewCount}</p>
-          <p className="rate__count">
-            <span className="visually-hidden">Всего оценок:</span>
-            23
-          </p>
-        </div>
+        <CamearaRating
+          rating={camera.rating}
+          reviewCount={camera.reviewCount}
+        />
         <p className="product-card__title">{camera.name}</p>
         <p className="product-card__price">
           <span className="visually-hidden">Цена:</span>
@@ -56,9 +41,12 @@ function CameraCard({ camera }: CameraCardProps): JSX.Element {
         <button className="btn btn--purple product-card__btn" type="button">
           Купить
         </button>
-        <a className="btn btn--transparent" href="#">
+        <Link
+          to={AppRoute.Product.replace(':id', String(camera.id))}
+          className="btn btn--transparent"
+        >
           Подробнее
-        </a>
+        </Link>
       </div>
     </div>
   );
