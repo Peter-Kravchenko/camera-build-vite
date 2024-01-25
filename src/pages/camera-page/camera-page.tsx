@@ -88,7 +88,7 @@ function ProductPage(): JSX.Element {
           </div>
         </div>
         <CameraDatails camera={camera} />
-        {similar.length ? (
+        {similar.length && similarFetchingStatus === RequestStatus.Success ? (
           <Similar similar={similar} />
         ) : (
           <div className="container">

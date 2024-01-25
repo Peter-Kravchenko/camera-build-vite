@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { fetchCameras } from './store/api-actions';
+import App from './components/app/app';
+import { fetchCameras, fetchPromo } from './store/api-actions';
 
 store.dispatch(fetchCameras());
+store.dispatch(fetchPromo());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

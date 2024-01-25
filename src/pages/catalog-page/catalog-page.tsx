@@ -1,29 +1,37 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
-import Filters from '../../components/filters/filters';
 import Pagination from '../../components/pagination/pagination';
 import Promo from '../../components/promo/promo';
-import Sorting from '../../components/sorting/sorting';
 import { RequestStatus } from '../../const';
 import { useAppSelector } from '../../hooks/index';
 import {
   getCameras,
   getCamerasFetchingStatus,
 } from '../../store/cameras-data/cameras-data.selectors';
+import {
+  getPromo,
+  getPromoFetchingStatus,
+} from '../../store/promo-data/promo-data.selectors';
 
 function CatalogPage(): JSX.Element {
+  const promo = useAppSelector(getPromo);
+  const promoFetchingStatus = useAppSelector(getPromoFetchingStatus);
+
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
   const camerasToRender = cameras.slice(0, 9);
 
-  if (cemerasFetchingStatus === RequestStatus.Pending) {
+  if (
+    cemerasFetchingStatus === RequestStatus.Pending &&
+    promoFetchingStatus === RequestStatus.Pending
+  ) {
     return <h1>Loading...</h1>;
   }
 
   return (
     <main>
-      <Promo />
+      {promo.length && <Promo promo={promo} />}
       <div className="page-content">
         <Breadcrumbs />
         <section className="catalog">
@@ -32,11 +40,11 @@ function CatalogPage(): JSX.Element {
             <div className="page-content__columns">
               <div className="catalog__aside">
                 <div className="catalog-filter">
-                  <Filters />
+                  {/* здесь будет компонент <Filters /> сейчас он мешает */}
                 </div>
               </div>
               <div className="catalog__content">
-                <Sorting />
+                {/* здесь будет компонент <Sorting /> сейчас он мешает */}
                 <CatalogCamerasList cameras={camerasToRender} />
                 <Pagination />
               </div>

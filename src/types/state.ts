@@ -24,7 +24,7 @@ export type TSimilarData = {
 };
 
 export type TPromoData = {
-  promo: TPromo | null;
+  promo: TPromo;
   fetchingStatus: RequestStatus;
 };
 

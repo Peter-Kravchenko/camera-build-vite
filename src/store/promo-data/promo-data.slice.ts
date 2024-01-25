@@ -4,7 +4,7 @@ import { TPromoData } from '../../types/state';
 import { fetchPromo } from '../api-actions';
 
 const initialState: TPromoData = {
-  promo: null,
+  promo: [],
   fetchingStatus: RequestStatus.Idle,
 };
 
