@@ -1,7 +1,7 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
 import Pagination from '../../components/pagination/pagination';
-import Promo from '../../components/promo/promo';
+import Banner from '../../components/banner/banner';
 import { RequestStatus } from '../../const';
 import { useAppSelector } from '../../hooks/index';
 import {
@@ -31,7 +31,7 @@ function CatalogPage(): JSX.Element {
 
   return (
     <main>
-      {promo.length && <Promo promo={promo} />}
+      {promo.length && <Banner promo={promo} />}
       <div className="page-content">
         <Breadcrumbs />
         <section className="catalog">
