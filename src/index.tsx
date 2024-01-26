@@ -1,11 +1,13 @@
+import { ToastContainer } from 'react-toastify';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import App from './components/app/app';
 import { fetchCameras, fetchPromos } from './store/api-actions';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchCameras());
 store.dispatch(fetchPromos());
@@ -18,7 +20,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ToastContainer />
+        <ToastContainer autoClose={2000} />
         <App />
       </BrowserRouter>
     </Provider>

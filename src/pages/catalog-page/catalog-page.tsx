@@ -33,7 +33,7 @@ function CatalogPage(): JSX.Element {
 
   return (
     <main>
-      {promos.length && <Banner promos={promos} />}
+      {promos.length > 0 && <Banner promos={promos} />}
       <div className="page-content">
         <Breadcrumbs />
         <section className="catalog">
@@ -48,9 +48,7 @@ function CatalogPage(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <Sorting />
-
                   <CatalogCamerasList cameras={camerasToRender} />
-
                   <Pagination />
                 </div>
               </div>

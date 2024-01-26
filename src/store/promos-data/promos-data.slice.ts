@@ -8,7 +8,7 @@ const initialState: TPromosData = {
   fetchingStatus: RequestStatus.Idle,
 };
 
-export const promoData = createSlice({
+export const promosData = createSlice({
   name: NameSpace.Promos,
   initialState,
   reducers: {},
