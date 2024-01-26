@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TCamera, TCameras } from '../types/cameras';
 import { APIRoute, NameSpace } from '../const';
 import { TAddRewiew, TReviews } from '../types/reviews';
-import { TPromo } from '../types/promo';
+import { TPromos } from '../types/promo';
 
 type TExtra = {
   dispatch: TAppDispatch;
@@ -40,10 +40,10 @@ export const fetchSimilar = createAsyncThunk<TCameras, TCamera['id'], TExtra>(
   }
 );
 
-export const fetchPromo = createAsyncThunk<TPromo, undefined, TExtra>(
-  `${NameSpace.Promo}/fetchPromo`,
+export const fetchPromos = createAsyncThunk<TPromos, undefined, TExtra>(
+  `${NameSpace.Promos}/fetchPromos`,
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<TPromo>(APIRoute.Promo);
+    const { data } = await api.get<TPromos>(APIRoute.Promos);
     return data;
   }
 );

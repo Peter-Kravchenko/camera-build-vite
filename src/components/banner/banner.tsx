@@ -1,42 +1,51 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+import { TPromos } from '../../types/promo';
+import { Link } from 'react-router-dom';
+import { AppRoute, BANNER_DELAY } from '../../const';
+
 import 'swiper/css';
+import 'swiper/css/bundle';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { TPromo } from '../../types/promo';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 
 type BannerProps = {
-  promo: TPromo;
+  promos: TPromos;
 };
-function Banner({ promo }: BannerProps): JSX.Element {
+function Banner({ promos: promos }: BannerProps): JSX.Element {
   return (
-    <Swiper>
-      {promo.map((item) => (
-        <SwiperSlide key={item.id}>
+    <Swiper
+      modules={[Autoplay, Pagination, Navigation]}
+      autoplay={{ delay: BANNER_DELAY }}
+      pagination={{ clickable: true }}
+      navigation
+    >
+      {promos.map((promo) => (
+        <SwiperSlide key={promo.id}>
           <div className="banner">
-            <div key={item.id}>
+            <div key={promo.id}>
               <picture>
                 <source
                   type="image/webp"
-                  srcSet={`${item.previewImgWebp}, ${item.previewImgWebp2x}}`}
+                  srcSet={`${promo.previewImgWebp}, ${promo.previewImgWebp2x}}`}
                 />
                 <img
-                  src={item.previewImg}
-                  srcSet={item.previewImg2x}
+                  src={promo.previewImg}
+                  srcSet={promo.previewImg2x}
                   width={1280}
                   height={280}
-                  alt={item.name}
+                  alt={promo.name}
                 />
               </picture>
               <p className="banner__info">
                 <span className="banner__message">Новинка!</span>
-                <span className="title title--h1">{item.name}</span>
+                <span className="title title--h1">{promo.name}</span>
                 <span className="banner__text">
                   Профессиональная камера от&nbsp;известного производителя
                 </span>
                 <Link
-                  to={AppRoute.Product.replace(':id', String(item.id))}
+                  to={AppRoute.Product.replace(':id', String(promo.id))}
                   className="btn"
                 >
                   Подробнее

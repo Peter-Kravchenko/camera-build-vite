@@ -9,13 +9,15 @@ import {
   getCamerasFetchingStatus,
 } from '../../store/cameras-data/cameras-data.selectors';
 import {
-  getPromo,
-  getPromoFetchingStatus,
-} from '../../store/promo-data/promo-data.selectors';
+  getPromos,
+  getPromosFetchingStatus,
+} from '../../store/promos-data/promos-data.selectors';
+import Filters from '../../components/filters/filters';
+import Sorting from '../../components/sorting/sorting';
 
 function CatalogPage(): JSX.Element {
-  const promo = useAppSelector(getPromo);
-  const promoFetchingStatus = useAppSelector(getPromoFetchingStatus);
+  const promos = useAppSelector(getPromos);
+  const promosFetchingStatus = useAppSelector(getPromosFetchingStatus);
 
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
@@ -24,31 +26,39 @@ function CatalogPage(): JSX.Element {
 
   if (
     cemerasFetchingStatus === RequestStatus.Pending &&
-    promoFetchingStatus === RequestStatus.Pending
+    promosFetchingStatus === RequestStatus.Pending
   ) {
     return <h1>Loading...</h1>;
   }
 
   return (
     <main>
-      {promo.length && <Banner promo={promo} />}
+      {promos.length && <Banner promos={promos} />}
       <div className="page-content">
         <Breadcrumbs />
         <section className="catalog">
           <div className="container">
             <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
-            <div className="page-content__columns">
-              <div className="catalog__aside">
-                <div className="catalog-filter">
-                  {/* здесь будет компонент <Filters /> сейчас он мешает */}
+            {camerasToRender.length ? (
+              <div className="page-content__columns">
+                <div className="catalog__aside">
+                  <div className="catalog-filter">
+                    <Filters />
+                  </div>
+                </div>
+                <div className="catalog__content">
+                  <Sorting />
+
+                  <CatalogCamerasList cameras={camerasToRender} />
+
+                  <Pagination />
                 </div>
               </div>
-              <div className="catalog__content">
-                {/* здесь будет компонент <Sorting /> сейчас он мешает */}
-                <CatalogCamerasList cameras={camerasToRender} />
-                <Pagination />
+            ) : (
+              <div className="title title--h3">
+                Камеры не найдены на сервере
               </div>
-            </div>
+            )}
           </div>
         </section>
       </div>

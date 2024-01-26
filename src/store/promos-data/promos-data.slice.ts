@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
-import { TPromoData } from '../../types/state';
-import { fetchPromo } from '../api-actions';
+import { TPromosData } from '../../types/state';
+import { fetchPromos } from '../api-actions';
 
-const initialState: TPromoData = {
-  promo: [],
+const initialState: TPromosData = {
+  promos: [],
   fetchingStatus: RequestStatus.Idle,
 };
 
 export const promoData = createSlice({
-  name: NameSpace.Promo,
+  name: NameSpace.Promos,
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchPromo.pending, (state) => {
+      .addCase(fetchPromos.pending, (state) => {
         state.fetchingStatus = RequestStatus.Pending;
       })
-      .addCase(fetchPromo.fulfilled, (state, action) => {
-        state.promo = action.payload;
+      .addCase(fetchPromos.fulfilled, (state, action) => {
+        state.promos = action.payload;
         state.fetchingStatus = RequestStatus.Success;
       })
-      .addCase(fetchPromo.rejected, (state) => {
+      .addCase(fetchPromos.rejected, (state) => {
         state.fetchingStatus = RequestStatus.Rejected;
       });
   },

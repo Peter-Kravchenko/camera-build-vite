@@ -1,7 +1,7 @@
 import { RequestStatus } from '../const';
 import store from '../store';
 import { TCamera, TCameras } from './cameras';
-import { TPromo } from './promo';
+import { TPromos } from './promo';
 import { TReviews } from './reviews';
 
 export type TAppDispatch = typeof store.dispatch;
@@ -23,8 +23,8 @@ export type TSimilarData = {
   fetchingStatus: RequestStatus;
 };
 
-export type TPromoData = {
-  promo: TPromo;
+export type TPromosData = {
+  promos: TPromos;
   fetchingStatus: RequestStatus;
 };
 

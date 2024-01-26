@@ -1,3 +1,5 @@
+export const BANNER_DELAY = 3000;
+
 export const stars: number[] = [1, 2, 3, 4, 5];
 
 export enum AppRoute {
@@ -14,7 +16,7 @@ export enum APIRoute {
   Cameras = '/cameras',
   Coupons = '/coupons',
   Orders = '/orders',
-  Promo = '/promo',
+  Promos = '/promo',
   Reviews = '/cameras/:id/reviews',
   Similar = '/cameras/:id/similar',
 }
@@ -25,7 +27,7 @@ export enum NameSpace {
   Cameras = 'CAMERAS',
   Coupons = 'COUPONS',
   Orders = 'ORDERS',
-  Promo = 'PROMO',
+  Promos = 'PROMOS',
   Reviews = 'REVIEWS',
   Similar = 'SIMILAR',
 }
