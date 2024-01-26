@@ -38,7 +38,11 @@ function CameraCard({ camera }: CameraCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">
+        <button
+          onClick={() => {}}
+          className="btn btn--purple product-card__btn"
+          type="button"
+        >
           Купить
         </button>
         <Link

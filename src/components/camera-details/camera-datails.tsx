@@ -55,7 +55,7 @@ function CameraDatails({ camera }: CameraDetailsProps): JSX.Element {
                 <div className="tabs__element">
                   <ul className="product__tabs-list">
                     <li className="item-list">
-                      <span className="item-list__title">Артикул:</span>
+                      <span className="item-list__title">Артикул:</span>{' '}
                       <p className="item-list__text">{camera.vendorCode}</p>
                     </li>
                     <li className="item-list">
