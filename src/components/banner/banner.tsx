@@ -7,19 +7,25 @@ import { AppRoute, BANNER_DELAY } from '../../const';
 
 import 'swiper/css';
 import 'swiper/css/bundle';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 type BannerProps = {
   promos: TPromos;
 };
-function Banner({ promos: promos }: BannerProps): JSX.Element {
+function Banner({ promos }: BannerProps): JSX.Element {
   return (
     <Swiper
       modules={[Autoplay, Pagination, Navigation]}
       autoplay={{ delay: BANNER_DELAY }}
-      pagination={{ clickable: true }}
-      navigation
+      pagination={{ clickable: true, el: '.swiper-pagination' }}
+      style={
+        {
+          '--swiper-pagination-color': '#7575E2',
+          '--swiper-pagination-bullet-inactive-color': ' #F4F4FC',
+          '--swiper-pagination-bullet-inactive-opacity': '100%',
+          '--swiper-pagination-bullet-size': '16px',
+          '--swiper-pagination-bullet-horizontal-gap': '6px',
+        } as React.CSSProperties
+      }
     >
       {promos.map((promo) => (
         <SwiperSlide key={promo.id}>
@@ -55,6 +61,16 @@ function Banner({ promos: promos }: BannerProps): JSX.Element {
           </div>
         </SwiperSlide>
       ))}
+      <div
+        className="swiper-pagination"
+        style={
+          {
+            color: '#7575E2',
+            paddingLeft: '1196px',
+            paddingTop: '310px',
+          } as React.CSSProperties
+        }
+      />
     </Swiper>
   );
 }
