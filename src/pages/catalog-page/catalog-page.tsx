@@ -16,15 +16,16 @@ import Filters from '../../components/filters/filters';
 import Sorting from '../../components/sorting/sorting';
 
 import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
+import { getModalAddToBasketOpen } from '../../store/modal-process/modal-process.selectors';
 
 function CatalogPage(): JSX.Element {
   const promos = useAppSelector(getPromos);
-
   const promosFetchingStatus = useAppSelector(getPromosFetchingStatus);
 
   const cameras = useAppSelector(getCameras);
-
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
+
+  const isModalOpen = useAppSelector(getModalAddToBasketOpen);
 
   const camerasToRender = cameras.slice(0, 9);
 
@@ -64,7 +65,7 @@ function CatalogPage(): JSX.Element {
           </div>
         </section>
       </div>
-      {/* <AddTobasketModal camera={cameras[0]} /> */}
+      {isModalOpen === true && <AddTobasketModal />}
     </main>
   );
 }

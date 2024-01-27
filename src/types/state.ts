@@ -8,6 +8,12 @@ export type TAppDispatch = typeof store.dispatch;
 
 export type TAppState = ReturnType<typeof store.getState>;
 
+export type TModalData = {
+  isModalAddToBasketOpen: boolean;
+  isModalAddToBasketSuccessOpen: boolean;
+  isModalAddReviewOpen: boolean;
+};
+
 export type TCamerasData = {
   cameras: TCameras;
   fetchingStatus: RequestStatus;

@@ -23,6 +23,7 @@ export enum APIRoute {
 
 export enum NameSpace {
   App = 'APP',
+  Modal = 'MODAL',
   Camera = 'CAMERA',
   Cameras = 'CAMERAS',
   Coupons = 'COUPONS',

@@ -1,12 +1,15 @@
+import { RequestStatus } from '../../../const';
+import { useAppSelector } from '../../../hooks/index';
+import { getCamera } from '../../../store/camera-data/camera-data.selectors';
+import { getCamerasFetchingStatus } from '../../../store/cameras-data/cameras-data.selectors';
 import { TCamera } from '../../../types/cameras';
 import { addSpaceInPrice } from '../../../utils';
 
-type AddTobasketModalProps = {
-  camera: TCamera;
-};
+function AddTobasketModal(): JSX.Element {
+  const camera: TCamera | null = useAppSelector(getCamera);
+  const camerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
-function AddTobasketModal({ camera }: AddTobasketModalProps): JSX.Element {
-  return (
+  return camera && camerasFetchingStatus === RequestStatus.Success ? (
     <div className="modal is-active">
       <div className="modal__wrapper">
         <div className="modal__overlay" />
@@ -69,7 +72,7 @@ function AddTobasketModal({ camera }: AddTobasketModalProps): JSX.Element {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }
 
 export default AddTobasketModal;
