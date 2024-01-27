@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 
 import { TPromos } from '../../types/promo';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,14 @@ type BannerProps = {
 function Banner({ promos }: BannerProps): JSX.Element {
   return (
     <Swiper
-      modules={[Autoplay, Pagination, Navigation]}
-      autoplay={{ delay: BANNER_DELAY }}
-      pagination={{ clickable: true, el: '.swiper-pagination' }}
+      modules={[Autoplay, Pagination]}
+      autoplay={{
+        delay: BANNER_DELAY,
+      }}
+      pagination={{
+        clickable: true,
+        el: '.swiper-pagination',
+      }}
       style={
         {
           '--swiper-pagination-color': '#7575E2',
@@ -65,9 +70,7 @@ function Banner({ promos }: BannerProps): JSX.Element {
         className="swiper-pagination"
         style={
           {
-            color: '#7575E2',
             paddingLeft: '1196px',
-            paddingTop: '310px',
           } as React.CSSProperties
         }
       />
