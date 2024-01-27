@@ -1,13 +1,30 @@
 import { RequestStatus } from '../../../const';
-import { useAppSelector } from '../../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { getCamera } from '../../../store/camera-data/camera-data.selectors';
 import { getCamerasFetchingStatus } from '../../../store/cameras-data/cameras-data.selectors';
+import {
+  closeAddToBasketModal,
+  openAddToBasketSuccessModal,
+} from '../../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../../types/cameras';
 import { addSpaceInPrice } from '../../../utils';
+import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
 
 function AddTobasketModal(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const camera: TCamera | null = useAppSelector(getCamera);
   const camerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
+
+  const closeModal = () => {
+    dispatch(closeAddToBasketModal());
+  };
+
+  const openSuccessModal = () => {
+    dispatch(openAddToBasketSuccessModal());
+  };
+
+  useEscKeyHandle(closeModal);
 
   return camera && camerasFetchingStatus === RequestStatus.Success ? (
     <div className="modal is-active">
@@ -40,8 +57,13 @@ function AddTobasketModal(): JSX.Element {
                     {camera.vendorCode}
                   </span>
                 </li>
-                <li className="basket-item__list-item">Плёночная фотокамера</li>
-                <li className="basket-item__list-item">Любительский уровень</li>
+                <li className="basket-item__list-item">
+                  {`${camera.type} ${camera.category}`}
+                  {/* todo исправить род прилогательго и убрать заглавную у категории */}
+                </li>
+                <li className="basket-item__list-item">
+                  {`${camera.level} уровень`}
+                </li>
               </ul>
               <p className="basket-item__price">
                 <span className="visually-hidden">Цена:</span>
@@ -51,6 +73,10 @@ function AddTobasketModal(): JSX.Element {
           </div>
           <div className="modal__buttons">
             <button
+              onClick={() => {
+                closeModal();
+                openSuccessModal();
+              }}
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
             >
@@ -61,6 +87,9 @@ function AddTobasketModal(): JSX.Element {
             </button>
           </div>
           <button
+            onClick={() => {
+              closeModal();
+            }}
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"

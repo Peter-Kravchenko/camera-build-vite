@@ -1,4 +1,19 @@
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../hooks/index';
+import { closeAddToBasketSuccessModal } from '../../../store/modal-process/modal-process.slice';
+import { AppRoute } from '../../../const';
+import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
+
 function AddToBasketSuccessModal(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const closeModal = () => {
+    dispatch(closeAddToBasketSuccessModal());
+  };
+
+  useEscKeyHandle(closeModal);
+
   return (
     <div className="modal is-active modal--narrow">
       <div className="modal__wrapper">
@@ -14,14 +29,21 @@ function AddToBasketSuccessModal(): JSX.Element {
             <use xlinkHref="#icon-success" />
           </svg>
           <div className="modal__buttons">
-            <a className="btn btn--transparent modal__btn" href="#">
+            <a
+              onClick={() => closeModal()}
+              className="btn btn--transparent modal__btn"
+            >
               Продолжить покупки
             </a>
-            <button className="btn btn--purple modal__btn modal__btn--fit-width">
+            <button
+              onClick={() => navigate(AppRoute.Order)}
+              className="btn btn--purple modal__btn modal__btn--fit-width"
+            >
               Перейти в корзину
             </button>
           </div>
           <button
+            onClick={() => closeModal()}
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
