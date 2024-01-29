@@ -2,7 +2,7 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
 import Pagination from '../../components/pagination/pagination';
 import Banner from '../../components/banner/banner';
-import { RequestStatus } from '../../const';
+import { MAX_CAMERAS_ON_PAGE, RequestStatus } from '../../const';
 import { useAppSelector } from '../../hooks/index';
 import {
   getCameras,
@@ -21,6 +21,8 @@ import {
   getModalAddToBasketSuccessOpen,
 } from '../../store/modal-process/modal-process.selectors';
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
+import { getCurrentPage } from '../../store/app-process/app-process.selectors';
+import { getCamerasFromCurrentPage } from '../../utils';
 
 function CatalogPage(): JSX.Element {
   const promos = useAppSelector(getPromos);
@@ -32,7 +34,12 @@ function CatalogPage(): JSX.Element {
   const isModalOpen = useAppSelector(getModalAddToBasketOpen);
   const isModalSuccessOpen = useAppSelector(getModalAddToBasketSuccessOpen);
 
-  const camerasToRender = cameras.slice(0, 9);
+  const currentPage = useAppSelector(getCurrentPage);
+  const camerasToRender = getCamerasFromCurrentPage(
+    cameras,
+    currentPage,
+    MAX_CAMERAS_ON_PAGE
+  );
 
   if (
     cemerasFetchingStatus === RequestStatus.Pending &&
@@ -58,8 +65,10 @@ function CatalogPage(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <Sorting />
-                  <CatalogCamerasList cameras={cameras} />
-                  <Pagination />
+                  <CatalogCamerasList cameras={camerasToRender} />
+                  {cameras.length > MAX_CAMERAS_ON_PAGE && (
+                    <Pagination cameras={cameras} currentPage={currentPage} />
+                  )}
                 </div>
               </div>
             ) : (

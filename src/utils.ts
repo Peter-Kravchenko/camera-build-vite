@@ -1,5 +1,5 @@
 import { Category, Type } from './const';
-import { TCamera } from './types/cameras';
+import { TCamera, TCameras } from './types/cameras';
 
 export const addSpaceInPrice = (price: number) =>
   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -27,3 +27,38 @@ export const addCorrectEnding = (
 
   return type;
 };
+
+export const createPages = (
+  pages: number[],
+  pagesCount: number,
+  currentPage: number
+) => {
+  if (pagesCount > 3) {
+    if (currentPage > 2) {
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i);
+        if (i === pagesCount) {
+          break;
+        }
+      }
+    } else {
+      for (let i = 1; i <= 3; i++) {
+        pages.push(i);
+        if (i === pagesCount) {
+          break;
+        }
+      }
+    }
+  } else {
+    for (let i = 1; i <= pagesCount; i++) {
+      pages.push(i);
+    }
+  }
+};
+
+export const getCamerasFromCurrentPage = (
+  cameras: TCameras,
+  currentPage: number,
+  camerasOnPage: number
+) =>
+  cameras.slice((currentPage - 1) * camerasOnPage, currentPage * camerasOnPage);

@@ -8,6 +8,12 @@ export type TAppDispatch = typeof store.dispatch;
 
 export type TAppState = ReturnType<typeof store.getState>;
 
+export type TAppProcess = {
+  currentPage: number;
+  perPage: number;
+  totalCount: number;
+};
+
 export type TModalData = {
   isModalAddToBasketOpen: boolean;
   isModalAddToBasketSuccessOpen: boolean;

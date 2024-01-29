@@ -1,5 +1,7 @@
 export const BANNER_DELAY = 3000;
 
+export const MAX_CAMERAS_ON_PAGE = 9;
+
 export const stars: number[] = [1, 2, 3, 4, 5];
 
 export enum AppRoute {
