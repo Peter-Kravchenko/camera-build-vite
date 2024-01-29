@@ -36,7 +36,10 @@ function AddToBasketSuccessModal(): JSX.Element {
               Продолжить покупки
             </a>
             <button
-              onClick={() => navigate(AppRoute.Order)}
+              onClick={() => {
+                dispatch(closeAddToBasketSuccessModal());
+                navigate(AppRoute.Order);
+              }}
               className="btn btn--purple modal__btn modal__btn--fit-width"
             >
               Перейти в корзину

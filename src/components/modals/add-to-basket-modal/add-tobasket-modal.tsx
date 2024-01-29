@@ -6,14 +6,17 @@ import {
   closeAddToBasketModal,
   openAddToBasketSuccessModal,
 } from '../../../store/modal-process/modal-process.slice';
-import { TCamera } from '../../../types/cameras';
-import { addSpaceInPrice } from '../../../utils';
+import {
+  addCorrectEnding,
+  addSpaceInPrice,
+  convertFirstLetterToLowercase,
+} from '../../../utils';
 import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
 
 function AddTobasketModal(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const camera: TCamera | null = useAppSelector(getCamera);
+  const camera = useAppSelector(getCamera);
   const camerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
   const closeModal = () => {
@@ -25,6 +28,10 @@ function AddTobasketModal(): JSX.Element {
   };
 
   useEscKeyHandle(closeModal);
+
+  if (camerasFetchingStatus === RequestStatus.Pending) {
+    return <h1>Loading...</h1>;
+  }
 
   return camera && camerasFetchingStatus === RequestStatus.Success ? (
     <div className="modal is-active">
@@ -58,11 +65,13 @@ function AddTobasketModal(): JSX.Element {
                   </span>
                 </li>
                 <li className="basket-item__list-item">
-                  {`${camera.type} ${camera.category}`}
-                  {/* todo исправить род прилогательго и убрать заглавную у категории */}
+                  {`${addCorrectEnding(
+                    camera.type,
+                    camera.category
+                  )} ${convertFirstLetterToLowercase(camera.category)} `}
                 </li>
                 <li className="basket-item__list-item">
-                  {`${camera.level} уровень`}
+                  {`${camera?.level ?? ''} уровень`}
                 </li>
               </ul>
               <p className="basket-item__price">

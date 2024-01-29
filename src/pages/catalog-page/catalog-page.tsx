@@ -58,7 +58,7 @@ function CatalogPage(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <Sorting />
-                  <CatalogCamerasList cameras={camerasToRender} />
+                  <CatalogCamerasList cameras={cameras} />
                   <Pagination />
                 </div>
               </div>

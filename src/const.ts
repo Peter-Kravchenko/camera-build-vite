@@ -50,7 +50,7 @@ export enum Type {
   Collectors = 'Коллекционная',
   Instant = 'Моментальная',
   Digital = 'Цифровая',
-  Film = 'Пленочная',
+  Film = 'Плёночная',
 }
 
 export enum Category {
