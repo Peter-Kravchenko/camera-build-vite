@@ -2,8 +2,9 @@ import cn from 'classnames';
 import { TCameras } from '../../types/cameras';
 import { useAppDispatch } from '../../hooks/index';
 import { setCurrentPage } from '../../store/app-process/app-process.slice';
-import { MAX_CAMERAS_ON_PAGE } from '../../const';
+import { AppRoute, MAX_CAMERAS_ON_PAGE } from '../../const';
 import { createPages } from '../../utils';
+import { Link, useNavigate } from 'react-router-dom';
 
 type PaginationProps = {
   cameras: TCameras;
@@ -12,6 +13,7 @@ type PaginationProps = {
 
 function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const totalPages = Math.ceil(cameras.length / MAX_CAMERAS_ON_PAGE);
   const pages: number[] = [];
@@ -22,37 +24,47 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
       <ul className="pagination__list">
         {currentPage > 1 && (
           <li className="pagination__item">
-            <a
+            <Link
+              to={`${AppRoute.Catalog}?page=${currentPage - 1}`}
               className="pagination__link pagination__link--text"
-              onClick={() => dispatch(setCurrentPage(currentPage - 1))}
+              onClick={() => {
+                dispatch(setCurrentPage(currentPage - 1));
+                navigate(`${AppRoute.Catalog}?page=${currentPage}`);
+              }}
             >
               Назад
-            </a>
+            </Link>
           </li>
         )}
         {pages.map((page) => (
           <li
             key={page}
             className="pagination__item"
-            onClick={() => dispatch(setCurrentPage(page))}
+            onClick={() => {
+              dispatch(setCurrentPage(page));
+            }}
           >
-            <a
+            <Link
+              to={`${AppRoute.Catalog}?page=${page}`}
               className={cn('pagination__link', {
                 'pagination__link--active': currentPage === page,
               })}
             >
               {page}
-            </a>
+            </Link>
           </li>
         ))}
         {currentPage < totalPages ? (
           <li className="pagination__item">
-            <a
+            <Link
+              to={`${AppRoute.Catalog}?page=${currentPage + 1}`}
               className="pagination__link pagination__link--text"
-              onClick={() => dispatch(setCurrentPage(currentPage + 1))}
+              onClick={() => {
+                dispatch(setCurrentPage(currentPage + 1));
+              }}
             >
               Далее
-            </a>
+            </Link>
           </li>
         ) : (
           <div style={{ paddingLeft: '99px' }}></div>
