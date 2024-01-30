@@ -1,4 +1,16 @@
+import { useAppDispatch } from '../../../hooks/index';
+import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
+import { closeAddReviewModal } from '../../../store/modal-process/modal-process.slice';
+
 function AddReviewModal(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const closeModal = () => {
+    dispatch(closeAddReviewModal());
+  };
+
+  useEscKeyHandle(closeModal);
+
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
@@ -169,6 +181,7 @@ function AddReviewModal(): JSX.Element {
             </form>
           </div>
           <button
+            onClick={() => dispatch(closeAddReviewModal())}
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"

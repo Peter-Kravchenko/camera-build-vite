@@ -4,11 +4,11 @@ import { Tab } from '../../../const';
 import cn from 'classnames';
 import TabsNavigation from '../tabs-navigation/tabs-navigation';
 
-type TabsProps = {
+type TabsDataProps = {
   camera: TCamera;
 };
 
-function Tabs({ camera }: TabsProps): JSX.Element {
+function TabsData({ camera }: TabsDataProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Description);
 
   return (
@@ -57,4 +57,4 @@ function Tabs({ camera }: TabsProps): JSX.Element {
   );
 }
 
-export default Tabs;
+export default TabsData;

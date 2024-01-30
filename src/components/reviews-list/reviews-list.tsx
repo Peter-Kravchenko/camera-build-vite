@@ -3,6 +3,7 @@ import { TReviews } from '../../types/reviews';
 import { getReviewsQtyOnPage } from '../../store/app-process/app-process.selectors';
 import ReviewCard from '../review-card/review-card';
 import { showMoreReviews } from '../../store/app-process/app-process.slice';
+import { openAddReviewModal } from '../../store/modal-process/modal-process.slice';
 
 type ReviewsProps = {
   reviews: TReviews;
@@ -22,7 +23,11 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
         <div className="container">
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
-            <button className="btn" type="button">
+            <button
+              onClick={() => dispatch(openAddReviewModal())}
+              className="btn"
+              type="button"
+            >
               Оставить свой отзыв
             </button>
           </div>

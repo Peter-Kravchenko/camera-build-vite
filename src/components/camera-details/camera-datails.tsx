@@ -3,7 +3,7 @@ import { openAddToBasketModal } from '../../store/modal-process/modal-process.sl
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils';
 import CameraRating from '../camera-rating/camera-rating';
-import Tabs from '../tabs/tabs-data/tabs-data';
+import TabsData from '../tabs/tabs-data/tabs-data';
 
 type CameraDetailsProps = {
   camera: TCamera;
@@ -51,7 +51,7 @@ function CameraDatails({ camera }: CameraDetailsProps): JSX.Element {
               </svg>
               Добавить в корзину
             </button>
-            <Tabs camera={camera} />
+            <TabsData camera={camera} />
           </div>
         </div>
       </section>
