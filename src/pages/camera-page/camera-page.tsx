@@ -10,7 +10,7 @@ import {
   getCamera,
   getCameraFetchingStatus,
 } from '../../store/camera-data/camera-data.selectors';
-import { RequestStatus } from '../../const';
+import { PageBlock, RequestStatus } from '../../const';
 import Similar from '../../components/similar/similar';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import {
@@ -22,6 +22,7 @@ import {
   getReviewsFetchingStatus,
 } from '../../store/reviews-data/reviews-data.selectors';
 import CameraDatails from '../../components/camera-details/camera-datails';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -60,33 +61,7 @@ function ProductPage(): JSX.Element {
   return camera && cameraFetchingStatus === RequestStatus.Success ? (
     <main>
       <div className="page-content">
-        <div className="breadcrumbs">
-          <div className="container">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="index.html">
-                  Главная
-                  <svg width={5} height={8} aria-hidden="true">
-                    <use xlinkHref="#icon-arrow-mini" />
-                  </svg>
-                </a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="catalog.html">
-                  Каталог
-                  <svg width={5} height={8} aria-hidden="true">
-                    <use xlinkHref="#icon-arrow-mini" />
-                  </svg>
-                </a>
-              </li>
-              <li className="breadcrumbs__item">
-                <span className="breadcrumbs__link breadcrumbs__link--active">
-                  {camera.name}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <Breadcrumbs pageBlock={PageBlock.Camera} camera={camera} />
         <CameraDatails camera={camera} />
         {similar && similarFetchingStatus === RequestStatus.Success ? (
           <Similar similar={similar} />

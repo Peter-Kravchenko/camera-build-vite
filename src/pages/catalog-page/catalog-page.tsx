@@ -2,7 +2,7 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
 import Pagination from '../../components/pagination/pagination';
 import Banner from '../../components/banner/banner';
-import { MAX_CAMERAS_ON_PAGE, RequestStatus } from '../../const';
+import { MAX_CAMERAS_ON_PAGE, PageBlock, RequestStatus } from '../../const';
 import { useAppSelector } from '../../hooks/index';
 import {
   getCameras,
@@ -52,7 +52,7 @@ function CatalogPage(): JSX.Element {
     <main>
       {promos && <Banner promos={promos} />}
       <div className="page-content">
-        <Breadcrumbs />
+        <Breadcrumbs pageBlock={PageBlock.Catalog} />
         <section className="catalog">
           <div className="container">
             <h1 className="title title--h2">Каталог фото- и видеотехники</h1>

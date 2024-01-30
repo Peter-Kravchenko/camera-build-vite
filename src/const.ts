@@ -35,6 +35,12 @@ export enum NameSpace {
   Similar = 'SIMILAR',
 }
 
+export enum PageBlock {
+  Catalog = 'catalog',
+  Camera = 'camera',
+  Order = 'order',
+}
+
 export enum RequestStatus {
   Idle = 'Idle',
   Pending = 'Pending',
