@@ -71,3 +71,8 @@ export enum Level {
   Amateur = 'Любительский',
   Professional = 'Профессиональный',
 }
+
+export enum Tab {
+  Characteristics = 'Характеристики',
+  Description = 'Описание',
+}

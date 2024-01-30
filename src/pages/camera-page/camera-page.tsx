@@ -23,6 +23,12 @@ import {
 } from '../../store/reviews-data/reviews-data.selectors';
 import CameraDatails from '../../components/camera-details/camera-datails';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import {
+  getModalAddToBasketOpen,
+  getModalAddToBasketSuccessOpen,
+} from '../../store/modal-process/modal-process.selectors';
+import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
+import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -50,6 +56,9 @@ function ProductPage(): JSX.Element {
   const reviews = useAppSelector(getReviews);
   const reviewsFetchingStatus = useAppSelector(getReviewsFetchingStatus);
 
+  const isModalOpen = useAppSelector(getModalAddToBasketOpen);
+  const isModalSuccessOpen = useAppSelector(getModalAddToBasketSuccessOpen);
+
   if (
     cameraFetchingStatus === RequestStatus.Pending ||
     similarFetchingStatus === RequestStatus.Pending ||
@@ -72,6 +81,8 @@ function ProductPage(): JSX.Element {
         )}
         <ReviewsList reviews={reviews} />
       </div>
+      {isModalOpen && <AddTobasketModal />}
+      {isModalSuccessOpen && <AddToBasketSuccessModal />}
     </main>
   ) : (
     <h2>Камера не найдена на сервере, пожалуйста, попробуйте ещё раз</h2>
