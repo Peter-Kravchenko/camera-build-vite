@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { TCamera } from '../../types/cameras';
-import { Tab } from '../../const';
+import { TCamera } from '../../../types/cameras';
+import { Tab } from '../../../const';
 import cn from 'classnames';
 import TabsNavigation from '../tabs-navigation/tabs-navigation';
 

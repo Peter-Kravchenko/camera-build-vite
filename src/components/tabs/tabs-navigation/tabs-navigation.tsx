@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, Tab } from '../../const';
+import { AppRoute, Tab } from '../../../const';
 import cn from 'classnames';
-import { TCamera } from '../../types/cameras';
+import { TCamera } from '../../../types/cameras';
 
 type TabsNavigationProps = {
   camera: TCamera;

@@ -3,7 +3,7 @@ import { openAddToBasketModal } from '../../store/modal-process/modal-process.sl
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils';
 import CameraRating from '../camera-rating/camera-rating';
-import Tabs from '../tabs/tabs';
+import Tabs from '../tabs/tabs-data/tabs-data';
 
 type CameraDetailsProps = {
   camera: TCamera;
