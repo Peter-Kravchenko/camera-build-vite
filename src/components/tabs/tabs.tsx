@@ -1,50 +1,23 @@
 import { useState } from 'react';
 import { TCamera } from '../../types/cameras';
-import { AppRoute, Tab } from '../../const';
+import { Tab } from '../../const';
 import cn from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import TabsNavigation from '../tabs-navigation/tabs-navigation';
 
 type TabsProps = {
   camera: TCamera;
 };
 
 function Tabs({ camera }: TabsProps): JSX.Element {
-  const navigate = useNavigate();
-
-  const [activeTab, setActiveTab] = useState<string>(Tab.Description);
+  const [activeTab, setActiveTab] = useState<Tab>(Tab.Description);
 
   return (
     <div className="tabs product__tabs">
-      <div className="tabs__controls product__tabs-controls">
-        <button
-          onClick={() => {
-            setActiveTab(Tab.Characteristics);
-            navigate(
-              `${AppRoute.Product.replace(':id', String(camera.id))}/?tab=cha`
-            );
-          }}
-          className={cn('tabs__control', {
-            'is-active': activeTab === Tab.Characteristics,
-          })}
-          type="button"
-        >
-          Характеристики
-        </button>
-        <button
-          onClick={() => {
-            setActiveTab(Tab.Description);
-            navigate(
-              `${AppRoute.Product.replace(':id', String(camera.id))}/?tab=des`
-            );
-          }}
-          className={cn('tabs__control', {
-            'is-active': activeTab === Tab.Description,
-          })}
-          type="button"
-        >
-          Описание
-        </button>
-      </div>
+      <TabsNavigation
+        camera={camera}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
       <div className="tabs__content">
         <div
           className={cn('tabs__element', {
