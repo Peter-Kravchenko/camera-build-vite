@@ -2,8 +2,8 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
 import Pagination from '../../components/pagination/pagination';
 import Banner from '../../components/banner/banner';
-import { MAX_CAMERAS_ON_PAGE, RequestStatus } from '../../const';
-import { useAppSelector } from '../../hooks/index';
+import { MAX_CAMERAS_ON_PAGE, PageBlock, RequestStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import {
   getCameras,
   getCamerasFetchingStatus,
@@ -23,8 +23,12 @@ import {
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
 import { getCurrentPage } from '../../store/app-process/app-process.selectors';
 import { getCamerasFromCurrentPage } from '../../utils';
+import { useEffect } from 'react';
+import { resetAppProcess } from '../../store/app-process/app-process.slice';
 
 function CatalogPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const promos = useAppSelector(getPromos);
   const promosFetchingStatus = useAppSelector(getPromosFetchingStatus);
 
@@ -41,6 +45,10 @@ function CatalogPage(): JSX.Element {
     MAX_CAMERAS_ON_PAGE
   );
 
+  useEffect(() => {
+    dispatch(resetAppProcess());
+  }, [dispatch]);
+
   if (
     cemerasFetchingStatus === RequestStatus.Pending &&
     promosFetchingStatus === RequestStatus.Pending
@@ -52,7 +60,7 @@ function CatalogPage(): JSX.Element {
     <main>
       {promos && <Banner promos={promos} />}
       <div className="page-content">
-        <Breadcrumbs />
+        <Breadcrumbs pageBlock={PageBlock.Catalog} />
         <section className="catalog">
           <div className="container">
             <h1 className="title title--h2">Каталог фото- и видеотехники</h1>

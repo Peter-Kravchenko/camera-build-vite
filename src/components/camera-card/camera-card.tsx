@@ -2,20 +2,22 @@ import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils';
 import { AppRoute } from '../../const';
-import CamearaRating from '../camera-rating/camera-rating';
+import CameraRating from '../camera-rating/camera-rating';
 import { useAppDispatch } from '../../hooks/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { fetchCamera } from '../../store/api-actions';
+import cn from 'classnames';
 
 type CameraCardProps = {
   camera: TCamera;
+  isSimilar?: boolean;
 };
 
-function CameraCard({ camera }: CameraCardProps): JSX.Element {
+function CameraCard({ camera, isSimilar }: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="product-card">
+    <div className={cn('product-card', { 'is-active': isSimilar })}>
       <div className="product-card__img">
         <picture>
           <source
@@ -32,10 +34,7 @@ function CameraCard({ camera }: CameraCardProps): JSX.Element {
         </picture>
       </div>
       <div className="product-card__info">
-        <CamearaRating
-          rating={camera.rating}
-          reviewCount={camera.reviewCount}
-        />
+        <CameraRating rating={camera.rating} reviewCount={camera.reviewCount} />
         <p className="product-card__title">{camera.name}</p>
         <p className="product-card__price">
           <span className="visually-hidden">Цена:</span>

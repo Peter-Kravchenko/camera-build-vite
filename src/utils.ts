@@ -1,5 +1,10 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru'; // Import the Russian locale
 import { Category, Type } from './const';
 import { TCamera, TCameras } from './types/cameras';
+import { TReview } from './types/reviews';
+
+dayjs.locale('ru');
 
 export const addSpaceInPrice = (price: number) =>
   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -62,3 +67,9 @@ export const getCamerasFromCurrentPage = (
   camerasOnPage: number
 ) =>
   cameras.slice((currentPage - 1) * camerasOnPage, currentPage * camerasOnPage);
+
+export const getReviewDate = (date: TReview['createAt']): string =>
+  dayjs(date).locale('ru').format('DD MMMM');
+
+export const getReviewDateTime = (date: TReview['createAt']): string =>
+  dayjs(date).format('YYYY-MM-DD');

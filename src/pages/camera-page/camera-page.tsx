@@ -10,7 +10,7 @@ import {
   getCamera,
   getCameraFetchingStatus,
 } from '../../store/camera-data/camera-data.selectors';
-import { RequestStatus } from '../../const';
+import { PageBlock, RequestStatus } from '../../const';
 import Similar from '../../components/similar/similar';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import {
@@ -22,6 +22,14 @@ import {
   getReviewsFetchingStatus,
 } from '../../store/reviews-data/reviews-data.selectors';
 import CameraDatails from '../../components/camera-details/camera-datails';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import {
+  getModalAddToBasketOpen,
+  getModalAddToBasketSuccessOpen,
+} from '../../store/modal-process/modal-process.selectors';
+import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
+import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
+import { resetAppProcess } from '../../store/app-process/app-process.slice';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -41,6 +49,7 @@ function ProductPage(): JSX.Element {
       dispatch(fetchSimilar(Number(id)));
       dispatch(fetchReviews(Number(id)));
     }
+    dispatch(resetAppProcess());
   }, [id, camera, dispatch]);
 
   const similar = useAppSelector(getSimilar);
@@ -48,6 +57,9 @@ function ProductPage(): JSX.Element {
 
   const reviews = useAppSelector(getReviews);
   const reviewsFetchingStatus = useAppSelector(getReviewsFetchingStatus);
+
+  const isModalOpen = useAppSelector(getModalAddToBasketOpen);
+  const isModalSuccessOpen = useAppSelector(getModalAddToBasketSuccessOpen);
 
   if (
     cameraFetchingStatus === RequestStatus.Pending ||
@@ -60,33 +72,7 @@ function ProductPage(): JSX.Element {
   return camera && cameraFetchingStatus === RequestStatus.Success ? (
     <main>
       <div className="page-content">
-        <div className="breadcrumbs">
-          <div className="container">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="index.html">
-                  Главная
-                  <svg width={5} height={8} aria-hidden="true">
-                    <use xlinkHref="#icon-arrow-mini" />
-                  </svg>
-                </a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="catalog.html">
-                  Каталог
-                  <svg width={5} height={8} aria-hidden="true">
-                    <use xlinkHref="#icon-arrow-mini" />
-                  </svg>
-                </a>
-              </li>
-              <li className="breadcrumbs__item">
-                <span className="breadcrumbs__link breadcrumbs__link--active">
-                  {camera.name}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <Breadcrumbs pageBlock={PageBlock.Camera} camera={camera} />
         <CameraDatails camera={camera} />
         {similar && similarFetchingStatus === RequestStatus.Success ? (
           <Similar similar={similar} />
@@ -97,6 +83,8 @@ function ProductPage(): JSX.Element {
         )}
         <ReviewsList reviews={reviews} />
       </div>
+      {isModalOpen && <AddTobasketModal />}
+      {isModalSuccessOpen && <AddToBasketSuccessModal />}
     </main>
   ) : (
     <h2>Камера не найдена на сервере, пожалуйста, попробуйте ещё раз</h2>

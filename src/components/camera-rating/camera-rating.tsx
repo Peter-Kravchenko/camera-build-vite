@@ -6,10 +6,7 @@ type CameraRatingProps = {
   reviewCount: TCamera['reviewCount'];
 };
 
-function CamearaRating({
-  rating,
-  reviewCount,
-}: CameraRatingProps): JSX.Element {
+function CameraRating({ rating, reviewCount }: CameraRatingProps): JSX.Element {
   return (
     <div className="rate product__rate">
       {stars.map((star) => (
@@ -31,4 +28,4 @@ function CamearaRating({
   );
 }
 
-export default CamearaRating;
+export default CameraRating;
