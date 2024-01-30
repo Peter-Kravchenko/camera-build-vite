@@ -29,6 +29,7 @@ import {
 } from '../../store/modal-process/modal-process.selectors';
 import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
+import { resetAppProcess } from '../../store/app-process/app-process.slice';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -48,6 +49,7 @@ function ProductPage(): JSX.Element {
       dispatch(fetchSimilar(Number(id)));
       dispatch(fetchReviews(Number(id)));
     }
+    dispatch(resetAppProcess());
   }, [id, camera, dispatch]);
 
   const similar = useAppSelector(getSimilar);

@@ -3,7 +3,7 @@ import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-ca
 import Pagination from '../../components/pagination/pagination';
 import Banner from '../../components/banner/banner';
 import { MAX_CAMERAS_ON_PAGE, PageBlock, RequestStatus } from '../../const';
-import { useAppSelector } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import {
   getCameras,
   getCamerasFetchingStatus,
@@ -23,8 +23,12 @@ import {
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
 import { getCurrentPage } from '../../store/app-process/app-process.selectors';
 import { getCamerasFromCurrentPage } from '../../utils';
+import { useEffect } from 'react';
+import { resetAppProcess } from '../../store/app-process/app-process.slice';
 
 function CatalogPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const promos = useAppSelector(getPromos);
   const promosFetchingStatus = useAppSelector(getPromosFetchingStatus);
 
@@ -40,6 +44,10 @@ function CatalogPage(): JSX.Element {
     currentPage,
     MAX_CAMERAS_ON_PAGE
   );
+
+  useEffect(() => {
+    dispatch(resetAppProcess());
+  }, [dispatch]);
 
   if (
     cemerasFetchingStatus === RequestStatus.Pending &&

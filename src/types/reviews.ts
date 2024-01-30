@@ -1,4 +1,4 @@
-type TReview = {
+export type TReview = {
   id: string;
   createAt: string;
   cameraId: number;

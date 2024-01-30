@@ -12,6 +12,7 @@ export type TAppProcess = {
   currentPage: number;
   perPage: number;
   totalCount: number;
+  reviewsQtyOnPage: number;
 };
 
 export type TModalData = {

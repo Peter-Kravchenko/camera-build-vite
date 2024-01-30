@@ -6,3 +6,8 @@ export const getCurrentPage = createSelector(
   (state: TAppState) => state[NameSpace.App],
   (state: TAppProcess) => state.currentPage
 );
+
+export const getReviewsQtyOnPage = createSelector(
+  (state: TAppState) => state[NameSpace.App],
+  (state: TAppProcess) => state.reviewsQtyOnPage
+);
