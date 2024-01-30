@@ -32,6 +32,7 @@ import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-to
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
 import AddReviewModal from '../../components/modals/add-review-modal/add-review-modal';
+import UpButton from '../../components/up-button/up-button';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -75,23 +76,26 @@ function ProductPage(): JSX.Element {
   }
 
   return camera && cameraFetchingStatus === RequestStatus.Success ? (
-    <main>
-      <div className="page-content">
-        <Breadcrumbs pageBlock={PageBlock.Camera} camera={camera} />
-        <CameraDatails camera={camera} />
-        {similar && similarFetchingStatus === RequestStatus.Success ? (
-          <Similar similar={similar} />
-        ) : (
-          <div className="container">
-            <h2 className="title title--h3">Похожие товары не найдены</h2>
-          </div>
-        )}
-        <ReviewsList reviews={reviews} />
-      </div>
-      {isModalAddToBasketOpen && <AddTobasketModal />}
-      {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
-      {isModalAddReviewOpen && <AddReviewModal />}
-    </main>
+    <>
+      <main>
+        <div className="page-content">
+          <Breadcrumbs pageBlock={PageBlock.Camera} camera={camera} />
+          <CameraDatails camera={camera} />
+          {similar && similarFetchingStatus === RequestStatus.Success ? (
+            <Similar similar={similar} />
+          ) : (
+            <div className="container">
+              <h2 className="title title--h3">Похожие товары не найдены</h2>
+            </div>
+          )}
+          <ReviewsList reviews={reviews} />
+        </div>
+        {isModalAddToBasketOpen && <AddTobasketModal />}
+        {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
+        {isModalAddReviewOpen && <AddReviewModal />}
+      </main>
+      <UpButton />
+    </>
   ) : (
     <h2>Камера не найдена на сервере, пожалуйста, попробуйте ещё раз</h2>
   );
