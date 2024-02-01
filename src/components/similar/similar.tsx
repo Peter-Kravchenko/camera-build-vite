@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { MAX_SIMILAR_CAMERAS_ON_PAGE } from '../../const';
 import { TCameras } from '../../types/cameras';
 import CameraCard from '../camera-card/camera-card';
 
@@ -6,7 +8,25 @@ type SimilarProps = {
 };
 
 function Similar({ similar }: SimilarProps): JSX.Element {
-  const similarToRender = similar.slice(0, 3);
+  const [sliderIndex, setSliderIndex] = useState(0);
+  console.log(sliderIndex);
+
+  const similarToRender = similar.slice(
+    sliderIndex,
+    sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE
+  );
+  const handleNextButttonClick = () => {
+    console.log('Кнопка вперед нажата');
+    setSliderIndex(sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE);
+  };
+  const handleBackButtonClick = () => {
+    console.log('Кнопка назад нажата');
+    setSliderIndex(sliderIndex - MAX_SIMILAR_CAMERAS_ON_PAGE);
+  };
+
+  const isBackButtonDisabled = sliderIndex === 0;
+  const isNextButtonDisabled =
+    sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE >= similar.length;
 
   return (
     <div className="page-content__section">
@@ -15,24 +35,27 @@ function Similar({ similar }: SimilarProps): JSX.Element {
           <h2 className="title title--h3">Похожие товары</h2>
           <div className="product-similar__slider">
             <div className="product-similar__slider-list">
-              {similarToRender.slice(0, 3).map((camera) => (
+              {similarToRender.map((camera) => (
                 <CameraCard key={camera.id} camera={camera} isSimilar />
               ))}
             </div>
             <button
+              onClick={handleBackButtonClick}
               className="slider-controls slider-controls--prev"
               type="button"
               aria-label="Предыдущий слайд"
-              disabled
+              disabled={isBackButtonDisabled}
             >
               <svg width={7} height={12} aria-hidden="true">
                 <use xlinkHref="#icon-arrow" />
               </svg>
             </button>
             <button
+              onClick={handleNextButttonClick}
               className="slider-controls slider-controls--next"
               type="button"
               aria-label="Следующий слайд"
+              disabled={isNextButtonDisabled}
             >
               <svg width={7} height={12} aria-hidden="true">
                 <use xlinkHref="#icon-arrow" />

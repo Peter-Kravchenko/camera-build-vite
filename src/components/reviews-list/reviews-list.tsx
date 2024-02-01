@@ -15,7 +15,7 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
   const reviewsQtyOnPage = useAppSelector(getReviewsQtyOnPage);
   const reviewsOnPage = reviews.slice(0, reviewsQtyOnPage);
 
-  const isShowMore = reviews.length > reviewsQtyOnPage;
+  const isShowMoreVisible = reviews.length > reviewsQtyOnPage;
 
   return (
     <div className="page-content__section">
@@ -37,7 +37,7 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
             ))}
           </ul>
           <div className="review-block__buttons">
-            {isShowMore && (
+            {isShowMoreVisible && (
               <button
                 onClick={() => dispatch(showMoreReviews())}
                 className="btn btn--purple"

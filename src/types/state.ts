@@ -10,8 +10,7 @@ export type TAppState = ReturnType<typeof store.getState>;
 
 export type TAppProcess = {
   currentPage: number;
-  perPage: number;
-  totalCount: number;
+  similarSliderIndex: number;
   reviewsQtyOnPage: number;
 };
 

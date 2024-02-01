@@ -197,3 +197,5 @@ function AddReviewModal(): JSX.Element {
 }
 
 export default AddReviewModal;
+
+//todo заблокировать стпаницу при открытиии модального окна

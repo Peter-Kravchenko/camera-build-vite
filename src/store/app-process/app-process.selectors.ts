@@ -7,6 +7,11 @@ export const getCurrentPage = createSelector(
   (state: TAppProcess) => state.currentPage
 );
 
+export const getSimilarSliderIndex = createSelector(
+  (state: TAppState) => state[NameSpace.App],
+  (state: TAppProcess) => state.similarSliderIndex
+);
+
 export const getReviewsQtyOnPage = createSelector(
   (state: TAppState) => state[NameSpace.App],
   (state: TAppProcess) => state.reviewsQtyOnPage
