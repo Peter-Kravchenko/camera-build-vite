@@ -1,27 +1,27 @@
-import { useState } from 'react';
 import { MAX_SIMILAR_CAMERAS_ON_PAGE } from '../../const';
 import { TCameras } from '../../types/cameras';
 import CameraCard from '../camera-card/camera-card';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { getSimilarSliderIndex } from '../../store/app-process/app-process.selectors';
+import { setSimilarSliderIndex } from '../../store/app-process/app-process.slice';
 
 type SimilarProps = {
   similar: TCameras;
 };
 
 function Similar({ similar }: SimilarProps): JSX.Element {
-  const [sliderIndex, setSliderIndex] = useState(0);
-  console.log(sliderIndex);
+  const dispatch = useAppDispatch();
+  const sliderIndex = useAppSelector(getSimilarSliderIndex);
 
   const similarToRender = similar.slice(
     sliderIndex,
     sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE
   );
   const handleNextButttonClick = () => {
-    console.log('Кнопка вперед нажата');
-    setSliderIndex(sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE);
+    dispatch(setSimilarSliderIndex(sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE));
   };
   const handleBackButtonClick = () => {
-    console.log('Кнопка назад нажата');
-    setSliderIndex(sliderIndex - MAX_SIMILAR_CAMERAS_ON_PAGE);
+    dispatch(setSimilarSliderIndex(sliderIndex - MAX_SIMILAR_CAMERAS_ON_PAGE));
   };
 
   const isBackButtonDisabled = sliderIndex === 0;

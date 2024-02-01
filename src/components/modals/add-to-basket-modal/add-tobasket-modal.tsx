@@ -110,7 +110,13 @@ function AddTobasketModal(): JSX.Element {
         </div>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className="modal is-active">
+      <div className="modal__wrapper">
+        <div className="modal__overlay" />
+      </div>
+    </div>
+  );
 }
 
 export default AddTobasketModal;
