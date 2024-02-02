@@ -7,8 +7,10 @@ import { cameraData } from './camera-data/camera-data.slice';
 import { promosData } from './promos-data/promos-data.slice';
 import { similarData } from './similar-data/similar-data.slice';
 import { reviewsData } from './reviews-data/reviews-data.slice';
+import { addReviewData } from './add-review-data/add-review.slice';
 
 export const rootReducer = combineReducers({
+  [NameSpace.AddReview]: addReviewData.reducer,
   [NameSpace.App]: appProcess.reducer,
   [NameSpace.Modal]: modalProcess.reducer,
   [NameSpace.Cameras]: camerasData.reducer,

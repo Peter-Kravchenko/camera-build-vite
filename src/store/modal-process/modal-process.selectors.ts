@@ -16,3 +16,8 @@ export const getModalAddReviewOpen = createSelector(
   (state: TAppState) => state[NameSpace.Modal],
   (state: TModalData) => state.isModalAddReviewOpen
 );
+
+export const getModalAddReviewSuccessOpen = createSelector(
+  (state: TAppState) => state[NameSpace.Modal],
+  (state: TModalData) => state.isModalAddReviewSuccessOpen
+);

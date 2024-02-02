@@ -34,6 +34,7 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
+  AddReview = 'ADD_REVIEW',
   App = 'APP',
   Modal = 'MODAL',
   Camera = 'CAMERA',
@@ -86,3 +87,11 @@ export enum Tab {
   Characteristics = 'Характеристики',
   Description = 'Описание',
 }
+
+export const ratingMap: Record<string, string> = {
+  '5': 'Отлично',
+  '4': 'Хорошо',
+  '3': 'Нормально',
+  '2': 'Плохо',
+  '1': 'Ужасно',
+};

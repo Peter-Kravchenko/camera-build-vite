@@ -25,6 +25,7 @@ import CameraDatails from '../../components/camera-details/camera-datails';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import {
   getModalAddReviewOpen,
+  getModalAddReviewSuccessOpen,
   getModalAddToBasketOpen,
   getModalAddToBasketSuccessOpen,
 } from '../../store/modal-process/modal-process.selectors';
@@ -33,6 +34,7 @@ import AddToBasketSuccessModal from '../../components/modals/add-to-basket-succe
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
 import AddReviewModal from '../../components/modals/add-review-modal/add-review-modal';
 import UpButton from '../../components/up-button/up-button';
+import AddReviewSuccessModal from '../../components/modals/add-review-success-modal/add-review-success-modal';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -66,6 +68,9 @@ function ProductPage(): JSX.Element {
     getModalAddToBasketSuccessOpen
   );
   const isModalAddReviewOpen = useAppSelector(getModalAddReviewOpen);
+  const isModalAddReviewSuccessOpen = useAppSelector(
+    getModalAddReviewSuccessOpen
+  );
 
   if (
     cameraFetchingStatus === RequestStatus.Pending ||
@@ -92,7 +97,8 @@ function ProductPage(): JSX.Element {
         </div>
         {isModalAddToBasketOpen && <AddTobasketModal />}
         {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
-        {isModalAddReviewOpen && <AddReviewModal />}
+        {isModalAddReviewOpen && <AddReviewModal cameraId={id} />}
+        {isModalAddReviewSuccessOpen && <AddReviewSuccessModal />}
       </main>
       <UpButton />
     </>

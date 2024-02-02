@@ -18,6 +18,7 @@ export type TModalData = {
   isModalAddToBasketOpen: boolean;
   isModalAddToBasketSuccessOpen: boolean;
   isModalAddReviewOpen: boolean;
+  isModalAddReviewSuccessOpen: boolean;
 };
 
 export type TCamerasData = {
@@ -42,5 +43,9 @@ export type TPromosData = {
 
 export type TReviewsData = {
   reviews: TReviews;
+  fetchingStatus: RequestStatus;
+};
+
+export type TAddReviewData = {
   fetchingStatus: RequestStatus;
 };

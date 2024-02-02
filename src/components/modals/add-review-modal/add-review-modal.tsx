@@ -1,15 +1,73 @@
-import { useAppDispatch } from '../../../hooks/index';
+import { Fragment, useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { RequestStatus, ratingMap } from '../../../const';
+import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
-import { closeAddReviewModal } from '../../../store/modal-process/modal-process.slice';
+import {
+  closeAddReviewModal,
+  openAddReviewSuccessModal,
+} from '../../../store/modal-process/modal-process.slice';
+import {
+  TAddReviewFormData,
+  TAddReviewFormValues,
+} from '../../../types/reviews';
+import { addReview } from '../../../store/api-actions';
+import { TCamera } from '../../../types/cameras';
+import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
+import cn from 'classnames';
+import { toast } from 'react-toastify';
+import { resetAddReviewFetchigStatus } from '../../../store/add-review-data/add-review.slice';
 
-function AddReviewModal(): JSX.Element {
+type AddReviewModalProps = {
+  cameraId: TCamera['id'];
+};
+
+function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const fetchingStatus = useAppSelector(getAddReviewFetchingStatus);
+  const isSending = fetchingStatus === RequestStatus.Pending;
 
   const closeModal = () => {
     dispatch(closeAddReviewModal());
   };
 
   useEscKeyHandle(closeModal);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isValid },
+  } = useForm<TAddReviewFormValues>({
+    // defaultValues: { rating: 0 },
+    mode: 'onBlur',
+  });
+
+  const onFormSubmit: SubmitHandler<TAddReviewFormData> = (formData) => {
+    const { userName, advantage, disadvantage, review, rating } = formData;
+    const currentData: TAddReviewFormData = {
+      userName,
+      advantage,
+      disadvantage,
+      review,
+      rating: Number(rating),
+      cameraId: Number(cameraId),
+    };
+    dispatch(addReview(currentData));
+  };
+
+  useEffect(() => {
+    if (fetchingStatus === RequestStatus.Rejected) {
+      toast.error('Не удалось отправить отзыв, Пожалуйста попробуйте еще раз');
+    }
+    if (fetchingStatus === RequestStatus.Success) {
+      dispatch(closeAddReviewModal());
+      dispatch(openAddReviewSuccessModal());
+      reset();
+    }
+    dispatch(resetAddReviewFetchigStatus());
+  }, [dispatch, fetchingStatus, reset]);
 
   return (
     <div className="modal is-active">
@@ -18,9 +76,19 @@ function AddReviewModal(): JSX.Element {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post">
+            <form
+              onSubmit={(e) => {
+                handleSubmit(onFormSubmit)(e);
+              }}
+              method="post"
+              noValidate
+            >
               <div className="form-review__rate">
-                <fieldset className="rate form-review__item">
+                <fieldset
+                  className={cn('rate', 'form-review__item', {
+                    'is-invalid': errors.rating,
+                  })}
+                >
                   <legend className="rate__caption">
                     Рейтинг
                     <svg width={9} height={9} aria-hidden="true">
@@ -29,77 +97,44 @@ function AddReviewModal(): JSX.Element {
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group">
-                      <input
-                        className="visually-hidden"
-                        id="star-5"
-                        name="rate"
-                        type="radio"
-                        defaultValue={5}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-5"
-                        title="Отлично"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-4"
-                        name="rate"
-                        type="radio"
-                        defaultValue={4}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-4"
-                        title="Хорошо"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-3"
-                        name="rate"
-                        type="radio"
-                        defaultValue={3}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-3"
-                        title="Нормально"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-2"
-                        name="rate"
-                        type="radio"
-                        defaultValue={2}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-2"
-                        title="Плохо"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-1"
-                        name="rate"
-                        type="radio"
-                        defaultValue={1}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-1"
-                        title="Ужасно"
-                      />
+                      {Object.entries(ratingMap)
+                        .reverse()
+                        .map(([key, value]) => (
+                          <Fragment key={key}>
+                            <input
+                              className="visually-hidden"
+                              id={`star-${key}`}
+                              type="radio"
+                              value={key}
+                              disabled={isSending}
+                              {...register('rating', {
+                                required: 'Нужно оценить товар',
+                              })}
+                            />
+                            <label
+                              className="rate__label"
+                              htmlFor={`star-${key}`}
+                              title={value}
+                            />
+                          </Fragment>
+                        ))}
                     </div>
                     <div className="rate__progress">
-                      <span className="rate__stars">0</span> <span>/</span>{' '}
-                      <span className="rate__all-stars">5</span>
+                      <span className="rate__stars">
+                        {watch().rating ? watch().rating : 0}
+                      </span>{' '}
+                      <span>/</span> <span className="rate__all-stars">5</span>
                     </div>
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
-                <div className="custom-input form-review__item">
+                <div
+                  className={cn('custom-input form-review__item', {
+                    'is-invalid': errors.userName,
+                  })}
+                >
                   <label>
-                    <span className="custom-input__label">
+                    <span className="custom-input__label ">
                       Ваше имя
                       <svg width={9} height={9} aria-hidden="true">
                         <use xlinkHref="#icon-snowflake" />
@@ -107,14 +142,30 @@ function AddReviewModal(): JSX.Element {
                     </span>
                     <input
                       type="text"
-                      name="user-name"
                       placeholder="Введите ваше имя"
-                      required
+                      disabled={isSending}
+                      {...register('userName', {
+                        required: 'Нужно укзать имя',
+                        minLength: {
+                          value: 2,
+                          message: 'Минимум 2 символа',
+                        },
+                        maxLength: {
+                          value: 15,
+                          message: 'Максимум 15 символов',
+                        },
+                      })}
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать имя</p>
+                  <p className="custom-input__error">
+                    {errors.userName?.message}
+                  </p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div
+                  className={cn('custom-input', 'form-review__item', {
+                    'is-invalid': errors.advantage,
+                  })}
+                >
                   <label>
                     <span className="custom-input__label">
                       Достоинства
@@ -124,16 +175,30 @@ function AddReviewModal(): JSX.Element {
                     </span>
                     <input
                       type="text"
-                      name="user-plus"
                       placeholder="Основные преимущества товара"
-                      required
+                      disabled={isSending}
+                      {...register('advantage', {
+                        required: 'Нужно указать достоинства',
+                        minLength: {
+                          value: 10,
+                          message: 'Минимум 10 символов',
+                        },
+                        maxLength: {
+                          value: 160,
+                          message: 'Максимум 160 символов',
+                        },
+                      })}
                     />
                   </label>
                   <p className="custom-input__error">
-                    Нужно указать достоинства
+                    {errors.advantage?.message}
                   </p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div
+                  className={cn('custom-input', 'form-review__item', {
+                    'is-invalid': errors.disadvantage,
+                  })}
+                >
                   <label>
                     <span className="custom-input__label">
                       Недостатки
@@ -143,16 +208,29 @@ function AddReviewModal(): JSX.Element {
                     </span>
                     <input
                       type="text"
-                      name="user-minus"
                       placeholder="Главные недостатки товара"
-                      required
+                      {...register('disadvantage', {
+                        required: 'Нужно указать недостатки',
+                        minLength: {
+                          value: 10,
+                          message: 'Минимум 10 символов',
+                        },
+                        maxLength: {
+                          value: 160,
+                          message: 'Максимум 160 символов',
+                        },
+                      })}
                     />
                   </label>
                   <p className="custom-input__error">
-                    Нужно указать недостатки
+                    {errors.disadvantage?.message}
                   </p>
                 </div>
-                <div className="custom-textarea form-review__item">
+                <div
+                  className={cn('custom-textarea', 'form-review__item', {
+                    'is-invalid': errors.review,
+                  })}
+                >
                   <label>
                     <span className="custom-textarea__label">
                       Комментарий
@@ -161,20 +239,29 @@ function AddReviewModal(): JSX.Element {
                       </svg>
                     </span>
                     <textarea
-                      name="user-comment"
-                      minLength={5}
                       placeholder="Поделитесь своим опытом покупки"
-                      defaultValue={''}
+                      {...register('review', {
+                        required: 'Нужно добавить комментарий',
+                        minLength: {
+                          value: 10,
+                          message: 'Минимум 10 символа',
+                        },
+                        maxLength: {
+                          value: 160,
+                          message: 'Максимум 160 символов',
+                        },
+                      })}
                     />
                   </label>
                   <div className="custom-textarea__error">
-                    Нужно добавить комментарий
+                    {errors.review?.message}
                   </div>
                 </div>
               </div>
               <button
                 className="btn btn--purple form-review__btn"
                 type="submit"
+                disabled={isSending || !isValid}
               >
                 Отправить отзыв
               </button>
