@@ -14,23 +14,6 @@ export type TReview = {
 export type TReviews = TReview[];
 
 export type TAddReview = {
-  cameraId: number;
-  userName: string;
-  advantage: string;
-  disadvantage: string;
-  review: string;
-  rating: number;
-};
-
-export type TAddReviewFormValues = {
-  userName: string;
-  advantage: string;
-  disadvantage: string;
-  review: string;
-  rating: number;
-};
-
-export type TAddReviewFormData = {
   cameraId: TCamera['id'];
   userName: string;
   advantage: string;

@@ -97,7 +97,7 @@ function ProductPage(): JSX.Element {
         </div>
         {isModalAddToBasketOpen && <AddTobasketModal />}
         {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
-        {isModalAddReviewOpen && <AddReviewModal cameraId={id} />}
+        {isModalAddReviewOpen && <AddReviewModal cameraId={camera.id} />}
         {isModalAddReviewSuccessOpen && <AddReviewSuccessModal />}
       </main>
       <UpButton />

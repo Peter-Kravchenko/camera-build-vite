@@ -17,7 +17,7 @@ function AddToBasketSuccessModal(): JSX.Element {
   return (
     <div className="modal is-active modal--narrow">
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">
           <p className="title title--h4">Товар успешно добавлен в корзину</p>
           <svg

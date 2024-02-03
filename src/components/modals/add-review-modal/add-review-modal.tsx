@@ -7,10 +7,7 @@ import {
   closeAddReviewModal,
   openAddReviewSuccessModal,
 } from '../../../store/modal-process/modal-process.slice';
-import {
-  TAddReviewFormData,
-  TAddReviewFormValues,
-} from '../../../types/reviews';
+import { TAddReview } from '../../../types/reviews';
 import { addReview } from '../../../store/api-actions';
 import { TCamera } from '../../../types/cameras';
 import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
@@ -27,26 +24,19 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
   const fetchingStatus = useAppSelector(getAddReviewFetchingStatus);
   const isSending = fetchingStatus === RequestStatus.Pending;
 
-  const closeModal = () => {
-    dispatch(closeAddReviewModal());
-  };
-
-  useEscKeyHandle(closeModal);
-
   const {
     register,
     handleSubmit,
     reset,
     watch,
     formState: { errors, isValid },
-  } = useForm<TAddReviewFormValues>({
-    // defaultValues: { rating: 0 },
+  } = useForm<TAddReview>({
     mode: 'onBlur',
   });
 
-  const onFormSubmit: SubmitHandler<TAddReviewFormData> = (formData) => {
+  const onFormSubmit: SubmitHandler<TAddReview> = (formData) => {
     const { userName, advantage, disadvantage, review, rating } = formData;
-    const currentData: TAddReviewFormData = {
+    const currentData: TAddReview = {
       userName,
       advantage,
       disadvantage,
@@ -56,6 +46,12 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
     };
     dispatch(addReview(currentData));
   };
+
+  const closeModal = () => {
+    dispatch(closeAddReviewModal());
+  };
+
+  useEscKeyHandle(closeModal);
 
   useEffect(() => {
     if (fetchingStatus === RequestStatus.Rejected) {
@@ -72,7 +68,7 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
@@ -268,7 +264,7 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
             </form>
           </div>
           <button
-            onClick={() => dispatch(closeAddReviewModal())}
+            onClick={() => closeModal()}
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
@@ -284,5 +280,3 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
 }
 
 export default AddReviewModal;
-
-//todo заблокировать стпаницу при открытиии модального окна

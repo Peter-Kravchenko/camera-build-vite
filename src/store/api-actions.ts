@@ -3,7 +3,7 @@ import { TAppDispatch, TAppState } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TCamera, TCameras } from '../types/cameras';
 import { APIRoute, NameSpace } from '../const';
-import { TAddReviewFormData, TReview, TReviews } from '../types/reviews';
+import { TAddReview, TReview, TReviews } from '../types/reviews';
 import { TPromos } from '../types/promo';
 import { toast } from 'react-toastify';
 
@@ -74,7 +74,7 @@ export const fetchReviews = createAsyncThunk<TReviews, TCamera['id'], TExtra>(
   }
 );
 
-export const addReview = createAsyncThunk<TReview, TAddReviewFormData, TExtra>(
+export const addReview = createAsyncThunk<TReview, TAddReview, TExtra>(
   `${NameSpace.AddReview}/addReview`,
   async (reviewData, { extra: api }) => {
     const { data } = await api

@@ -19,12 +19,17 @@ import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-to
 import {
   getModalAddToBasketOpen,
   getModalAddToBasketSuccessOpen,
+  getModalStatus,
 } from '../../store/modal-process/modal-process.selectors';
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
 import { getCurrentPage } from '../../store/app-process/app-process.selectors';
 import { getCamerasFromCurrentPage } from '../../utils';
 import { useEffect } from 'react';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
+import {
+  closeAddReviewModal,
+  closeAddReviewSuccessModal,
+} from '../../store/modal-process/modal-process.slice';
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -37,6 +42,14 @@ function CatalogPage(): JSX.Element {
 
   const isModalOpen = useAppSelector(getModalAddToBasketOpen);
   const isModalSuccessOpen = useAppSelector(getModalAddToBasketSuccessOpen);
+
+  const modalStatus = useAppSelector(getModalStatus);
+  if (modalStatus.isModalAddReviewOpen) {
+    dispatch(closeAddReviewModal());
+  } else if (modalStatus.isModalAddReviewSuccessOpen) {
+    dispatch(closeAddReviewSuccessModal());
+  }
+  // Устраняет баг, если при открытом модальном окне отзыва вернуться в каталог, то состояние модального окна не изменится и страница зависает
 
   const currentPage = useAppSelector(getCurrentPage);
   const camerasToRender = getCamerasFromCurrentPage(

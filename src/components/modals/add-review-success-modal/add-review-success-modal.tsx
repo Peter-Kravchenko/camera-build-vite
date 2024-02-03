@@ -17,7 +17,7 @@ function AddReviewSuccessModal() {
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">
           <p className="title title--h4">Спасибо за отзыв</p>
           <svg
@@ -41,7 +41,7 @@ function AddReviewSuccessModal() {
             </button>
           </div>
           <button
-            onClick={() => dispatch(closeAddReviewSuccessModal())}
+            onClick={() => closeModal()}
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
