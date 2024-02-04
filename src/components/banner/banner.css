@@ -1,0 +1,11 @@
+.banner-swiper {
+  --swiper-pagination-color: #7575e2;
+  --swiper-pagination-bullet-inactive-color: #f4f4fc;
+  --swiper-pagination-bullet-inactive-opacity: 100%;
+  --swiper-pagination-bullet-size: 16px;
+  --swiper-pagination-bullet-horizontal-gap: 6px;
+}
+
+.swiper-pagination-bullets {
+  padding-left: 80%;
+}
