@@ -1,10 +1,11 @@
 import cn from 'classnames';
-import { TCameras } from '../../types/cameras';
-import { useAppDispatch } from '../../hooks/index';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { setCurrentPage } from '../../store/app-process/app-process.slice';
+import { useAppDispatch } from '../../hooks/index';
 import { AppRoute, MAX_CAMERAS_ON_PAGE } from '../../const';
 import { createPages } from '../../utils';
-import { Link, useNavigate } from 'react-router-dom';
+import { TCameras } from '../../types/cameras';
+import { useEffect } from 'react';
 
 type PaginationProps = {
   cameras: TCameras;
@@ -14,10 +15,27 @@ type PaginationProps = {
 function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const totalPages = Math.ceil(cameras.length / MAX_CAMERAS_ON_PAGE);
   const pages: number[] = [];
   createPages(pages, totalPages, currentPage);
+
+  const searchParams = new URLSearchParams(location.search);
+  const pageParam = searchParams.get('page');
+  const parsedPage = pageParam ? Number(pageParam) : 1;
+  const isValid =
+    !isNaN(parsedPage) && parsedPage >= 1 && parsedPage <= totalPages;
+
+  useEffect(() => {
+    if (parsedPage !== currentPage) {
+      if (isValid) {
+        dispatch(setCurrentPage(parsedPage));
+      } else {
+        navigate(AppRoute.NotFound);
+      }
+    }
+  }, [dispatch, isValid, navigate, parsedPage, currentPage]);
 
   return (
     <div className="pagination" style={{ cursor: 'pointer' }}>
@@ -29,7 +47,6 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
               className="pagination__link pagination__link--text"
               onClick={() => {
                 dispatch(setCurrentPage(currentPage - 1));
-                navigate(`${AppRoute.Catalog}?page=${currentPage}`);
               }}
             >
               Назад

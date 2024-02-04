@@ -11,7 +11,7 @@ import {
   addSpaceInPrice,
   convertFirstLetterToLowercase,
 } from '../../../utils';
-import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
+import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
 
 function AddTobasketModal(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ function AddTobasketModal(): JSX.Element {
     dispatch(openAddToBasketSuccessModal());
   };
 
-  useEscKeyHandle(closeModal);
+  useEscKey(closeModal);
 
   if (camerasFetchingStatus === RequestStatus.Pending) {
     return <h1>Loading...</h1>;

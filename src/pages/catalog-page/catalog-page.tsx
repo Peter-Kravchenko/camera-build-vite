@@ -1,7 +1,3 @@
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
-import Pagination from '../../components/pagination/pagination';
-import Banner from '../../components/banner/banner';
 import { MAX_CAMERAS_ON_PAGE, PageBlock, RequestStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import {
@@ -15,21 +11,21 @@ import {
 import Filters from '../../components/filters/filters';
 import Sorting from '../../components/sorting/sorting';
 
-import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
 import {
   getModalAddToBasketOpen,
   getModalAddToBasketSuccessOpen,
-  getModalStatus,
 } from '../../store/modal-process/modal-process.selectors';
-import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
 import { getCurrentPage } from '../../store/app-process/app-process.selectors';
 import { getCamerasFromCurrentPage } from '../../utils';
 import { useEffect } from 'react';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
-import {
-  closeAddReviewModal,
-  closeAddReviewSuccessModal,
-} from '../../store/modal-process/modal-process.slice';
+import { resetModalStatus } from '../../store/modal-process/modal-process.slice';
+import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
+import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import Banner from '../../components/banner/banner';
+import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
+import Pagination from '../../components/pagination/pagination';
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -43,14 +39,6 @@ function CatalogPage(): JSX.Element {
   const isModalOpen = useAppSelector(getModalAddToBasketOpen);
   const isModalSuccessOpen = useAppSelector(getModalAddToBasketSuccessOpen);
 
-  const modalStatus = useAppSelector(getModalStatus);
-  if (modalStatus.isModalAddReviewOpen) {
-    dispatch(closeAddReviewModal());
-  } else if (modalStatus.isModalAddReviewSuccessOpen) {
-    dispatch(closeAddReviewSuccessModal());
-  }
-  // Устраняет баг, если при открытом модальном окне отзыва вернуться в каталог, то состояние модального окна не изменится и страница зависает
-
   const currentPage = useAppSelector(getCurrentPage);
   const camerasToRender = getCamerasFromCurrentPage(
     cameras,
@@ -60,6 +48,7 @@ function CatalogPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(resetAppProcess());
+    dispatch(resetModalStatus());
   }, [dispatch]);
 
   if (

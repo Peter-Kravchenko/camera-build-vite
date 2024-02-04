@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { TCamera } from '../../../types/cameras';
-import { Tab } from '../../../const';
 import cn from 'classnames';
+import { useState } from 'react';
+import { Tab } from '../../../const';
+import { TCamera } from '../../../types/cameras';
 import TabsNavigation from '../tabs-navigation/tabs-navigation';
 
 type TabsDataProps = {

@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 
-function useEscKeyHandle(onEscKeyHandle: () => void): void {
+function useEscKey(onEscKey: () => void): void {
   useEffect(() => {
     const handleEscKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
-        onEscKeyHandle();
+        onEscKey();
       }
     };
     document.addEventListener('keydown', handleEscKey);
     return () => {
       document.removeEventListener('keydown', handleEscKey);
     };
-  }, [onEscKeyHandle]);
+  }, [onEscKey]);
 }
 
-export default useEscKeyHandle;
+export default useEscKey;

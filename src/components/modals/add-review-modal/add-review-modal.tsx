@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RequestStatus, ratingMap } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
+import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
 import {
   closeAddReviewModal,
   openAddReviewSuccessModal,
@@ -41,6 +41,7 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
       advantage,
       disadvantage,
       review,
+
       rating: Number(rating),
       cameraId: Number(cameraId),
     };
@@ -51,7 +52,7 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
     dispatch(closeAddReviewModal());
   };
 
-  useEscKeyHandle(closeModal);
+  useEscKey(closeModal);
 
   useEffect(() => {
     if (fetchingStatus === RequestStatus.Rejected) {

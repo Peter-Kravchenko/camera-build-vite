@@ -37,6 +37,12 @@ export const modalProcess = createSlice({
     closeAddReviewSuccessModal: (state) => {
       state.isModalAddReviewSuccessOpen = false;
     },
+    resetModalStatus: (state) => {
+      state.isModalAddToBasketOpen = false;
+      state.isModalAddToBasketSuccessOpen = false;
+      state.isModalAddReviewOpen = false;
+      state.isModalAddReviewSuccessOpen = false;
+    },
   },
 });
 
@@ -49,4 +55,5 @@ export const {
   closeAddReviewModal,
   openAddReviewSuccessModal,
   closeAddReviewSuccessModal,
+  resetModalStatus,
 } = modalProcess.actions;

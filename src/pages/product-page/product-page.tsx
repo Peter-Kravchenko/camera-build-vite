@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/index/index';
 import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/index/index';
 import {
   fetchCamera,
   fetchReviews,
@@ -29,12 +29,13 @@ import {
   getModalAddToBasketOpen,
   getModalAddToBasketSuccessOpen,
 } from '../../store/modal-process/modal-process.selectors';
+import { resetAppProcess } from '../../store/app-process/app-process.slice';
+import { resetModalStatus } from '../../store/modal-process/modal-process.slice';
 import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
 import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
-import { resetAppProcess } from '../../store/app-process/app-process.slice';
+import AddReviewSuccessModal from '../../components/modals/add-review-success-modal/add-review-success-modal';
 import AddReviewModal from '../../components/modals/add-review-modal/add-review-modal';
 import UpButton from '../../components/up-button/up-button';
-import AddReviewSuccessModal from '../../components/modals/add-review-success-modal/add-review-success-modal';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -55,6 +56,7 @@ function ProductPage(): JSX.Element {
       dispatch(fetchReviews(Number(id)));
     }
     dispatch(resetAppProcess());
+    dispatch(resetModalStatus());
   }, [id, camera, dispatch]);
 
   const similar = useAppSelector(getSimilar);

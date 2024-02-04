@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/index';
 import { closeAddToBasketSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
-import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
+import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
 
 function AddToBasketSuccessModal(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ function AddToBasketSuccessModal(): JSX.Element {
     dispatch(closeAddToBasketSuccessModal());
   };
 
-  useEscKeyHandle(closeModal);
+  useEscKey(closeModal);
 
   return (
     <div className="modal is-active modal--narrow">

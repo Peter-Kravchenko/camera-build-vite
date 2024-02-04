@@ -84,8 +84,8 @@ export enum Level {
 }
 
 export enum Tab {
-  Characteristics = 'Характеристики',
-  Description = 'Описание',
+  Characteristics = 'chr',
+  Description = 'dsc',
 }
 
 export const ratingMap: Record<string, string> = {

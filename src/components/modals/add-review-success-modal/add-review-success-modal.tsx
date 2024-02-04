@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/index';
-import useEscKeyHandle from '../../../hooks/use-esc-key-handle/use-esc-key-handle';
+import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
 import { closeAddReviewSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
 
@@ -12,7 +12,7 @@ function AddReviewSuccessModal() {
     dispatch(closeAddReviewSuccessModal());
   };
 
-  useEscKeyHandle(closeModal);
+  useEscKey(closeModal);
 
   return (
     <div className="modal is-active">
@@ -31,7 +31,7 @@ function AddReviewSuccessModal() {
           <div className="modal__buttons">
             <button
               onClick={() => {
-                dispatch(closeAddReviewSuccessModal());
+                closeModal();
                 navigate(AppRoute.Catalog);
               }}
               className="btn btn--purple modal__btn modal__btn--fit-width"

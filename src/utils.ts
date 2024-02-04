@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import the Russian locale
-import { Category, Type } from './const';
+import { Category, Tab, Type } from './const';
 import { TCamera, TCameras } from './types/cameras';
 import { TReview } from './types/reviews';
 
@@ -73,3 +73,12 @@ export const getReviewDate = (date: TReview['createAt']): string =>
 
 export const getReviewDateTime = (date: TReview['createAt']): string =>
   dayjs(date).format('YYYY-MM-DD');
+
+export const getTabName = (tab: Tab) => {
+  switch (tab) {
+    case Tab.Characteristics:
+      return 'Характеристики';
+    case Tab.Description:
+      return 'Описание';
+  }
+};
