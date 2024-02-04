@@ -19,13 +19,13 @@ function TabsNavigation({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const searchParams = new URLSearchParams(location.search);
-  const pageParam = searchParams.get('tab');
-  const parsedTab = pageParam ? pageParam : Tab.Description;
-  const isValid =
-    parsedTab === Tab.Characteristics || parsedTab === Tab.Description;
-
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const pageParam = searchParams.get('tab');
+    const parsedTab = pageParam ? pageParam : Tab.Description;
+    const isValid =
+      parsedTab === Tab.Characteristics || parsedTab === Tab.Description;
+
     if (parsedTab !== activeTab) {
       if (isValid) {
         setActiveTab(parsedTab);
@@ -33,7 +33,7 @@ function TabsNavigation({
         navigate(AppRoute.NotFound);
       }
     }
-  }, [setActiveTab, isValid, navigate, parsedTab, activeTab]);
+  }, [activeTab, setActiveTab, navigate, location]);
 
   return (
     <div className="tabs__controls product__tabs-controls">

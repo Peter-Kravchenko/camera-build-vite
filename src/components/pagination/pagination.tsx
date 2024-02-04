@@ -21,13 +21,13 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   const pages: number[] = [];
   createPages(pages, totalPages, currentPage);
 
-  const searchParams = new URLSearchParams(location.search);
-  const pageParam = searchParams.get('page');
-  const parsedPage = pageParam ? Number(pageParam) : 1;
-  const isValid =
-    !isNaN(parsedPage) && parsedPage >= 1 && parsedPage <= totalPages;
-
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const pageParam = searchParams.get('page');
+    const parsedPage = pageParam ? Number(pageParam) : 1;
+    const isValid =
+      !isNaN(parsedPage) && parsedPage >= 1 && parsedPage <= totalPages;
+
     if (parsedPage !== currentPage) {
       if (isValid) {
         dispatch(setCurrentPage(parsedPage));
@@ -35,7 +35,7 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
         navigate(AppRoute.NotFound);
       }
     }
-  }, [dispatch, isValid, navigate, parsedPage, currentPage]);
+  }, [currentPage, dispatch, location, navigate, totalPages]);
 
   return (
     <div className="pagination" style={{ cursor: 'pointer' }}>
