@@ -1,7 +1,7 @@
 import { useAppDispatch } from '../../hooks/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../types/cameras';
-import { addSpaceInPrice } from '../../utils';
+import { addSpaceInPrice } from '../../utils/utils';
 import CameraRating from '../camera-rating/camera-rating';
 import TabsData from '../tabs/tabs-data/tabs-data';
 

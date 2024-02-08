@@ -10,7 +10,7 @@ import {
   addCorrectEnding,
   addSpaceInPrice,
   convertFirstLetterToLowercase,
-} from '../../../utils';
+} from '../../../utils/utils';
 import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
 
 function AddTobasketModal(): JSX.Element {

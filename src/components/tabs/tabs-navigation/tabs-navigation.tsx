@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute, Tab } from '../../../const';
 import { TCamera } from '../../../types/cameras';
 import { useEffect } from 'react';
-import { getTabName } from '../../../utils';
+import { getTabName } from '../../../utils/utils';
 
 type TabsNavigationProps = {
   camera: TCamera;

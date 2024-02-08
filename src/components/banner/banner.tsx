@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 
-import { TPromos } from '../../types/promo';
+import { TPromos } from '../../types/promos';
 import { Link } from 'react-router-dom';
 import { AppRoute, BANNER_DELAY } from '../../const';
 

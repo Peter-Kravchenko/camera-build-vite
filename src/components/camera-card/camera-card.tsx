@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/cameras';
-import { addSpaceInPrice } from '../../utils';
+import { addSpaceInPrice } from '../../utils/utils';
 import { AppRoute } from '../../const';
 import CameraRating from '../camera-rating/camera-rating';
 import { useAppDispatch } from '../../hooks/index';

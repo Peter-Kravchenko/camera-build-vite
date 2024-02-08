@@ -1,6 +1,6 @@
 import { stars } from '../../const';
 import { TReview } from '../../types/reviews';
-import { getReviewDate, getReviewDateTime } from '../../utils';
+import { getReviewDate, getReviewDateTime } from '../../utils/utils';
 
 type ReviewCardProps = {
   review: TReview;

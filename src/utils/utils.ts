@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import the Russian locale
-import { Category, Tab, Type } from './const';
-import { TCamera, TCameras } from './types/cameras';
-import { TReview } from './types/reviews';
+import { Category, Tab, Type } from '../const';
+import { TCamera, TCameras } from '../types/cameras';
+import { TReview } from '../types/reviews';
 
 dayjs.locale('ru');
 

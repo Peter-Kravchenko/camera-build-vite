@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TCamera, TCameras } from '../types/cameras';
 import { APIRoute, NameSpace } from '../const';
 import { TAddReview, TReview, TReviews } from '../types/reviews';
-import { TPromos } from '../types/promo';
+import { TPromos } from '../types/promos';
 import { toast } from 'react-toastify';
 
 type TExtra = {

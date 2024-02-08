@@ -1,7 +1,7 @@
 import { RequestStatus } from '../const';
 import store from '../store';
 import { TCamera, TCameras } from './cameras';
-import { TPromos } from './promo';
+import { TPromos } from './promos';
 import { TReviews } from './reviews';
 
 export type TAppDispatch = typeof store.dispatch;
