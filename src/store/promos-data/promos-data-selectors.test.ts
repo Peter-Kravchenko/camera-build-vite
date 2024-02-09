@@ -3,7 +3,7 @@ import { makeFakePromos } from '../../utils/mocks';
 import { getPromos, getPromosFetchingStatus } from './promos-data.selectors';
 
 describe('PromosData selectors', () => {
-  const mockPromos = makeFakePromos;
+  const mockPromos = makeFakePromos();
   const state = {
     [NameSpace.Promos]: {
       promos: mockPromos,

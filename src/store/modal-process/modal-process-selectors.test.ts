@@ -4,6 +4,7 @@ import {
   getModalAddReviewSuccessOpen,
   getModalAddToBasketOpen,
   getModalAddToBasketSuccessOpen,
+  getModalStatus,
 } from './modal-process.selectors';
 
 describe('ModalProcess selectors', () => {
@@ -34,5 +35,20 @@ describe('ModalProcess selectors', () => {
     const { isModalAddReviewSuccessOpen } = state[NameSpace.Modal];
     const result = getModalAddReviewSuccessOpen(state);
     expect(result).toEqual(isModalAddReviewSuccessOpen);
+  });
+  it('should return modal status', () => {
+    const {
+      isModalAddToBasketOpen,
+      isModalAddToBasketSuccessOpen,
+      isModalAddReviewOpen,
+      isModalAddReviewSuccessOpen,
+    } = state[NameSpace.Modal];
+    const result = getModalStatus(state);
+    expect(result).toEqual({
+      isModalAddToBasketOpen,
+      isModalAddToBasketSuccessOpen,
+      isModalAddReviewOpen,
+      isModalAddReviewSuccessOpen,
+    });
   });
 });

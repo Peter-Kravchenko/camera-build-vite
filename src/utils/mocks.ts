@@ -44,7 +44,7 @@ export const makeFakeCamera = (): TCamera => ({
 });
 
 export const makeFakeCameras = (): TCameras =>
-  Array.from({ length: 20 }).map(makeFakeCamera);
+  Array.from({ length: 5 }).map(makeFakeCamera);
 
 export const makeFakePromos = (): TPromos =>
   Array.from({ length: 3 }).map(() => ({
@@ -68,7 +68,7 @@ export const makeFakeReview = () => ({
 });
 
 export const makeFakeReviews = (): TReviews =>
-  Array.from({ length: 20 }).map(makeFakeReview);
+  Array.from({ length: 5 }).map(makeFakeReview);
 
 export const makeFakeStore = (
   initialState?: Partial<TAppState>

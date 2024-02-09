@@ -6,7 +6,7 @@ describe('CamerasData selectors', () => {
   const mockCameras = makeFakeCameras();
   const state = {
     [NameSpace.Cameras]: {
-      cameras: [mockCameras],
+      cameras: mockCameras,
       fetchingStatus: RequestStatus.Success,
     },
   };

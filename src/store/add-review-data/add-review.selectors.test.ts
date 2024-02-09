@@ -7,7 +7,7 @@ describe('AddReview selectors', () => {
       fetchingStatus: RequestStatus.Success,
     },
   };
-  it('should return fetchingStatus', () => {
+  it('should return fetchingStatus from state', () => {
     const { fetchingStatus } = state[NameSpace.AddReview];
     const result = getAddReviewFetchingStatus(state);
     expect(result).toBe(fetchingStatus);

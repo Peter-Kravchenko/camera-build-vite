@@ -3,9 +3,10 @@ import { makeFakeReviews } from '../../utils/mocks';
 import { getReviews, getReviewsFetchingStatus } from './reviews-data.selectors';
 
 describe('ReviewsData selectors', () => {
+  const mockReviews = makeFakeReviews();
   const state = {
     [NameSpace.Reviews]: {
-      reviews: makeFakeReviews,
+      reviews: mockReviews,
       fetchingStatus: RequestStatus.Success,
     },
   };
