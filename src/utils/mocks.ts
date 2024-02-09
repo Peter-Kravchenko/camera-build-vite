@@ -14,6 +14,9 @@ export type AppThunkDispatch = ThunkDispatch<
   Action
 >;
 
+export const makeFakeRandomNumber = (): number =>
+  datatype.number({ min: 1, max: 100 });
+
 export const extractActionsTypes = (actions: Action<string>[]) =>
   actions.map(({ type }) => type);
 
