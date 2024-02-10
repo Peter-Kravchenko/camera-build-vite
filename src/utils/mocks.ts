@@ -8,7 +8,7 @@ import { TCamera, TCameras } from '../types/cameras';
 import { TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
 
-export type AppThunkDispatch = ThunkDispatch<
+export type TAppThunkDispatch = ThunkDispatch<
   TAppState,
   ReturnType<typeof createAPI>,
   Action
