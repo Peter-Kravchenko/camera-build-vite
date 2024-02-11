@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../hooks/index';
+import { useAppDispatch } from '../../hooks/index/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils/utils';
@@ -9,11 +9,11 @@ type CameraDetailsProps = {
   camera: TCamera;
 };
 
-function CameraDatails({ camera }: CameraDetailsProps): JSX.Element {
+function CameraDetails({ camera }: CameraDetailsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid="camera-details">
       <section className="product">
         <div className="container">
           <div className="product__img">
@@ -59,4 +59,4 @@ function CameraDatails({ camera }: CameraDetailsProps): JSX.Element {
   );
 }
 
-export default CameraDatails;
+export default CameraDetails;

@@ -18,7 +18,7 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
   const isShowMoreVisible = reviews.length > reviewsQtyOnPage;
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid="reviews-list">
       <section className="review-block">
         <div className="container">
           <div className="page-content__headed">
@@ -31,11 +31,19 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
               Оставить свой отзыв
             </button>
           </div>
-          <ul className="review-block__list">
-            {reviewsOnPage.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
-          </ul>
+          {reviews.length > 0 ? (
+            <ul className="review-block__list">
+              {reviewsOnPage.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </ul>
+          ) : (
+            <div className="review-block__list">
+              <p className="title title--h4">
+                Отзывы по данному товару отсутствуют
+              </p>
+            </div>
+          )}
           <div className="review-block__buttons">
             {isShowMoreVisible && (
               <button

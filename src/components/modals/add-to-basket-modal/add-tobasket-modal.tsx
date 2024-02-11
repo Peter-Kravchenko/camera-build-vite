@@ -1,7 +1,9 @@
 import { RequestStatus } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import { getCamera } from '../../../store/camera-data/camera-data.selectors';
-import { getCamerasFetchingStatus } from '../../../store/cameras-data/cameras-data.selectors';
+import {
+  getCamera,
+  getCameraFetchingStatus,
+} from '../../../store/camera-data/camera-data.selectors';
 import {
   closeAddToBasketModal,
   openAddToBasketSuccessModal,
@@ -17,7 +19,7 @@ function AddTobasketModal(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const camera = useAppSelector(getCamera);
-  const camerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
+  const cameraFetchingStatus = useAppSelector(getCameraFetchingStatus);
 
   const closeModal = () => {
     dispatch(closeAddToBasketModal());
@@ -29,12 +31,12 @@ function AddTobasketModal(): JSX.Element {
 
   useEscKey(closeModal);
 
-  if (camerasFetchingStatus === RequestStatus.Pending) {
+  if (cameraFetchingStatus === RequestStatus.Pending) {
     return <h1>Loading...</h1>;
   }
 
-  return camera && camerasFetchingStatus === RequestStatus.Success ? (
-    <div className="modal is-active">
+  return camera && cameraFetchingStatus === RequestStatus.Success ? (
+    <div className="modal is-active" data-testid="add-to-basket-modal">
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">

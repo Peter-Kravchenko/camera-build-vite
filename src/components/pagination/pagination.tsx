@@ -38,7 +38,11 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   }, [currentPage, dispatch, location, navigate, totalPages]);
 
   return (
-    <div className="pagination" style={{ cursor: 'pointer' }}>
+    <div
+      className="pagination"
+      data-testid="pagination"
+      style={{ cursor: 'pointer' }}
+    >
       <ul className="pagination__list">
         {currentPage > 1 && (
           <li className="pagination__item">

@@ -59,7 +59,7 @@ function CatalogPage(): JSX.Element {
   }
 
   return (
-    <main>
+    <main data-testid="catalog-page">
       {promos && <Banner promos={promos} />}
       <div className="page-content">
         <Breadcrumbs pageBlock={PageBlock.Catalog} />

@@ -12,10 +12,12 @@ import './banner.css';
 type BannerProps = {
   promos: TPromos;
 };
+
 function Banner({ promos }: BannerProps): JSX.Element {
   return (
     <Swiper
       className="banner-swiper"
+      data-testid="banner"
       modules={[Autoplay, Pagination]}
       autoplay={{
         delay: BANNER_DELAY,

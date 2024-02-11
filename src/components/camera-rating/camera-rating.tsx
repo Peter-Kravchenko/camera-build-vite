@@ -8,7 +8,7 @@ type CameraRatingProps = {
 
 function CameraRating({ rating, reviewCount }: CameraRatingProps): JSX.Element {
   return (
-    <div className="rate product__rate">
+    <div className="rate product__rate" data-testid="camera-rating">
       {stars.map((star) => (
         <svg key={star} width={17} height={16} aria-hidden="true">
           {star <= Math.floor(rating) ? (

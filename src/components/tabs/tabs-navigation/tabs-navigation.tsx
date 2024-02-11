@@ -36,7 +36,10 @@ function TabsNavigation({
   }, [activeTab, setActiveTab, navigate, location]);
 
   return (
-    <div className="tabs__controls product__tabs-controls">
+    <div
+      className="tabs__controls product__tabs-controls"
+      data-testid="tabs-navigation"
+    >
       {Object.values(Tab).map((tab) => (
         <button
           key={tab}

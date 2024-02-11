@@ -17,7 +17,10 @@ function CameraCard({ camera, isSimilar }: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <div className={cn('product-card', { 'is-active': isSimilar })}>
+    <div
+      className={cn('product-card', { 'is-active': isSimilar })}
+      data-testid="camera-card"
+    >
       <div className="product-card__img">
         <picture>
           <source

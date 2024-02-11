@@ -15,7 +15,7 @@ function AddReviewSuccessModal() {
   useEscKey(closeModal);
 
   return (
-    <div className="modal is-active">
+    <div className="modal is-active" data-testid="add-review-success-modal">
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">
