@@ -67,7 +67,7 @@ function AddReviewModal({ cameraId }: AddReviewModalProps): JSX.Element {
   }, [dispatch, fetchingStatus, reset]);
 
   return (
-    <div className="modal is-active">
+    <div className="modal is-active" data-testid="add-review-modal">
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">

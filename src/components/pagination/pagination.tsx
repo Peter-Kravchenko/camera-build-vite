@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { setCurrentPage } from '../../store/app-process/app-process.slice';
 import { useAppDispatch } from '../../hooks/index';
 import { AppRoute, MAX_CAMERAS_ON_PAGE } from '../../const';
-import { createPages } from '../../utils';
+import { createPages } from '../../utils/utils';
 import { TCameras } from '../../types/cameras';
 import { useEffect } from 'react';
 
@@ -38,7 +38,11 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   }, [currentPage, dispatch, location, navigate, totalPages]);
 
   return (
-    <div className="pagination" style={{ cursor: 'pointer' }}>
+    <div
+      className="pagination"
+      data-testid="pagination"
+      style={{ cursor: 'pointer' }}
+    >
       <ul className="pagination__list">
         {currentPage > 1 && (
           <li className="pagination__item">

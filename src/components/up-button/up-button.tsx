@@ -6,7 +6,7 @@ function UpButton() {
     });
   };
   return (
-    <a onClick={scrollToTop} className="up-btn">
+    <a onClick={scrollToTop} className="up-btn" data-testid="up-button">
       <svg width="12" height="18" aria-hidden="true">
         <use href="#icon-arrow2"></use>
       </svg>

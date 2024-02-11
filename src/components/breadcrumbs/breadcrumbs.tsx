@@ -29,9 +29,11 @@ function Breadcrumbs({ pageBlock, camera }: BreadcrumbsProps): JSX.Element {
               })}
             >
               Каталог
-              <svg width={5} height={8} aria-hidden="true">
-                <use xlinkHref="#icon-arrow-mini" />
-              </svg>
+              {pageBlock !== PageBlock.Catalog && (
+                <svg width={5} height={8} aria-hidden="true">
+                  <use xlinkHref="#icon-arrow-mini" />
+                </svg>
+              )}
             </Link>
           </li>
           {pageBlock === PageBlock.Camera && (

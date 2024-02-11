@@ -21,7 +21,7 @@ import {
   getReviews,
   getReviewsFetchingStatus,
 } from '../../store/reviews-data/reviews-data.selectors';
-import CameraDatails from '../../components/camera-details/camera-datails';
+import CameraDetails from '../../components/camera-details/camera-details';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import {
   getModalAddReviewOpen,
@@ -85,9 +85,9 @@ function ProductPage(): JSX.Element {
   return camera && cameraFetchingStatus === RequestStatus.Success ? (
     <>
       <main>
-        <div className="page-content">
+        <div className="page-content" data-testid="product-page">
           <Breadcrumbs pageBlock={PageBlock.Camera} camera={camera} />
-          <CameraDatails camera={camera} />
+          <CameraDetails camera={camera} />
           {similar && similarFetchingStatus === RequestStatus.Success ? (
             <Similar similar={similar} />
           ) : (

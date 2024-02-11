@@ -1,6 +1,6 @@
 import { stars } from '../../const';
 import { TReview } from '../../types/reviews';
-import { getReviewDate, getReviewDateTime } from '../../utils';
+import { getReviewDate, getReviewDateTime } from '../../utils/utils';
 
 type ReviewCardProps = {
   review: TReview;
@@ -8,7 +8,7 @@ type ReviewCardProps = {
 
 function ReviewCard({ review }: ReviewCardProps): JSX.Element {
   return (
-    <li className="review-card">
+    <li className="review-card" data-testid="review-card">
       <div className="review-card__head">
         <p className="title title--h4">{review.userName}</p>
         <time

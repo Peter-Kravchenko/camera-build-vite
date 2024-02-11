@@ -12,7 +12,7 @@ function TabsData({ camera }: TabsDataProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Description);
 
   return (
-    <div className="tabs product__tabs">
+    <div className="tabs product__tabs" data-testid="tabs-data">
       <TabsNavigation
         camera={camera}
         activeTab={activeTab}

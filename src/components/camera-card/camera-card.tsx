@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/cameras';
-import { addSpaceInPrice } from '../../utils';
+import { addSpaceInPrice } from '../../utils/utils';
 import { AppRoute } from '../../const';
 import CameraRating from '../camera-rating/camera-rating';
 import { useAppDispatch } from '../../hooks/index';
@@ -17,7 +17,10 @@ function CameraCard({ camera, isSimilar }: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <div className={cn('product-card', { 'is-active': isSimilar })}>
+    <div
+      className={cn('product-card', { 'is-active': isSimilar })}
+      data-testid="camera-card"
+    >
       <div className="product-card__img">
         <picture>
           <source

@@ -4,7 +4,7 @@ import { PageBlock } from '../../const';
 function OrderPage(): JSX.Element {
   return (
     <main>
-      <div className="page-content">
+      <div className="page-content" data-testid="order-page">
         <Breadcrumbs pageBlock={PageBlock.Order} />
         <section className="basket">
           <div className="container">

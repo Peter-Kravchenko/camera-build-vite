@@ -15,7 +15,10 @@ function AddToBasketSuccessModal(): JSX.Element {
   useEscKey(closeModal);
 
   return (
-    <div className="modal is-active modal--narrow">
+    <div
+      className="modal is-active modal--narrow"
+      data-testid="add-to-basket-modal-success"
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={closeModal} />
         <div className="modal__content">

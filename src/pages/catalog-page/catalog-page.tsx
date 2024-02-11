@@ -16,7 +16,7 @@ import {
   getModalAddToBasketSuccessOpen,
 } from '../../store/modal-process/modal-process.selectors';
 import { getCurrentPage } from '../../store/app-process/app-process.selectors';
-import { getCamerasFromCurrentPage } from '../../utils';
+import { getCamerasFromCurrentPage } from '../../utils/utils';
 import { useEffect } from 'react';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
 import { resetModalStatus } from '../../store/modal-process/modal-process.slice';
@@ -59,7 +59,7 @@ function CatalogPage(): JSX.Element {
   }
 
   return (
-    <main>
+    <main data-testid="catalog-page">
       {promos && <Banner promos={promos} />}
       <div className="page-content">
         <Breadcrumbs pageBlock={PageBlock.Catalog} />

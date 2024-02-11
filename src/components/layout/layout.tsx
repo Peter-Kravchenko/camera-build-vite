@@ -19,7 +19,7 @@ function Layout(): JSX.Element {
   }
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="layout">
       <Header />
       <Outlet />
       <Footer />

@@ -29,7 +29,7 @@ function Similar({ similar }: SimilarProps): JSX.Element {
     sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE >= similar.length;
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid="similar">
       <section className="product-similar">
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>

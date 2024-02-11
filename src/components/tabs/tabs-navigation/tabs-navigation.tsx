@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute, Tab } from '../../../const';
 import { TCamera } from '../../../types/cameras';
 import { useEffect } from 'react';
-import { getTabName } from '../../../utils';
+import { getTabName } from '../../../utils/utils';
 
 type TabsNavigationProps = {
   camera: TCamera;
@@ -36,7 +36,10 @@ function TabsNavigation({
   }, [activeTab, setActiveTab, navigate, location]);
 
   return (
-    <div className="tabs__controls product__tabs-controls">
+    <div
+      className="tabs__controls product__tabs-controls"
+      data-testid="tabs-navigation"
+    >
       {Object.values(Tab).map((tab) => (
         <button
           key={tab}
