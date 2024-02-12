@@ -2,27 +2,27 @@ import { createSelector } from '@reduxjs/toolkit';
 import { TAppState, TModalData } from '../../types/state';
 import { NameSpace } from '../../const';
 
-export const getModalAddToBasketOpen = createSelector(
+export const checkAddToBasketModalOpen = createSelector(
   (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
   (state: TModalData) => state.isModalAddToBasketOpen
 );
 
-export const getModalAddToBasketSuccessOpen = createSelector(
+export const checkAddToBasketSuccessModalOpen = createSelector(
   (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
   (state: TModalData) => state.isModalAddToBasketSuccessOpen
 );
 
-export const getModalAddReviewOpen = createSelector(
+export const checkAddReviewModalOpen = createSelector(
   (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
   (state: TModalData) => state.isModalAddReviewOpen
 );
 
-export const getModalAddReviewSuccessOpen = createSelector(
+export const checkAddReviewSuccessModalOpen = createSelector(
   (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
   (state: TModalData) => state.isModalAddReviewSuccessOpen
 );
 
-export const getModalStatus = createSelector(
+export const checkModalOpen = createSelector(
   (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
-  (state: TModalData) => state
+  (state: TModalData) => state.isModalOpen
 );

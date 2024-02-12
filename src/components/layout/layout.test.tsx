@@ -4,14 +4,7 @@ import { withHistory, withStore } from '../../utils/mock-component';
 
 describe('Component: Layout', () => {
   it('should render correctly', () => {
-    const { withStoreComponent } = withStore(<Layout />, {
-      MODAL: {
-        isModalAddReviewOpen: false,
-        isModalAddReviewSuccessOpen: false,
-        isModalAddToBasketOpen: false,
-        isModalAddToBasketSuccessOpen: false,
-      },
-    });
+    const { withStoreComponent } = withStore(<Layout />);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);

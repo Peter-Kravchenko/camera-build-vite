@@ -23,19 +23,11 @@ import {
 } from '../../store/reviews-data/reviews-data.selectors';
 import CameraDetails from '../../components/camera-details/camera-details';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import {
-  getModalAddReviewOpen,
-  getModalAddReviewSuccessOpen,
-  getModalAddToBasketOpen,
-  getModalAddToBasketSuccessOpen,
-} from '../../store/modal-process/modal-process.selectors';
+import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
-import { resetModalStatus } from '../../store/modal-process/modal-process.slice';
-import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
-import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
-import AddReviewSuccessModal from '../../components/modals/add-review-success-modal/add-review-success-modal';
-import AddReviewModal from '../../components/modals/add-review-modal/add-review-modal';
+
 import UpButton from '../../components/up-button/up-button';
+import ModalData from '../../components/modals/modal-data/modal-data';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -56,7 +48,6 @@ function ProductPage(): JSX.Element {
       dispatch(fetchReviews(Number(id)));
     }
     dispatch(resetAppProcess());
-    dispatch(resetModalStatus());
   }, [id, camera, dispatch]);
 
   const similar = useAppSelector(getSimilar);
@@ -65,14 +56,7 @@ function ProductPage(): JSX.Element {
   const reviews = useAppSelector(getReviews);
   const reviewsFetchingStatus = useAppSelector(getReviewsFetchingStatus);
 
-  const isModalAddToBasketOpen = useAppSelector(getModalAddToBasketOpen);
-  const isModalAddToBasketSuccessOpen = useAppSelector(
-    getModalAddToBasketSuccessOpen
-  );
-  const isModalAddReviewOpen = useAppSelector(getModalAddReviewOpen);
-  const isModalAddReviewSuccessOpen = useAppSelector(
-    getModalAddReviewSuccessOpen
-  );
+  const isModalOpen = useAppSelector(checkModalOpen);
 
   if (
     cameraFetchingStatus === RequestStatus.Pending ||
@@ -97,10 +81,7 @@ function ProductPage(): JSX.Element {
           )}
           <ReviewsList reviews={reviews} />
         </div>
-        {isModalAddToBasketOpen && <AddTobasketModal />}
-        {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
-        {isModalAddReviewOpen && <AddReviewModal cameraId={camera.id} />}
-        {isModalAddReviewSuccessOpen && <AddReviewSuccessModal />}
+        {isModalOpen && <ModalData />}
       </main>
       <UpButton />
     </>

@@ -11,21 +11,16 @@ import {
 import Filters from '../../components/filters/filters';
 import Sorting from '../../components/sorting/sorting';
 
-import {
-  getModalAddToBasketOpen,
-  getModalAddToBasketSuccessOpen,
-} from '../../store/modal-process/modal-process.selectors';
+import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
 import { getCurrentPage } from '../../store/app-process/app-process.selectors';
 import { getCamerasFromCurrentPage } from '../../utils/utils';
 import { useEffect } from 'react';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
-import { resetModalStatus } from '../../store/modal-process/modal-process.slice';
-import AddToBasketSuccessModal from '../../components/modals/add-to-basket-success-modal/add-to-basket-success-modal';
-import AddTobasketModal from '../../components/modals/add-to-basket-modal/add-tobasket-modal';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/banner/banner';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
 import Pagination from '../../components/pagination/pagination';
+import ModalData from '../../components/modals/modal-data/modal-data';
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -36,8 +31,7 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
-  const isModalOpen = useAppSelector(getModalAddToBasketOpen);
-  const isModalSuccessOpen = useAppSelector(getModalAddToBasketSuccessOpen);
+  const isModalOpen = useAppSelector(checkModalOpen);
 
   const currentPage = useAppSelector(getCurrentPage);
   const camerasToRender = getCamerasFromCurrentPage(
@@ -48,7 +42,6 @@ function CatalogPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(resetAppProcess());
-    dispatch(resetModalStatus());
   }, [dispatch]);
 
   if (
@@ -89,8 +82,7 @@ function CatalogPage(): JSX.Element {
           </div>
         </section>
       </div>
-      {isModalOpen && <AddTobasketModal />}
-      {isModalSuccessOpen && <AddToBasketSuccessModal />}
+      {isModalOpen && <ModalData />}
     </main>
   );
 }

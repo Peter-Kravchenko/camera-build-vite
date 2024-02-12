@@ -15,6 +15,7 @@ export type TAppProcess = {
 };
 
 export type TModalData = {
+  isModalOpen: boolean;
   isModalAddToBasketOpen: boolean;
   isModalAddToBasketSuccessOpen: boolean;
   isModalAddReviewOpen: boolean;

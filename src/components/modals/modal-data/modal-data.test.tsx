@@ -1,18 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../../utils/mock-component';
-import AddReviewSuccessModal from './add-review-success-modal';
 import { makeFakeStore } from '../../../utils/mocks';
+import ModalData from './modal-data';
 
-describe('Component: AddToBasketSuccessModal', () => {
+describe('Component: ModalData', () => {
   it('should render correctly', () => {
-    const { withStoreComponent } = withStore(
-      <AddReviewSuccessModal />,
-      makeFakeStore()
-    );
+    const { withStoreComponent } = withStore(<ModalData />, makeFakeStore());
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 
-    expect(screen.getByTestId('add-review-success-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('modal-data')).toBeInTheDocument();
   });
 });
