@@ -79,6 +79,7 @@ export const makeFakeStore = (
   ADD_REVIEW: { fetchingStatus: RequestStatus.Idle },
   APP: { currentPage: 1, similarSliderIndex: 0, reviewsQtyOnPage: 3 },
   MODAL: {
+    isModalOpen: false,
     isModalAddToBasketOpen: false,
     isModalAddToBasketSuccessOpen: false,
     isModalAddReviewOpen: false,

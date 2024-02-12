@@ -4,12 +4,12 @@ import {
   checkAddReviewSuccessModalOpen,
   checkAddToBasketModalOpen,
   checkAddToBasketSuccessModalOpen,
-  getModalStatus,
 } from './modal-process.selectors';
 
 describe('ModalProcess selectors', () => {
   const state = {
     [NameSpace.Modal]: {
+      isModalOpen: true,
       isModalAddToBasketOpen: true,
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: true,
@@ -36,19 +36,9 @@ describe('ModalProcess selectors', () => {
     const result = checkAddReviewSuccessModalOpen(state);
     expect(result).toEqual(isModalAddReviewSuccessOpen);
   });
-  it('should return modal status', () => {
-    const {
-      isModalAddToBasketOpen,
-      isModalAddToBasketSuccessOpen,
-      isModalAddReviewOpen,
-      isModalAddReviewSuccessOpen,
-    } = state[NameSpace.Modal];
-    const result = getModalStatus(state);
-    expect(result).toEqual({
-      isModalAddToBasketOpen,
-      isModalAddToBasketSuccessOpen,
-      isModalAddReviewOpen,
-      isModalAddReviewSuccessOpen,
-    });
+  it('should return isModalOpen', () => {
+    const { isModalOpen } = state[NameSpace.Modal];
+    const result = checkAddToBasketModalOpen(state);
+    expect(result).toEqual(isModalOpen);
   });
 });

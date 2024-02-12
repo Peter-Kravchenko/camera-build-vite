@@ -6,6 +6,7 @@ describe('ModalProcess slice', () => {
       type: '',
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -22,6 +23,7 @@ describe('ModalProcess slice', () => {
       type: '',
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -35,12 +37,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddToBasketOpen to true with "openModalAddToBasket"', () => {
     const initialState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: true,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -57,12 +61,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddToBasketSuccessOpen to true with "openModalAddToBasketSuccess"', () => {
     const initialState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: false,
@@ -79,12 +85,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddReviewOpen to true with "openModalAddReview"', () => {
     const initialState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: true,
@@ -101,12 +109,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddReviewSuccessOpen to true with "openModalAddReviewSuccess"', () => {
     const initialState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -123,12 +133,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddToBasketOpen to false with "closeModalAddToBasket"', () => {
     const initialState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: true,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -145,12 +157,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddToBasketSuccessOpen to false with "closeModalAddToBasketSuccess"', () => {
     const initialState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -167,12 +181,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddReviewOpen to false with "closeModalAddReview"', () => {
     const initialState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: false,
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -189,12 +205,14 @@ describe('ModalProcess slice', () => {
 
   it('should set isModalAddReviewSuccessOpen to false with "closeModalAddReviewSuccess"', () => {
     const initialState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: true,
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
@@ -211,12 +229,14 @@ describe('ModalProcess slice', () => {
 
   it('should set modals status false with "resetModalStatus"', () => {
     const initialState = {
+      isModalOpen: true,
       isModalAddToBasketOpen: true,
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: true,
     };
     const expectedState = {
+      isModalOpen: false,
       isModalAddToBasketOpen: false,
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
