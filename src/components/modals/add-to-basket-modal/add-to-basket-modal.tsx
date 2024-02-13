@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { RequestStatus } from '../../../const';
-import { useAppDispatch, useAppSelector } from '../../../hooks/index/index';
+import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import {
   getCamera,
   getCameraFetchingStatus,
@@ -14,7 +14,7 @@ import {
   addSpaceInPrice,
   convertFirstLetterToLowercase,
 } from '../../../utils/utils';
-import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
+import useEscKey from '../../../hooks/use-esc-key';
 import { checkAddToBasketModalOpen } from '../../../store/modal-process/modal-process.selectors';
 
 function AddToBasketModal(): JSX.Element {

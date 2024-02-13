@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
+import useEscKey from '../../../hooks/use-esc-key';
 import { closeAddReviewSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute, RequestStatus } from '../../../const';
 import { useEffect, useRef } from 'react';

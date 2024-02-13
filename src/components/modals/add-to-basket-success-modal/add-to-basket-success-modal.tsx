@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { closeAddToBasketSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
-import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
+import useEscKey from '../../../hooks/use-esc-key';
 import { useEffect, useRef } from 'react';
 import { checkAddToBasketSuccessModalOpen } from '../../../store/modal-process/modal-process.selectors';
 

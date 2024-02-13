@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/index/index';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import {
   fetchCamera,
   fetchReviews,
@@ -31,11 +31,12 @@ import ModalData from '../../components/modals/modal-data/modal-data';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+
+  const id = Number(useParams().id);
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchCamera(Number(id)));
+      dispatch(fetchCamera(id));
     }
   }, [id, dispatch]);
 
@@ -44,8 +45,8 @@ function ProductPage(): JSX.Element {
 
   useEffect(() => {
     if (id && camera) {
-      dispatch(fetchSimilar(Number(id)));
-      dispatch(fetchReviews(Number(id)));
+      dispatch(fetchSimilar(id));
+      dispatch(fetchReviews(id));
     }
     dispatch(resetAppProcess());
   }, [id, camera, dispatch]);

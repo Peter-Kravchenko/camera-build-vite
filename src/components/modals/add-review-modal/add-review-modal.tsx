@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Fragment, useEffect } from 'react';
 import { RequestStatus, ratingMap } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
+import useEscKey from '../../../hooks/use-esc-key';
 import {
   closeAddReviewModal,
   openAddReviewSuccessModal,
@@ -19,7 +19,7 @@ function AddReviewModal(): JSX.Element {
   const dispatch = useAppDispatch();
   const fetchingStatus = useAppSelector(getAddReviewFetchingStatus);
   const isSending = fetchingStatus === RequestStatus.Pending;
-  const { id } = useParams();
+  const cameraId = Number(useParams().id);
 
   const {
     register,
@@ -33,12 +33,12 @@ function AddReviewModal(): JSX.Element {
   });
 
   const onFormSubmit: SubmitHandler<TAddReview> = (formData) => {
-    const { rating } = formData;
+    const rating = Number(formData.rating);
     dispatch(
       addReview({
         ...formData,
-        rating: Number(rating),
-        cameraId: Number(id),
+        rating,
+        cameraId,
       })
     );
   };

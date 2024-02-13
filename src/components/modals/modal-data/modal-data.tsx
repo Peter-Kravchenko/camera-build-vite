@@ -1,4 +1,4 @@
-import useEscKey from '../../../hooks/use-esc-key/use-esc-key';
+import useEscKey from '../../../hooks/use-esc-key';
 import { resetModalStatus } from '../../../store/modal-process/modal-process.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import {

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import the Russian locale
 import { Category, Tab, Type } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
-import { TReview } from '../types/reviews';
+import { TReview, TReviews } from '../types/reviews';
 
 dayjs.locale('ru');
 
@@ -81,4 +81,15 @@ export const getTabName = (tab: Tab) => {
     case Tab.Description:
       return 'Описание';
   }
+};
+
+const sortIncrease = (reviewA: TReview, reviewB: TReview) =>
+  dayjs(reviewB.createAt).diff(reviewA.createAt);
+
+const sortDecrease = (reviewA: TReview, reviewB: TReview) =>
+  dayjs(reviewA.createAt).diff(reviewB.createAt);
+
+export const sortByDate = {
+  increase: (reviews: TReviews) => [...reviews].sort(sortIncrease),
+  decreace: (reviews: TReviews) => [...reviews].sort(sortDecrease),
 };

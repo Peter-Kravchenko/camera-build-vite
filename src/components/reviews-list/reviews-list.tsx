@@ -4,6 +4,7 @@ import { getReviewsQtyOnPage } from '../../store/app-process/app-process.selecto
 import ReviewCard from '../review-card/review-card';
 import { showMoreReviews } from '../../store/app-process/app-process.slice';
 import { openAddReviewModal } from '../../store/modal-process/modal-process.slice';
+import { sortByDate } from '../../utils/utils';
 
 type ReviewsProps = {
   reviews: TReviews;
@@ -13,7 +14,8 @@ function ReviewsList({ reviews }: ReviewsProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const reviewsQtyOnPage = useAppSelector(getReviewsQtyOnPage);
-  const reviewsOnPage = reviews.slice(0, reviewsQtyOnPage);
+  const sortedReviews = sortByDate.increase(reviews);
+  const reviewsOnPage = sortedReviews.slice(0, reviewsQtyOnPage);
 
   const isShowMoreVisible = reviews.length > reviewsQtyOnPage;
 

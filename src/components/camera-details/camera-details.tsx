@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../hooks/index/index';
+import { useAppDispatch } from '../../hooks/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils/utils';
