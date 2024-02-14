@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { RequestStatus } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import {
@@ -14,12 +14,10 @@ import {
   addSpaceInPrice,
   convertFirstLetterToLowercase,
 } from '../../../utils/utils';
-import { checkAddToBasketModalOpen } from '../../../store/modal-process/modal-process.selectors';
+import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddToBasketModal(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isModalActive = useAppSelector(checkAddToBasketModalOpen);
-  const modalRef = useRef<HTMLButtonElement>(null);
 
   const camera = useAppSelector(getCamera);
   const cameraFetchingStatus = useAppSelector(getCameraFetchingStatus);
@@ -32,18 +30,20 @@ function AddToBasketModal(): JSX.Element {
     dispatch(openAddToBasketSuccessModal());
   };
 
-  useEffect(() => {
-    if (isModalActive && cameraFetchingStatus === RequestStatus.Success) {
-      modalRef.current?.focus();
-    }
-  }, [isModalActive, cameraFetchingStatus]);
+  const modalFocusRef = useRef<HTMLDivElement>(null);
+
+  useModalFocus(modalFocusRef);
 
   if (!camera || cameraFetchingStatus === RequestStatus.Pending) {
     return <h1>Loading...</h1>;
   }
 
   return (
-    <div className="modal__content" data-testid="add-to-basket-modal">
+    <div
+      ref={modalFocusRef}
+      className="modal__content"
+      data-testid="add-to-basket-modal"
+    >
       <p className="title title--h4">Добавить товар в корзину</p>
       <div className="basket-item basket-item--short">
         <div className="basket-item__img">
@@ -86,7 +86,7 @@ function AddToBasketModal(): JSX.Element {
       </div>
       <div className="modal__buttons">
         <button
-          ref={modalRef}
+          autoFocus
           onClick={() => {
             closeModal();
             openSuccessModal();

@@ -2,10 +2,9 @@ import cn from 'classnames';
 import { toast } from 'react-toastify';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { RequestStatus, ratingMap } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import useEscKey from '../../../hooks/use-esc-key';
 import {
   closeAddReviewModal,
   openAddReviewSuccessModal,
@@ -15,6 +14,7 @@ import { addReview } from '../../../store/api-actions';
 import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
 import { resetAddReviewFetchigStatus } from '../../../store/add-review-data/add-review.slice';
 import { commonReviewConfig } from '../../../const';
+import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddReviewModal(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -48,7 +48,9 @@ function AddReviewModal(): JSX.Element {
     dispatch(closeAddReviewModal());
   };
 
-  useEscKey(closeModal);
+  const modalFocusRef = useRef<HTMLDivElement>(null);
+
+  useModalFocus(modalFocusRef);
 
   useEffect(() => {
     if (fetchingStatus === RequestStatus.Rejected) {
@@ -64,7 +66,11 @@ function AddReviewModal(): JSX.Element {
   }, [dispatch, fetchingStatus, reset, setFocus]);
 
   return (
-    <div className="modal__content" data-testid="add-review-modal">
+    <div
+      ref={modalFocusRef}
+      className="modal__content"
+      data-testid="add-review-modal"
+    >
       <p className="title title--h4">Оставить отзыв</p>
       <div className="form-review">
         <form

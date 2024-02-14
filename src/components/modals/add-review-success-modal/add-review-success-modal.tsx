@@ -1,48 +1,44 @@
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/index';
+import { useAppDispatch } from '../../../hooks/index';
 import useEscKey from '../../../hooks/use-esc-key';
 import { closeAddReviewSuccessModal } from '../../../store/modal-process/modal-process.slice';
-import { AppRoute, RequestStatus } from '../../../const';
-import { useEffect, useRef } from 'react';
-import { checkAddReviewSuccessModalOpen } from '../../../store/modal-process/modal-process.selectors';
-import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
+import { AppRoute } from '../../../const';
+import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddReviewSuccessModal() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const addReviewFetchingStatus = useAppSelector(getAddReviewFetchingStatus);
-
-  const isModalActive = useAppSelector(checkAddReviewSuccessModalOpen);
-  const modalRef = useRef<HTMLButtonElement>(null);
-
   const closeModal = () => {
     dispatch(closeAddReviewSuccessModal());
   };
 
+  const modalFocusRef = useRef<HTMLDivElement>(null);
+
+  useModalFocus(modalFocusRef);
+
   useEscKey(closeModal);
 
-  useEffect(() => {
-    if (isModalActive && addReviewFetchingStatus === RequestStatus.Success) {
-      modalRef.current?.focus();
-    }
-  }, [isModalActive, addReviewFetchingStatus]);
-
   return (
-    <div className="modal__content" data-testid="add-review-success-modal">
+    <div
+      ref={modalFocusRef}
+      className="modal__content"
+      data-testid="add-review-success-modal"
+    >
       <p className="title title--h4">Спасибо за отзыв</p>
       <svg className="modal__icon" width={80} height={78} aria-hidden="true">
         <use xlinkHref="#icon-review-success" />
       </svg>
       <div className="modal__buttons">
         <button
+          autoFocus
           onClick={() => {
             closeModal();
             navigate(AppRoute.Catalog);
           }}
           className="btn btn--purple modal__btn modal__btn--fit-width"
           type="button"
-          ref={modalRef}
         >
           Вернуться к покупкам
         </button>

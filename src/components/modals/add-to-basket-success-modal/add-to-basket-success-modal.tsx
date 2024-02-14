@@ -1,36 +1,34 @@
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/index';
+import { useAppDispatch } from '../../../hooks/index';
 import { closeAddToBasketSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
-import { useEffect, useRef } from 'react';
-import { checkAddToBasketSuccessModalOpen } from '../../../store/modal-process/modal-process.selectors';
+import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddToBasketSuccessModal(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isModalActive = useAppSelector(checkAddToBasketSuccessModalOpen);
-  const modalRef = useRef<HTMLButtonElement>(null);
-
   const closeModal = () => {
     dispatch(closeAddToBasketSuccessModal());
   };
 
-  useEffect(() => {
-    if (isModalActive) {
-      modalRef.current?.focus();
-    }
-  }, [isModalActive]);
+  const modalFocusRef = useRef<HTMLDivElement>(null);
+
+  useModalFocus(modalFocusRef);
 
   return (
-    <div className="modal__content" data-testid="add-to-basket-modal-success">
+    <div
+      ref={modalFocusRef}
+      className="modal__content"
+      data-testid="add-to-basket-modal-success"
+    >
       <p className="title title--h4">Товар успешно добавлен в корзину</p>
       <svg className="modal__icon" width={86} height={80} aria-hidden="true">
         <use xlinkHref="#icon-success" />
       </svg>
       <div className="modal__buttons">
         <button
-          ref={modalRef}
           onClick={() => {
             closeModal();
             navigate(AppRoute.Catalog);
@@ -40,6 +38,7 @@ function AddToBasketSuccessModal(): JSX.Element {
           Продолжить покупки
         </button>
         <button
+          autoFocus
           onClick={() => {
             dispatch(closeAddToBasketSuccessModal());
             navigate(AppRoute.Order);
