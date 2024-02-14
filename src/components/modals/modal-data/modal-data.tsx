@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import useEscKey from '../../../hooks/use-esc-key';
 import { resetModalStatus } from '../../../store/modal-process/modal-process.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
@@ -13,6 +13,7 @@ import AddReviewModal from '../add-review-modal/add-review-modal';
 import AddReviewSuccessModal from '../add-review-success-modal/add-review-success-modal';
 import AddToBasketModal from '../add-to-basket-modal/add-to-basket-modal';
 import AddToBasketSuccessModal from '../add-to-basket-success-modal/add-to-basket-success-modal';
+import useModalFocus from '../../../hooks/use-modal-focus';
 
 function ModalData() {
   const dispatch = useAppDispatch();
@@ -29,8 +30,11 @@ function ModalData() {
   const closeModal = () => {
     dispatch(resetModalStatus());
   };
+  const modalFocusRef = useRef<HTMLDivElement>(null);
 
   useEscKey(closeModal);
+
+  useModalFocus(modalFocusRef);
 
   useEffect(() => {
     if (
@@ -48,6 +52,7 @@ function ModalData() {
 
   return (
     <div
+      ref={modalFocusRef}
       className={cn('modal is-active', {
         'modal--narrow': isModalAddReviewSuccessOpen,
       })}

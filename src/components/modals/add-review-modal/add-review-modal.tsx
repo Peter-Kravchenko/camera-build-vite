@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { toast } from 'react-toastify';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useEffect } from 'react';
 import { RequestStatus, ratingMap } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import {
@@ -14,7 +14,6 @@ import { addReview } from '../../../store/api-actions';
 import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
 import { resetAddReviewFetchigStatus } from '../../../store/add-review-data/add-review.slice';
 import { commonReviewConfig } from '../../../const';
-import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddReviewModal(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -48,10 +47,6 @@ function AddReviewModal(): JSX.Element {
     dispatch(closeAddReviewModal());
   };
 
-  const modalFocusRef = useRef<HTMLDivElement>(null);
-
-  useModalFocus(modalFocusRef);
-
   useEffect(() => {
     if (fetchingStatus === RequestStatus.Rejected) {
       toast.error('Не удалось отправить отзыв, Пожалуйста попробуйте еще раз');
@@ -66,11 +61,7 @@ function AddReviewModal(): JSX.Element {
   }, [dispatch, fetchingStatus, reset, setFocus]);
 
   return (
-    <div
-      ref={modalFocusRef}
-      className="modal__content"
-      data-testid="add-review-modal"
-    >
+    <div className="modal__content" data-testid="add-review-modal">
       <p className="title title--h4">Оставить отзыв</p>
       <div className="form-review">
         <form
@@ -93,7 +84,7 @@ function AddReviewModal(): JSX.Element {
                 </svg>
               </legend>
               <div className="rate__bar">
-                <div className="rate__group">
+                <div className="rate__group" tabIndex={0}>
                   {Object.entries(ratingMap)
                     .reverse()
                     .map(([key, value]) => (

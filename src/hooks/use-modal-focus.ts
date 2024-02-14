@@ -6,10 +6,12 @@ const useModalFocus = (modalFocusRef: React.RefObject<HTMLDivElement>) => {
       if (e.key === 'Tab') {
         if (modalFocusRef.current) {
           const focusableElements =
-            modalFocusRef.current.querySelectorAll<HTMLElement>(
-              'a, button, input, textarea'
+            modalFocusRef.current.querySelectorAll<HTMLAnchorElement>(
+              'a, button, input, textarea, [tabindex]:not([tabindex="-1"])'
             );
+
           const firstElement = focusableElements[0];
+
           const lastElement = focusableElements[focusableElements.length - 1];
 
           if (e.shiftKey && document.activeElement === firstElement) {

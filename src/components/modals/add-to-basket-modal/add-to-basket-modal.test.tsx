@@ -9,6 +9,7 @@ describe('Component: AddToBasketModal', () => {
     const mockCamera = makeFakeCamera();
     const { withStoreComponent } = withStore(<AddToBasketModal />, {
       MODAL: {
+        isModalOpen: true,
         isModalAddToBasketOpen: true,
         isModalAddToBasketSuccessOpen: false,
         isModalAddReviewOpen: false,

@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { RequestStatus } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import {
@@ -14,7 +13,6 @@ import {
   addSpaceInPrice,
   convertFirstLetterToLowercase,
 } from '../../../utils/utils';
-import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddToBasketModal(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -30,20 +28,12 @@ function AddToBasketModal(): JSX.Element {
     dispatch(openAddToBasketSuccessModal());
   };
 
-  const modalFocusRef = useRef<HTMLDivElement>(null);
-
-  useModalFocus(modalFocusRef);
-
   if (!camera || cameraFetchingStatus === RequestStatus.Pending) {
     return <h1>Loading...</h1>;
   }
 
   return (
-    <div
-      ref={modalFocusRef}
-      className="modal__content"
-      data-testid="add-to-basket-modal"
-    >
+    <div className="modal__content" data-testid="add-to-basket-modal">
       <p className="title title--h4">Добавить товар в корзину</p>
       <div className="basket-item basket-item--short">
         <div className="basket-item__img">

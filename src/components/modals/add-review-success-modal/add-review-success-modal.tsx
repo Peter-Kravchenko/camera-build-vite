@@ -1,10 +1,7 @@
-import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/index';
-import useEscKey from '../../../hooks/use-esc-key';
 import { closeAddReviewSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
-import useModalFocus from '../../../hooks/use-modal-focus';
 
 function AddReviewSuccessModal() {
   const dispatch = useAppDispatch();
@@ -14,18 +11,8 @@ function AddReviewSuccessModal() {
     dispatch(closeAddReviewSuccessModal());
   };
 
-  const modalFocusRef = useRef<HTMLDivElement>(null);
-
-  useModalFocus(modalFocusRef);
-
-  useEscKey(closeModal);
-
   return (
-    <div
-      ref={modalFocusRef}
-      className="modal__content"
-      data-testid="add-review-success-modal"
-    >
+    <div className="modal__content" data-testid="add-review-success-modal">
       <p className="title title--h4">Спасибо за отзыв</p>
       <svg className="modal__icon" width={80} height={78} aria-hidden="true">
         <use xlinkHref="#icon-review-success" />
