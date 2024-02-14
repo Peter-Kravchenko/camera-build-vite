@@ -14,7 +14,6 @@ import {
   addSpaceInPrice,
   convertFirstLetterToLowercase,
 } from '../../../utils/utils';
-import useEscKey from '../../../hooks/use-esc-key';
 import { checkAddToBasketModalOpen } from '../../../store/modal-process/modal-process.selectors';
 
 function AddToBasketModal(): JSX.Element {
@@ -38,8 +37,6 @@ function AddToBasketModal(): JSX.Element {
       modalRef.current?.focus();
     }
   }, [isModalActive, cameraFetchingStatus]);
-
-  useEscKey(closeModal);
 
   if (!camera || cameraFetchingStatus === RequestStatus.Pending) {
     return <h1>Loading...</h1>;
@@ -96,7 +93,6 @@ function AddToBasketModal(): JSX.Element {
           }}
           className="btn btn--purple modal__btn modal__btn--fit-width"
           type="button"
-          tabIndex={-1}
         >
           <svg width={24} height={16} aria-hidden="true">
             <use xlinkHref="#icon-add-basket" />

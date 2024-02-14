@@ -1,3 +1,5 @@
+import cn from 'classnames';
+import { useEffect, useRef } from 'react';
 import useEscKey from '../../../hooks/use-esc-key';
 import { resetModalStatus } from '../../../store/modal-process/modal-process.slice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
@@ -10,9 +12,8 @@ import {
 import AddReviewModal from '../add-review-modal/add-review-modal';
 import AddReviewSuccessModal from '../add-review-success-modal/add-review-success-modal';
 import AddToBasketModal from '../add-to-basket-modal/add-to-basket-modal';
-import cn from 'classnames';
 import AddToBasketSuccessModal from '../add-to-basket-success-modal/add-to-basket-success-modal';
-import { useEffect } from 'react';
+import useTabFocus from '../../../hooks/use-modal-focus';
 
 function ModalData() {
   const dispatch = useAppDispatch();
@@ -25,6 +26,14 @@ function ModalData() {
   const isModalAddReviewSuccessOpen = useAppSelector(
     checkAddReviewSuccessModalOpen
   );
+
+  const closeModal = () => {
+    dispatch(resetModalStatus());
+  };
+  const modalFocusRef = useRef<HTMLDivElement>(null);
+
+  useEscKey(closeModal);
+  useTabFocus(modalFocusRef);
 
   useEffect(() => {
     if (
@@ -40,14 +49,9 @@ function ModalData() {
     };
   });
 
-  const closeModal = () => {
-    dispatch(resetModalStatus());
-  };
-
-  useEscKey(closeModal);
-
   return (
     <div
+      ref={modalFocusRef}
       className={cn('modal is-active', {
         'modal--narrow': isModalAddReviewSuccessOpen,
       })}

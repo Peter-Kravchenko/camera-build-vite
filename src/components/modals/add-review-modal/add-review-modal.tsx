@@ -14,6 +14,7 @@ import { TAddReview } from '../../../types/reviews';
 import { addReview } from '../../../store/api-actions';
 import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
 import { resetAddReviewFetchigStatus } from '../../../store/add-review-data/add-review.slice';
+import { commonReviewConfig } from '../../../const';
 
 function AddReviewModal(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -166,15 +167,8 @@ function AddReviewModal(): JSX.Element {
                   placeholder="Основные преимущества товара"
                   disabled={isSending}
                   {...register('advantage', {
+                    ...commonReviewConfig,
                     required: 'Нужно указать достоинства',
-                    minLength: {
-                      value: 10,
-                      message: 'Минимум 10 символов',
-                    },
-                    maxLength: {
-                      value: 160,
-                      message: 'Максимум 160 символов',
-                    },
                   })}
                 />
               </label>
@@ -195,16 +189,10 @@ function AddReviewModal(): JSX.Element {
                 <input
                   type="text"
                   placeholder="Главные недостатки товара"
+                  disabled={isSending}
                   {...register('disadvantage', {
+                    ...commonReviewConfig,
                     required: 'Нужно указать недостатки',
-                    minLength: {
-                      value: 10,
-                      message: 'Минимум 10 символов',
-                    },
-                    maxLength: {
-                      value: 160,
-                      message: 'Максимум 160 символов',
-                    },
                   })}
                 />
               </label>
@@ -225,17 +213,11 @@ function AddReviewModal(): JSX.Element {
                   </svg>
                 </span>
                 <textarea
+                  disabled={isSending}
                   placeholder="Поделитесь своим опытом покупки"
                   {...register('review', {
+                    ...commonReviewConfig,
                     required: 'Нужно добавить комментарий',
-                    minLength: {
-                      value: 10,
-                      message: 'Минимум 10 символа',
-                    },
-                    maxLength: {
-                      value: 160,
-                      message: 'Максимум 160 символов',
-                    },
                   })}
                 />
               </label>

@@ -95,3 +95,14 @@ export const ratingMap: Record<string, string> = {
   '2': 'Плохо',
   '1': 'Ужасно',
 };
+
+export const commonReviewConfig = {
+  minLength: {
+    value: 10,
+    message: 'Минимум 10 символа',
+  },
+  maxLength: {
+    value: 160,
+    message: 'Максимум 160 символов',
+  },
+};
