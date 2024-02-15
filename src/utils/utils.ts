@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import the Russian locale
-import { Category, Tab, Type } from '../const';
+import { Category, SortByType, SortOrder, Tab, Type } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReview, TReviews } from '../types/reviews';
 
@@ -83,13 +83,65 @@ export const getTabName = (tab: Tab) => {
   }
 };
 
-const sortIncrease = (reviewA: TReview, reviewB: TReview) =>
+const sortReviewIncrease = (reviewA: TReview, reviewB: TReview) =>
   dayjs(reviewB.createAt).diff(reviewA.createAt);
 
 const sortDecrease = (reviewA: TReview, reviewB: TReview) =>
   dayjs(reviewA.createAt).diff(reviewB.createAt);
 
-export const sortByDate = {
-  increase: (reviews: TReviews) => [...reviews].sort(sortIncrease),
+export const sortReviewByDate = {
+  increase: (reviews: TReviews) => [...reviews].sort(sortReviewIncrease),
   decreace: (reviews: TReviews) => [...reviews].sort(sortDecrease),
+};
+
+export const sortCamerasByPriceDecrease = (
+  cameraA: TCamera,
+  cameraB: TCamera
+) => cameraB.price - cameraA.price;
+
+export const sortCamerasByPriceIncrease = (
+  cameraA: TCamera,
+  cameraB: TCamera
+) => cameraA.price - cameraB.price;
+
+export const sortCamerasByPrice = {
+  [SortOrder.Up]: (cameras: TCameras) =>
+    [...cameras].sort(sortCamerasByPriceIncrease),
+  [SortOrder.Down]: (cameras: TCameras) =>
+    [...cameras].sort(sortCamerasByPriceDecrease),
+};
+
+export const sortCamerasByPopularityIncrease = (
+  cameraA: TCamera,
+  cameraB: TCamera
+) => cameraB.rating - cameraA.rating;
+
+export const sortCamerasByPopularityDecrease = (
+  cameraA: TCamera,
+  cameraB: TCamera
+) => cameraA.rating - cameraB.rating;
+
+export const sortCamerasByPopularity = {
+  [SortOrder.Up]: (cameras: TCameras) =>
+    [...cameras].sort(sortCamerasByPopularityIncrease),
+  [SortOrder.Down]: (cameras: TCameras) =>
+    [...cameras].sort(sortCamerasByPopularityDecrease),
+};
+
+export const getSortByTypeName = (sortType: SortByType) => {
+  switch (sortType) {
+    case SortByType.Price:
+      return 'по цене';
+    case SortByType.Popularity:
+      return 'по популярности';
+  }
+};
+
+export const getSortOrderName = (sortOrder: SortOrder) => {
+  switch (sortOrder) {
+    case SortOrder.Up:
+      return 'По возростанию';
+    case SortOrder.Down:
+      return 'По убыванию';
+  }
 };

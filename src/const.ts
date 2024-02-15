@@ -88,6 +88,16 @@ export enum Tab {
   Description = 'dsc',
 }
 
+export enum SortByType {
+  Price = 'sortPrice',
+  Popularity = 'sortPopular',
+}
+
+export enum SortOrder {
+  Up = 'up',
+  Down = 'down',
+}
+
 export const ratingMap: Record<string, string> = {
   '5': 'Отлично',
   '4': 'Хорошо',

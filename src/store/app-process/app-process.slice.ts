@@ -5,6 +5,8 @@ import {
   NameSpace,
   REVIEWS_ON_FIRST_LOAD,
   REVIEWS_ON_SHOW_MORE_CLICK,
+  SortByType,
+  SortOrder,
 } from '../../const';
 import { TAppProcess } from '../../types/state';
 
@@ -12,6 +14,8 @@ const initialState: TAppProcess = {
   currentPage: DEFAULT_PAGE,
   similarSliderIndex: DEFAULT_SLIDER_INDEX,
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
+  sortByType: SortByType.Price,
+  sortOrder: SortOrder.Up,
 };
 
 export const appProcess = createSlice({
@@ -27,10 +31,18 @@ export const appProcess = createSlice({
     showMoreReviews: (state) => {
       state.reviewsQtyOnPage += REVIEWS_ON_SHOW_MORE_CLICK;
     },
+    setSortByType: (state, action: PayloadAction<SortByType>) => {
+      state.sortByType = action.payload;
+    },
+    setSortOrder: (state, action: PayloadAction<SortOrder>) => {
+      state.sortOrder = action.payload;
+    },
     resetAppProcess: (state) => {
       state.currentPage = DEFAULT_PAGE;
       state.similarSliderIndex = DEFAULT_SLIDER_INDEX;
       state.reviewsQtyOnPage = REVIEWS_ON_FIRST_LOAD;
+      state.sortByType = SortByType.Price;
+      state.sortOrder = SortOrder.Up;
     },
   },
 });
@@ -39,5 +51,7 @@ export const {
   setCurrentPage,
   setSimilarSliderIndex,
   showMoreReviews,
+  setSortByType,
+  setSortOrder,
   resetAppProcess,
 } = appProcess.actions;

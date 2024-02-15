@@ -1,4 +1,4 @@
-import { RequestStatus } from '../const';
+import { RequestStatus, SortByType, SortOrder } from '../const';
 import store from '../store';
 import { TCamera, TCameras } from './cameras';
 import { TPromos } from './promos';
@@ -12,6 +12,8 @@ export type TAppProcess = {
   currentPage: number;
   similarSliderIndex: number;
   reviewsQtyOnPage: number;
+  sortByType: SortByType;
+  sortOrder: SortOrder;
 };
 
 export type TModalData = {

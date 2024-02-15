@@ -1,4 +1,9 @@
-import { MAX_CAMERAS_ON_PAGE, PageBlock, RequestStatus } from '../../const';
+import {
+  MAX_CAMERAS_ON_PAGE,
+  PageBlock,
+  RequestStatus,
+  SortByType,
+} from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import {
   getCameras,
@@ -12,8 +17,16 @@ import Filters from '../../components/filters/filters';
 import Sorting from '../../components/sorting/sorting';
 
 import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
-import { getCurrentPage } from '../../store/app-process/app-process.selectors';
-import { getCamerasFromCurrentPage } from '../../utils/utils';
+import {
+  getCurrentPage,
+  getSortByType,
+  getSortOrder,
+} from '../../store/app-process/app-process.selectors';
+import {
+  getCamerasFromCurrentPage,
+  sortCamerasByPopularity,
+  sortCamerasByPrice,
+} from '../../utils/utils';
 import { useEffect } from 'react';
 import { resetAppProcess } from '../../store/app-process/app-process.slice';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
@@ -21,6 +34,7 @@ import Banner from '../../components/banner/banner';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
 import Pagination from '../../components/pagination/pagination';
 import ModalData from '../../components/modals/modal-data/modal-data';
+import { TCameras } from '../../types/cameras';
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -31,11 +45,22 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
+  const activeSortByType = useAppSelector(getSortByType);
+  const activeSortOrder = useAppSelector(getSortOrder);
+
+  let sortedCameras: TCameras = cameras;
+
+  if (activeSortByType === SortByType.Popularity) {
+    sortedCameras = sortCamerasByPopularity[activeSortOrder](cameras);
+  } else if (activeSortByType === SortByType.Price) {
+    sortedCameras = sortCamerasByPrice[activeSortOrder](cameras);
+  }
+
   const isModalOpen = useAppSelector(checkModalOpen);
 
   const currentPage = useAppSelector(getCurrentPage);
   const camerasToRender = getCamerasFromCurrentPage(
-    cameras,
+    sortedCameras,
     currentPage,
     MAX_CAMERAS_ON_PAGE
   );
@@ -67,7 +92,10 @@ function CatalogPage(): JSX.Element {
                   </div>
                 </div>
                 <div className="catalog__content">
-                  <Sorting />
+                  <Sorting
+                    activeSortByType={activeSortByType}
+                    activeSortOrder={activeSortOrder}
+                  />
                   <CatalogCamerasList cameras={camerasToRender} />
                   {cameras.length > MAX_CAMERAS_ON_PAGE && (
                     <Pagination cameras={cameras} currentPage={currentPage} />

@@ -16,3 +16,13 @@ export const getReviewsQtyOnPage = createSelector(
   (state: Pick<TAppState, NameSpace.App>) => state[NameSpace.App],
   (state: TAppProcess) => state.reviewsQtyOnPage
 );
+
+export const getSortByType = createSelector(
+  (state: Pick<TAppState, NameSpace.App>) => state[NameSpace.App],
+  (state: TAppProcess) => state.sortByType
+);
+
+export const getSortOrder = createSelector(
+  (state: Pick<TAppState, NameSpace.App>) => state[NameSpace.App],
+  (state: TAppProcess) => state.sortOrder
+);
