@@ -116,3 +116,9 @@ export const commonReviewConfig = {
     message: 'Максимум 160 символов',
   },
 };
+
+export enum CardType {
+  Catalog = 'catalog',
+  Details = 'details',
+  Similar = 'similar',
+}

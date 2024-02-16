@@ -15,7 +15,7 @@ function Breadcrumbs({ pageBlock, camera }: BreadcrumbsProps): JSX.Element {
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
             <Link to={AppRoute.Catalog} className="breadcrumbs__link">
-              Главная
+              {'Главная '}
               <svg width={5} height={8} aria-hidden="true">
                 <use xlinkHref="#icon-arrow-mini" />
               </svg>
@@ -28,7 +28,7 @@ function Breadcrumbs({ pageBlock, camera }: BreadcrumbsProps): JSX.Element {
                 'breadcrumbs__link--active': pageBlock === PageBlock.Catalog,
               })}
             >
-              Каталог
+              {'Каталог '}
               {pageBlock !== PageBlock.Catalog && (
                 <svg width={5} height={8} aria-hidden="true">
                   <use xlinkHref="#icon-arrow-mini" />
@@ -46,7 +46,7 @@ function Breadcrumbs({ pageBlock, camera }: BreadcrumbsProps): JSX.Element {
           {pageBlock === PageBlock.Order && (
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">
-                Корзина
+                {'Корзина '}
               </span>
             </li>
           )}

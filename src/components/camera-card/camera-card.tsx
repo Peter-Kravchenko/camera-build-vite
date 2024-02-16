@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils/utils';
-import { AppRoute } from '../../const';
+import { AppRoute, CardType } from '../../const';
 import CameraRating from '../camera-rating/camera-rating';
 import { useAppDispatch } from '../../hooks/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
@@ -10,15 +10,17 @@ import cn from 'classnames';
 
 type CameraCardProps = {
   camera: TCamera;
-  isSimilar?: boolean;
+  cardType: CardType;
 };
 
-function CameraCard({ camera, isSimilar }: CameraCardProps): JSX.Element {
+function CameraCard({ camera, cardType }: CameraCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
     <div
-      className={cn('product-card', { 'is-active': isSimilar })}
+      className={cn('product-card', {
+        'is-active': cardType === CardType.Similar,
+      })}
       data-testid="camera-card"
     >
       <div className="product-card__img">
@@ -37,7 +39,11 @@ function CameraCard({ camera, isSimilar }: CameraCardProps): JSX.Element {
         </picture>
       </div>
       <div className="product-card__info">
-        <CameraRating rating={camera.rating} reviewCount={camera.reviewCount} />
+        <CameraRating
+          rating={camera.rating}
+          reviewCount={camera.reviewCount}
+          cardType={cardType}
+        />
         <p className="product-card__title">{camera.name}</p>
         <p className="product-card__price">
           <span className="visually-hidden">Цена:</span>

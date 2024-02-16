@@ -1,4 +1,4 @@
-import { MAX_SIMILAR_CAMERAS_ON_PAGE } from '../../const';
+import { CardType, MAX_SIMILAR_CAMERAS_ON_PAGE } from '../../const';
 import { TCameras } from '../../types/cameras';
 import CameraCard from '../camera-card/camera-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
@@ -36,7 +36,7 @@ function Similar({ similar }: SimilarProps): JSX.Element {
           <div className="product-similar__slider">
             <div className="product-similar__slider-list">
               {similarToRender.map((camera) => (
-                <CameraCard key={camera.id} camera={camera} isSimilar />
+                <CameraCard key={camera.id} camera={camera} cardType={CardType.Similar}/>
               ))}
             </div>
             <button

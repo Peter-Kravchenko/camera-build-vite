@@ -1,3 +1,4 @@
+import { CardType } from '../../const';
 import { useAppDispatch } from '../../hooks/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../types/cameras';
@@ -36,6 +37,7 @@ function CameraDetails({ camera }: CameraDetailsProps): JSX.Element {
             <CameraRating
               rating={camera.rating}
               reviewCount={camera.reviewCount}
+              cardType={CardType.Details}
             />
             <p className="product__price">
               <span className="visually-hidden">Цена:</span>
