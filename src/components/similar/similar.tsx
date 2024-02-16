@@ -42,6 +42,10 @@ function Similar({ similar }: SimilarProps): JSX.Element {
               slidesPerGroup={3}
               spaceBetween={30}
               modules={[Navigation]}
+              navigation={{
+                prevEl: '.slider-controls--prev',
+                nextEl: '.slider-controls--next',
+              }}
             >
               {similar.map((camera) => (
                 <SwiperSlide key={camera.id}>
