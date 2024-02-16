@@ -1,9 +1,15 @@
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { CardType, MAX_SIMILAR_CAMERAS_ON_PAGE } from '../../const';
 import { TCameras } from '../../types/cameras';
-import CameraCard from '../camera-card/camera-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { getSimilarSliderIndex } from '../../store/app-process/app-process.selectors';
 import { setSimilarSliderIndex } from '../../store/app-process/app-process.slice';
+import CameraCard from '../camera-card/camera-card';
+
+import 'swiper/css';
+import 'swiper/css/bundle';
+import 'swiper/css/navigation';
 
 type SimilarProps = {
   similar: TCameras;
@@ -13,10 +19,6 @@ function Similar({ similar }: SimilarProps): JSX.Element {
   const dispatch = useAppDispatch();
   const sliderIndex = useAppSelector(getSimilarSliderIndex);
 
-  const similarToRender = similar.slice(
-    sliderIndex,
-    sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE
-  );
   const handleNextButttonClick = () => {
     dispatch(setSimilarSliderIndex(sliderIndex + MAX_SIMILAR_CAMERAS_ON_PAGE));
   };
@@ -34,11 +36,20 @@ function Similar({ similar }: SimilarProps): JSX.Element {
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>
           <div className="product-similar__slider">
-            <div className="product-similar__slider-list">
-              {similarToRender.map((camera) => (
-                <CameraCard key={camera.id} camera={camera} cardType={CardType.Similar}/>
+            <Swiper
+              className="product-similar__slider-list"
+              slidesPerView={3}
+              slidesPerGroup={3}
+              spaceBetween={30}
+              modules={[Navigation]}
+            >
+              {similar.map((camera) => (
+                <SwiperSlide key={camera.id}>
+                  <CameraCard camera={camera} cardType={CardType.Similar} />
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
+
             <button
               onClick={handleBackButtonClick}
               className="slider-controls slider-controls--prev"

@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils/utils';
@@ -6,7 +7,6 @@ import CameraRating from '../camera-rating/camera-rating';
 import { useAppDispatch } from '../../hooks/index';
 import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { fetchCamera } from '../../store/api-actions';
-import cn from 'classnames';
 
 type CameraCardProps = {
   camera: TCamera;
@@ -22,6 +22,9 @@ function CameraCard({ camera, cardType }: CameraCardProps): JSX.Element {
         'is-active': cardType === CardType.Similar,
       })}
       data-testid="camera-card"
+      style={{
+        width: `${cardType === CardType.Similar ? '280px' : '100%'}`,
+      }}
     >
       <div className="product-card__img">
         <picture>

@@ -10,7 +10,7 @@ import {
   openAddReviewSuccessModal,
 } from '../../../store/modal-process/modal-process.slice';
 import { TAddReview } from '../../../types/reviews';
-import { addReview } from '../../../store/api-actions';
+import { addReview, fetchReviews } from '../../../store/api-actions';
 import { getAddReviewFetchingStatus } from '../../../store/add-review-data/add-review.selectors';
 import { resetAddReviewFetchigStatus } from '../../../store/add-review-data/add-review.slice';
 import { commonReviewConfig } from '../../../const';
@@ -52,13 +52,14 @@ function AddReviewModal(): JSX.Element {
       toast.error('Не удалось отправить отзыв, Пожалуйста попробуйте еще раз');
     }
     if (fetchingStatus === RequestStatus.Success) {
+      dispatch(fetchReviews(cameraId));
       dispatch(closeAddReviewModal());
       dispatch(openAddReviewSuccessModal());
       reset();
     }
     dispatch(resetAddReviewFetchigStatus());
     setFocus('rating');
-  }, [dispatch, fetchingStatus, reset, setFocus]);
+  }, [dispatch, fetchingStatus, reset, setFocus, cameraId]);
 
   return (
     <div className="modal__content" data-testid="add-review-modal">

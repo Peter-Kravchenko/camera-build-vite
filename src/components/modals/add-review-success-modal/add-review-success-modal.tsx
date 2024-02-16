@@ -1,11 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/index';
 import { closeAddReviewSuccessModal } from '../../../store/modal-process/modal-process.slice';
-import { AppRoute } from '../../../const';
 
 function AddReviewSuccessModal() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const closeModal = () => {
     dispatch(closeAddReviewSuccessModal());
@@ -22,7 +19,6 @@ function AddReviewSuccessModal() {
           autoFocus
           onClick={() => {
             closeModal();
-            navigate(AppRoute.Catalog);
           }}
           className="btn btn--purple modal__btn modal__btn--fit-width"
           type="button"

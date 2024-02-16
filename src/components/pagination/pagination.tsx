@@ -44,17 +44,20 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
       style={{ cursor: 'pointer' }}
     >
       <ul className="pagination__list">
-        {currentPage > 1 && (
+        {currentPage > 2 && (
           <li className="pagination__item">
-            <Link
-              to={`${AppRoute.Catalog}?page=${currentPage - 1}`}
+            <a
               className="pagination__link pagination__link--text"
               onClick={() => {
-                dispatch(setCurrentPage(currentPage - 1));
+                const prevPage = currentPage - 2;
+                if (prevPage >= 1) {
+                  dispatch(setCurrentPage(prevPage));
+                  navigate(`${AppRoute.Catalog}?page=${prevPage}`);
+                }
               }}
             >
               Назад
-            </Link>
+            </a>
           </li>
         )}
         {pages.map((page) => (
@@ -75,20 +78,24 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
             </Link>
           </li>
         ))}
-        {currentPage < totalPages ? (
+        {currentPage < totalPages - 1 && (
           <li className="pagination__item">
-            <Link
-              to={`${AppRoute.Catalog}?page=${currentPage + 1}`}
+            <a
               className="pagination__link pagination__link--text"
               onClick={() => {
-                dispatch(setCurrentPage(currentPage + 1));
+                const nextPage = currentPage + 2;
+                if (currentPage === 1) {
+                  dispatch(setCurrentPage(nextPage + 1));
+                  navigate(`${AppRoute.Catalog}?page=${nextPage + 1}`);
+                } else {
+                  dispatch(setCurrentPage(nextPage));
+                  navigate(`${AppRoute.Catalog}?page=${nextPage}`);
+                }
               }}
             >
               Далее
-            </Link>
+            </a>
           </li>
-        ) : (
-          <div style={{ paddingLeft: '99px' }}></div>
         )}
       </ul>
     </div>
