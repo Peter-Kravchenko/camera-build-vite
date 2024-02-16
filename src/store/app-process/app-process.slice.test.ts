@@ -1,3 +1,4 @@
+import { SortByType, SortOrder } from '../../const';
 import { makeFakeRandomNumber } from '../../utils/mocks';
 import {
   appProcess,
@@ -16,6 +17,8 @@ describe('AppProcess slice', () => {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
 
     const result = appProcess.reducer(expectedState, emptyAction);
@@ -31,6 +34,8 @@ describe('AppProcess slice', () => {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
 
     const result = appProcess.reducer(undefined, emptyAction);
@@ -44,11 +49,15 @@ describe('AppProcess slice', () => {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
     const expectedState = {
       currentPage: mockCurrentPage,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
 
     const result = appProcess.reducer(
@@ -65,11 +74,15 @@ describe('AppProcess slice', () => {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
     const expectedState = {
       currentPage: 1,
       similarSliderIndex: mockSimilarSliderIndex,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
 
     const result = appProcess.reducer(
@@ -86,6 +99,8 @@ describe('AppProcess slice', () => {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: mockReviewsQtyOnPage,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
     const expectedReviewsQtyOnPage = mockReviewsQtyOnPage + 3;
 
@@ -99,11 +114,15 @@ describe('AppProcess slice', () => {
       currentPage: 10,
       similarSliderIndex: 5,
       reviewsQtyOnPage: 12,
+      sortByType: SortByType.Price,
+      sortOrder: SortOrder.Up,
     };
     const expectedState = {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
+      sortByType: SortByType.Popularity,
+      sortOrder: SortOrder.Down,
     };
 
     const result = appProcess.reducer(initialState, resetAppProcess());

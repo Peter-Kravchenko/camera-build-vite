@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { TAppState } from '../types/state';
 import { createAPI } from '../services/api';
-import { RequestStatus } from '../const';
+import { RequestStatus, SortByType, SortOrder } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
@@ -77,7 +77,13 @@ export const makeFakeStore = (
   initialState?: Partial<TAppState>
 ): TAppState => ({
   ADD_REVIEW: { fetchingStatus: RequestStatus.Idle },
-  APP: { currentPage: 1, similarSliderIndex: 0, reviewsQtyOnPage: 3 },
+  APP: {
+    currentPage: 1,
+    similarSliderIndex: 0,
+    reviewsQtyOnPage: 3,
+    sortByType: SortByType.Popularity,
+    sortOrder: SortOrder.Up,
+  },
   MODAL: {
     isModalOpen: false,
     isModalAddToBasketOpen: false,

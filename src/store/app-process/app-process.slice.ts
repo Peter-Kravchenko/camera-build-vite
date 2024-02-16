@@ -14,8 +14,8 @@ const initialState: TAppProcess = {
   currentPage: DEFAULT_PAGE,
   similarSliderIndex: DEFAULT_SLIDER_INDEX,
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
-  sortByType: SortByType.Price,
-  sortOrder: SortOrder.Up,
+  sortByType: SortByType.Popularity,
+  sortOrder: SortOrder.Down,
 };
 
 export const appProcess = createSlice({
@@ -41,8 +41,8 @@ export const appProcess = createSlice({
       state.currentPage = DEFAULT_PAGE;
       state.similarSliderIndex = DEFAULT_SLIDER_INDEX;
       state.reviewsQtyOnPage = REVIEWS_ON_FIRST_LOAD;
-      state.sortByType = SortByType.Price;
-      state.sortOrder = SortOrder.Up;
+      state.sortByType = SortByType.Popularity;
+      state.sortOrder = SortOrder.Down;
     },
   },
 });
