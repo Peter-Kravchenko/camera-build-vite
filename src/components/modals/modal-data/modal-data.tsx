@@ -11,9 +11,10 @@ import {
 } from '../../../store/modal-process/modal-process.selectors';
 import AddReviewModal from '../add-review-modal/add-review-modal';
 import AddReviewSuccessModal from '../add-review-success-modal/add-review-success-modal';
-import AddToBasketModal from '../add-to-basket-modal/add-to-basket-modal';
+import BasketActionModal from '../add-to-basket-modal/add-to-basket-modal';
 import AddToBasketSuccessModal from '../add-to-basket-success-modal/add-to-basket-success-modal';
 import useModalFocus from '../../../hooks/use-modal-focus';
+import { BasketAction } from '../../../const';
 
 function ModalData() {
   const dispatch = useAppDispatch();
@@ -60,7 +61,9 @@ function ModalData() {
     >
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={closeModal} />
-        {isModalAddToBasketOpen && <AddToBasketModal />}
+        {isModalAddToBasketOpen && (
+          <BasketActionModal basketAction={BasketAction.Add} />
+        )}
         {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
         {isModalAddReviewOpen && <AddReviewModal />}
         {isModalAddReviewSuccessOpen && <AddReviewSuccessModal />}

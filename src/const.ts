@@ -98,6 +98,17 @@ export enum SortOrder {
   Down = 'down',
 }
 
+export enum CardType {
+  Catalog = 'catalog',
+  Details = 'details',
+  Similar = 'similar',
+}
+
+export enum BasketAction {
+  Add = 'add',
+  Remove = 'remove',
+}
+
 export const ratingMap: Record<string, string> = {
   '5': 'Отлично',
   '4': 'Хорошо',
@@ -116,9 +127,3 @@ export const commonReviewConfig = {
     message: 'Максимум 160 символов',
   },
 };
-
-export enum CardType {
-  Catalog = 'catalog',
-  Details = 'details',
-  Similar = 'similar',
-}

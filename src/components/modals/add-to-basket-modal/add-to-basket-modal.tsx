@@ -1,4 +1,5 @@
-import { RequestStatus } from '../../../const';
+import { Link } from 'react-router-dom';
+import { AppRoute, BasketAction, RequestStatus } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import {
   getCamera,
@@ -13,8 +14,15 @@ import {
   addSpaceInPrice,
   convertFirstLetterToLowercase,
 } from '../../../utils/utils';
+import { toast } from 'react-toastify';
 
-function AddToBasketModal(): JSX.Element {
+type BasketActionModalProps = {
+  basketAction: BasketAction;
+};
+
+function BasketActionModal({
+  basketAction,
+}: BasketActionModalProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const camera = useAppSelector(getCamera);
@@ -34,7 +42,11 @@ function AddToBasketModal(): JSX.Element {
 
   return (
     <div className="modal__content" data-testid="add-to-basket-modal">
-      <p className="title title--h4">Добавить товар в корзину</p>
+      <p className="title title--h4">
+        {basketAction === BasketAction.Add
+          ? 'Добавить товар в корзину'
+          : 'Удалить этот товар?'}
+      </p>
       <div className="basket-item basket-item--short">
         <div className="basket-item__img">
           <picture>
@@ -75,20 +87,41 @@ function AddToBasketModal(): JSX.Element {
         </div>
       </div>
       <div className="modal__buttons">
-        <button
-          autoFocus
-          onClick={() => {
-            closeModal();
-            openSuccessModal();
-          }}
-          className="btn btn--purple modal__btn modal__btn--fit-width"
-          type="button"
-        >
-          <svg width={24} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-add-basket" />
-          </svg>
-          Добавить в корзину
-        </button>
+        {basketAction === BasketAction.Add ? (
+          <button
+            autoFocus
+            onClick={() => {
+              closeModal();
+              openSuccessModal();
+            }}
+            className="btn btn--purple modal__btn modal__btn--fit-width"
+            type="button"
+          >
+            <svg width={24} height={16} aria-hidden="true">
+              <use xlinkHref="#icon-add-basket" />
+            </svg>
+            Добавить в корзину
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                toast.info('Товар был удален из корзины.');
+                closeModal();
+              }}
+              className="btn btn--purple modal__btn modal__btn--half-width"
+              type="button"
+            >
+              Удалить
+            </button>
+            <Link
+              to={AppRoute.Catalog}
+              className="btn btn--transparent modal__btn modal__btn--half-width"
+            >
+              Продолжить покупки
+            </Link>
+          </>
+        )}
       </div>
       <button
         onClick={() => {
@@ -106,4 +139,4 @@ function AddToBasketModal(): JSX.Element {
   );
 }
 
-export default AddToBasketModal;
+export default BasketActionModal;
