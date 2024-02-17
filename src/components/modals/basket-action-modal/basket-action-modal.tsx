@@ -105,6 +105,7 @@ function BasketActionModal({
         ) : (
           <>
             <button
+              autoFocus
               onClick={() => {
                 toast.info('Товар был удален из корзины.');
                 closeModal();

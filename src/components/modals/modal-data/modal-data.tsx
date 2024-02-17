@@ -11,7 +11,7 @@ import {
 } from '../../../store/modal-process/modal-process.selectors';
 import AddReviewModal from '../add-review-modal/add-review-modal';
 import AddReviewSuccessModal from '../add-review-success-modal/add-review-success-modal';
-import BasketActionModal from '../add-to-basket-modal/add-to-basket-modal';
+import BasketActionModal from '../basket-action-modal/basket-action-modal';
 import AddToBasketSuccessModal from '../add-to-basket-success-modal/add-to-basket-success-modal';
 import useModalFocus from '../../../hooks/use-modal-focus';
 import { BasketAction } from '../../../const';
