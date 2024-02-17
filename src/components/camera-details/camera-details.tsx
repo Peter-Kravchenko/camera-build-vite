@@ -1,8 +1,7 @@
 import { CardType } from '../../const';
-import { useAppDispatch } from '../../hooks/index';
-import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils/utils';
+import AddToBasketButton from '../buttons/add-to-basket-button/add-to-basket-button';
 import CameraRating from '../camera-rating/camera-rating';
 import TabsData from '../tabs/tabs-data/tabs-data';
 
@@ -11,8 +10,6 @@ type CameraDetailsProps = {
 };
 
 function CameraDetails({ camera }: CameraDetailsProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
   return (
     <div className="page-content__section" data-testid="camera-details">
       <section className="product">
@@ -43,16 +40,7 @@ function CameraDetails({ camera }: CameraDetailsProps): JSX.Element {
               <span className="visually-hidden">Цена:</span>
               {addSpaceInPrice(camera.price)} ₽
             </p>
-            <button
-              onClick={() => dispatch(openAddToBasketModal())}
-              className="btn btn--purple"
-              type="button"
-            >
-              <svg width={24} height={16} aria-hidden="true">
-                <use xlinkHref="#icon-add-basket" />
-              </svg>
-              Добавить в корзину
-            </button>
+            <AddToBasketButton />
             <TabsData camera={camera} />
           </div>
         </div>

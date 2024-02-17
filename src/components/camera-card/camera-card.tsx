@@ -4,9 +4,7 @@ import { TCamera } from '../../types/cameras';
 import { addSpaceInPrice } from '../../utils/utils';
 import { AppRoute, CardType } from '../../const';
 import CameraRating from '../camera-rating/camera-rating';
-import { useAppDispatch } from '../../hooks/index';
-import { openAddToBasketModal } from '../../store/modal-process/modal-process.slice';
-import { fetchCamera } from '../../store/api-actions';
+import BuyButton from '../buttons/buy-button/buy-button';
 
 type CameraCardProps = {
   camera: TCamera;
@@ -14,8 +12,6 @@ type CameraCardProps = {
 };
 
 function CameraCard({ camera, cardType }: CameraCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
   return (
     <div
       className={cn('product-card', {
@@ -54,16 +50,7 @@ function CameraCard({ camera, cardType }: CameraCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button
-          onClick={() => {
-            dispatch(fetchCamera(Number(camera.id)));
-            dispatch(openAddToBasketModal());
-          }}
-          className="btn btn--purple product-card__btn"
-          type="button"
-        >
-          Купить
-        </button>
+        <BuyButton id={camera.id} />
         <Link
           to={AppRoute.Product.replace(':id', String(camera.id))}
           className="btn btn--transparent"

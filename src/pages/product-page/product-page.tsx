@@ -67,7 +67,13 @@ function ProductPage(): JSX.Element {
     return <h1>Loading...</h1>;
   }
 
-  return camera && cameraFetchingStatus === RequestStatus.Success ? (
+  if (!camera || cameraFetchingStatus === RequestStatus.Rejected) {
+    return (
+      <h2>Камера не найдена на сервере, пожалуйста, попробуйте ещё раз</h2>
+    );
+  }
+
+  return (
     <>
       <main>
         <div className="page-content" data-testid="product-page">
@@ -86,8 +92,6 @@ function ProductPage(): JSX.Element {
       </main>
       <UpButton />
     </>
-  ) : (
-    <h2>Камера не найдена на сервере, пожалуйста, попробуйте ещё раз</h2>
   );
 }
 

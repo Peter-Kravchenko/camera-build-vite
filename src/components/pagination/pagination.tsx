@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { setCurrentPage } from '../../store/app-process/app-process.slice';
 import { useAppDispatch } from '../../hooks/index';
 import { AppRoute, MAX_CAMERAS_ON_PAGE } from '../../const';
@@ -20,6 +20,29 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   const totalPages = Math.ceil(cameras.length / MAX_CAMERAS_ON_PAGE);
   const pages: number[] = [];
   createPages(pages, totalPages, currentPage);
+
+  const handleBackButtonClick = () => {
+    const prevPage = currentPage - 2;
+    if (prevPage >= 1) {
+      dispatch(setCurrentPage(prevPage));
+      navigate(`${AppRoute.Catalog}?page=${prevPage}`);
+    }
+  };
+
+  const handlePageButtonClick = (page: number) => {
+    navigate(`${AppRoute.Catalog}?page=${page}`);
+  };
+
+  const handleForwardButtonClick = () => {
+    const nextPage = currentPage + 2;
+    if (currentPage === 1) {
+      dispatch(setCurrentPage(nextPage + 1));
+      navigate(`${AppRoute.Catalog}?page=${nextPage + 1}`);
+    } else {
+      dispatch(setCurrentPage(nextPage));
+      navigate(`${AppRoute.Catalog}?page=${nextPage}`);
+    }
+  };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -48,13 +71,7 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
           <li className="pagination__item">
             <a
               className="pagination__link pagination__link--text"
-              onClick={() => {
-                const prevPage = currentPage - 2;
-                if (prevPage >= 1) {
-                  dispatch(setCurrentPage(prevPage));
-                  navigate(`${AppRoute.Catalog}?page=${prevPage}`);
-                }
-              }}
+              onClick={handleBackButtonClick}
             >
               Назад
             </a>
@@ -64,34 +81,23 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
           <li
             key={page}
             className="pagination__item"
-            onClick={() => {
-              dispatch(setCurrentPage(page));
-            }}
+            onClick={() => handlePageButtonClick(page)}
           >
-            <Link
-              to={`${AppRoute.Catalog}?page=${page}`}
+            <a
+              onClick={() => navigate(`${AppRoute.Catalog}?page=${page}`)}
               className={cn('pagination__link', {
                 'pagination__link--active': currentPage === page,
               })}
             >
               {page}
-            </Link>
+            </a>
           </li>
         ))}
         {currentPage < totalPages - 1 && (
           <li className="pagination__item">
             <a
               className="pagination__link pagination__link--text"
-              onClick={() => {
-                const nextPage = currentPage + 2;
-                if (currentPage === 1) {
-                  dispatch(setCurrentPage(nextPage + 1));
-                  navigate(`${AppRoute.Catalog}?page=${nextPage + 1}`);
-                } else {
-                  dispatch(setCurrentPage(nextPage));
-                  navigate(`${AppRoute.Catalog}?page=${nextPage}`);
-                }
-              }}
+              onClick={handleForwardButtonClick}
             >
               Далее
             </a>
