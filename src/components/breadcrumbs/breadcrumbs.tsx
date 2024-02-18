@@ -36,17 +36,12 @@ function Breadcrumbs({ pageBlock, camera }: BreadcrumbsProps): JSX.Element {
               )}
             </Link>
           </li>
-          {pageBlock === PageBlock.Camera && (
+          {(pageBlock === PageBlock.Camera ||
+            pageBlock === PageBlock.Order) && (
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">
-                {camera?.name}
-              </span>
-            </li>
-          )}
-          {pageBlock === PageBlock.Order && (
-            <li className="breadcrumbs__item">
-              <span className="breadcrumbs__link breadcrumbs__link--active">
-                {'Корзина '}
+                {pageBlock === PageBlock.Camera && camera?.name}
+                {pageBlock === PageBlock.Order && 'Корзина'}
               </span>
             </li>
           )}

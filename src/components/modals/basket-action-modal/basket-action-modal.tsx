@@ -41,7 +41,7 @@ function BasketActionModal({
   }
 
   return (
-    <div className="modal__content" data-testid="add-to-basket-modal">
+    <div className="modal__content">
       <p className="title title--h4">
         {basketAction === BasketAction.Add
           ? 'Добавить товар в корзину'
@@ -89,6 +89,7 @@ function BasketActionModal({
       <div className="modal__buttons">
         {basketAction === BasketAction.Add ? (
           <button
+            data-testid="add-to-basket-modal"
             autoFocus
             onClick={() => {
               closeModal();
@@ -105,6 +106,7 @@ function BasketActionModal({
         ) : (
           <>
             <button
+              data-testid="remove-from-basket-modal"
               autoFocus
               onClick={() => {
                 toast.info('Товар был удален из корзины.');

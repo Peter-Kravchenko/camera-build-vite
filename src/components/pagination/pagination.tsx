@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/index';
 import { AppRoute, MAX_CAMERAS_ON_PAGE } from '../../const';
 import { createPages } from '../../utils/utils';
 import { TCameras } from '../../types/cameras';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 type PaginationProps = {
   cameras: TCameras;
@@ -21,38 +21,38 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   const pages: number[] = [];
   createPages(pages, totalPages, currentPage);
 
-  const handleBackButtonClick = () => {
+  const handleBackButtonClick = useCallback(() => {
     const prevPage = currentPage - 2;
     if (prevPage >= 1) {
-      dispatch(setCurrentPage(prevPage));
       navigate(`${AppRoute.Catalog}?page=${prevPage}`);
     }
-  };
+  }, [currentPage, navigate]);
 
-  const handlePageButtonClick = (page: number) => {
-    navigate(`${AppRoute.Catalog}?page=${page}`);
-  };
+  const handlePageButtonClick = useCallback(
+    (page: number) => {
+      navigate(`${AppRoute.Catalog}?page=${page}`);
+    },
+    [navigate]
+  );
 
-  const handleForwardButtonClick = () => {
+  const handleForwardButtonClick = useCallback(() => {
     const nextPage = currentPage + 2;
     if (currentPage === 1) {
-      dispatch(setCurrentPage(nextPage + 1));
       navigate(`${AppRoute.Catalog}?page=${nextPage + 1}`);
     } else {
-      dispatch(setCurrentPage(nextPage));
       navigate(`${AppRoute.Catalog}?page=${nextPage}`);
     }
-  };
+  }, [currentPage, navigate]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const pageParam = searchParams.get('page');
     const parsedPage = pageParam ? Number(pageParam) : 1;
-    const isValid =
+    const isValidPage =
       !isNaN(parsedPage) && parsedPage >= 1 && parsedPage <= totalPages;
 
     if (parsedPage !== currentPage) {
-      if (isValid) {
+      if (isValidPage) {
         dispatch(setCurrentPage(parsedPage));
       } else {
         navigate(AppRoute.NotFound);
@@ -78,13 +78,9 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
           </li>
         )}
         {pages.map((page) => (
-          <li
-            key={page}
-            className="pagination__item"
-            onClick={() => handlePageButtonClick(page)}
-          >
+          <li key={page} className="pagination__item">
             <a
-              onClick={() => navigate(`${AppRoute.Catalog}?page=${page}`)}
+              onClick={() => handlePageButtonClick(page)}
               className={cn('pagination__link', {
                 'pagination__link--active': currentPage === page,
               })}
