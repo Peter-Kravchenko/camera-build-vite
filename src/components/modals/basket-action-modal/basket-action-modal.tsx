@@ -15,6 +15,7 @@ import {
   convertFirstLetterToLowercase,
 } from '../../../utils/utils';
 import { toast } from 'react-toastify';
+import Loader from '../../loader/loader';
 
 type BasketActionModalProps = {
   basketAction: BasketAction;
@@ -37,7 +38,7 @@ function BasketActionModal({
   };
 
   if (!camera || cameraFetchingStatus === RequestStatus.Pending) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
 
   return (

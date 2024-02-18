@@ -14,6 +14,7 @@ describe('ModalProcess selectors', () => {
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: true,
+      isModalRemoveFromBasketOpen: true,
     },
   };
   it('should return isModalAddToBasketOpen', () => {

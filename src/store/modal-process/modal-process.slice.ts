@@ -8,6 +8,7 @@ const initialState: TModalData = {
   isModalAddToBasketSuccessOpen: false,
   isModalAddReviewOpen: false,
   isModalAddReviewSuccessOpen: false,
+  isModalRemoveFromBasketOpen: false,
 };
 
 export const modalProcess = createSlice({
@@ -46,12 +47,21 @@ export const modalProcess = createSlice({
       state.isModalOpen = false;
       state.isModalAddReviewSuccessOpen = false;
     },
+    openRemoveFromBasketModal: (state) => {
+      state.isModalOpen = true;
+      state.isModalRemoveFromBasketOpen = true;
+    },
+    closeRemoveFromBasketModal: (state) => {
+      state.isModalOpen = false;
+      state.isModalRemoveFromBasketOpen = false;
+    },
     resetModalStatus: (state) => {
       state.isModalOpen = false;
       state.isModalAddToBasketOpen = false;
       state.isModalAddToBasketSuccessOpen = false;
       state.isModalAddReviewOpen = false;
       state.isModalAddReviewSuccessOpen = false;
+      state.isModalRemoveFromBasketOpen = false;
     },
   },
 });
@@ -65,5 +75,6 @@ export const {
   closeAddReviewModal,
   openAddReviewSuccessModal,
   closeAddReviewSuccessModal,
+  openRemoveFromBasketModal,
   resetModalStatus,
 } = modalProcess.actions;

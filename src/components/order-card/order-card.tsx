@@ -1,4 +1,10 @@
+import { useAppDispatch } from '../../hooks';
+import { fetchCamera } from '../../store/api-actions';
+import { openRemoveFromBasketModal } from '../../store/modal-process/modal-process.slice';
+
 function OrderCard() {
+  const dispatch = useAppDispatch();
+
   return (
     <li className="basket-item">
       <div className="basket-item__img">
@@ -60,7 +66,15 @@ function OrderCard() {
       <div className="basket-item__total-price">
         <span className="visually-hidden">Общая цена:</span>37 940 ₽
       </div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар">
+      <button
+        className="cross-btn"
+        type="button"
+        aria-label="Удалить товар"
+        onClick={() => {
+          dispatch(fetchCamera(1)); //заглушка далее id
+          dispatch(openRemoveFromBasketModal());
+        }}
+      >
         <svg width={10} height={10} aria-hidden="true">
           <use xlinkHref="#icon-close" />
         </svg>

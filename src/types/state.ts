@@ -22,6 +22,7 @@ export type TModalData = {
   isModalAddToBasketSuccessOpen: boolean;
   isModalAddReviewOpen: boolean;
   isModalAddReviewSuccessOpen: boolean;
+  isModalRemoveFromBasketOpen: boolean;
 };
 
 export type TCamerasData = {

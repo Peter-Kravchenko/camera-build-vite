@@ -28,6 +28,7 @@ import { resetAppProcess } from '../../store/app-process/app-process.slice';
 
 import UpButton from '../../components/up-button/up-button';
 import ModalData from '../../components/modals/modal-data/modal-data';
+import Loader from '../../components/loader/loader';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -64,7 +65,7 @@ function ProductPage(): JSX.Element {
     similarFetchingStatus === RequestStatus.Pending ||
     reviewsFetchingStatus === RequestStatus.Pending
   ) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
 
   if (!camera || cameraFetchingStatus === RequestStatus.Rejected) {

@@ -35,6 +35,7 @@ import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-ca
 import Pagination from '../../components/pagination/pagination';
 import ModalData from '../../components/modals/modal-data/modal-data';
 import { TCameras } from '../../types/cameras';
+import Loader from '../../components/loader/loader';
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -73,7 +74,7 @@ function CatalogPage(): JSX.Element {
     cemerasFetchingStatus === RequestStatus.Pending &&
     promosFetchingStatus === RequestStatus.Pending
   ) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
 
   return (
