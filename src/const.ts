@@ -1,17 +1,11 @@
 export const BANNER_DELAY = 3000;
-
 export const DEFAULT_PAGE = 1;
-
 export const DEFAULT_SLIDER_INDEX = 0;
-
 export const MAX_CAMERAS_ON_PAGE = 9;
-
+export const PAGES_PER_ITERATION = 3;
 export const MAX_SIMILAR_CAMERAS_ON_PAGE = 3;
-
 export const REVIEWS_ON_FIRST_LOAD = 3;
-
 export const REVIEWS_ON_SHOW_MORE_CLICK = 3;
-
 export const stars: number[] = [1, 2, 3, 4, 5];
 
 export enum AppRoute {
