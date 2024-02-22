@@ -60,15 +60,15 @@ export enum Coupon {
 }
 
 export enum Type {
-  Collectors = 'Коллекционная',
-  Instant = 'Моментальная',
   Digital = 'Цифровая',
   Film = 'Плёночная',
+  Instant = 'Моментальная',
+  Collectors = 'Коллекционная',
 }
 
 export enum Category {
-  Camcorder = 'Видеокамера',
   Camera = 'Фотоаппарат',
+  Camcorder = 'Видеокамера',
 }
 
 export enum Level {

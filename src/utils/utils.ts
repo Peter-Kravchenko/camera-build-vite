@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import the Russian locale
-import { Category, SortByType, SortOrder, Tab, Type } from '../const';
+import { Category, Level, SortByType, SortOrder, Tab, Type } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReview, TReviews } from '../types/reviews';
 
@@ -33,6 +33,24 @@ export const addCorrectEnding = (
   return type;
 };
 
+export const getTabName = (tab: Tab) => {
+  switch (tab) {
+    case Tab.Characteristics:
+      return 'Характеристики';
+    case Tab.Description:
+      return 'Описание';
+  }
+};
+
+export const getCorrectFilterCategory = (category: Category) => {
+  switch (category) {
+    case Category.Camera:
+      return 'Фотокамера';
+    case Category.Camcorder:
+      return 'Видеокамера';
+  }
+};
+
 export const getCamerasFromCurrentPage = (
   cameras: TCameras,
   currentPage: number,
@@ -45,15 +63,6 @@ export const getReviewDate = (date: TReview['createAt']): string =>
 
 export const getReviewDateTime = (date: TReview['createAt']): string =>
   dayjs(date).format('YYYY-MM-DD');
-
-export const getTabName = (tab: Tab) => {
-  switch (tab) {
-    case Tab.Characteristics:
-      return 'Характеристики';
-    case Tab.Description:
-      return 'Описание';
-  }
-};
 
 const sortReviewIncrease = (reviewA: TReview, reviewB: TReview) =>
   dayjs(reviewB.createAt).diff(reviewA.createAt);
@@ -115,5 +124,38 @@ export const getSortOrderName = (sortOrder: SortOrder) => {
       return 'По возростанию';
     case SortOrder.Down:
       return 'По убыванию';
+  }
+};
+
+export const getCategoryUrl = (category: Category) => {
+  switch (category) {
+    case Category.Camera:
+      return 'cam';
+    case Category.Camcorder:
+      return 'camc';
+  }
+};
+
+export const getTypeUrl = (type: Type) => {
+  switch (type) {
+    case Type.Digital:
+      return 'dig';
+    case Type.Film:
+      return 'fil';
+    case Type.Instant:
+      return 'ins';
+    case Type.Collectors:
+      return 'col';
+  }
+};
+
+export const getLevelUrl = (level: Level) => {
+  switch (level) {
+    case Level.Zero:
+      return 'zer';
+    case Level.Amateur:
+      return 'ama';
+    case Level.Professional:
+      return 'pro';
   }
 };

@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  Category,
   DEFAULT_PAGE,
   DEFAULT_SLIDER_INDEX,
+  Level,
   NameSpace,
   REVIEWS_ON_FIRST_LOAD,
   REVIEWS_ON_SHOW_MORE_CLICK,
   SortByType,
   SortOrder,
+  Type,
 } from '../../const';
 import { TAppProcess } from '../../types/state';
 
@@ -16,6 +19,10 @@ const initialState: TAppProcess = {
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
   sortByType: SortByType.Popularity,
   sortOrder: SortOrder.Down,
+  activePrice: [0, 1000000],
+  activeCategory: null,
+  activeType: [],
+  activeLevel: [],
 };
 
 export const appProcess = createSlice({
@@ -37,6 +44,39 @@ export const appProcess = createSlice({
     setSortOrder: (state, action: PayloadAction<SortOrder>) => {
       state.sortOrder = action.payload;
     },
+    setActivePrice: (state, action: PayloadAction<[number, number]>) => {
+      state.activePrice = action.payload;
+    },
+    setActiveCategory: (state, action: PayloadAction<Category>) => {
+      if (state.activeCategory === action.payload) {
+        state.activeCategory = null;
+      } else {
+        state.activeCategory = action.payload;
+      }
+    },
+    setActiveType: (state, action: PayloadAction<Type>) => {
+      if (state.activeType.includes(action.payload)) {
+        state.activeType = state.activeType.filter(
+          (type) => type !== action.payload
+        );
+      } else {
+        state.activeType = [...state.activeType, action.payload];
+      }
+    },
+    setActiveLevel: (state, action: PayloadAction<Level>) => {
+      if (state.activeLevel.includes(action.payload)) {
+        state.activeLevel = state.activeLevel.filter(
+          (level) => level !== action.payload
+        );
+      } else {
+        state.activeLevel = [...state.activeLevel, action.payload];
+      }
+    },
+    resetFilters: (state) => {
+      state.activeCategory = null;
+      state.activeType = [];
+      state.activeLevel = [];
+    },
     resetAppProcess: (state) => {
       state.currentPage = DEFAULT_PAGE;
       state.similarSliderIndex = DEFAULT_SLIDER_INDEX;
@@ -53,5 +93,9 @@ export const {
   showMoreReviews,
   setSortByType,
   setSortOrder,
+  setActiveCategory,
+  setActiveType,
+  setActiveLevel,
+  resetFilters,
   resetAppProcess,
 } = appProcess.actions;

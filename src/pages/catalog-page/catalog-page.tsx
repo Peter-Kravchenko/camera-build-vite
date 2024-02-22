@@ -18,6 +18,9 @@ import Sorting from '../../components/sorting/sorting';
 
 import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
 import {
+  getActiveCategory,
+  getActiveLevel,
+  getActiveType,
   getCurrentPage,
   getSortByType,
   getSortOrder,
@@ -46,15 +49,37 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
+  const activeFilterType = useAppSelector(getActiveType);
+  const activeFilterLevel = useAppSelector(getActiveLevel);
+  const activeFilterCategory = useAppSelector(getActiveCategory);
+
   const activeSortByType = useAppSelector(getSortByType);
   const activeSortOrder = useAppSelector(getSortOrder);
 
-  let sortedCameras: TCameras = cameras;
+  let filteredCameras: TCameras = cameras;
+
+  if (activeFilterCategory) {
+    filteredCameras = filteredCameras.filter(
+      (camera) => camera.category === activeFilterCategory
+    );
+  }
+  if (activeFilterType.length) {
+    filteredCameras = filteredCameras.filter((camera) =>
+      activeFilterType.includes(camera.type)
+    );
+  }
+  if (activeFilterLevel.length) {
+    filteredCameras = filteredCameras.filter((camera) =>
+      activeFilterLevel.includes(camera.level)
+    );
+  }
+
+  let sortedCameras = filteredCameras;
 
   if (activeSortByType === SortByType.Popularity) {
-    sortedCameras = sortCamerasByPopularity[activeSortOrder](cameras);
+    sortedCameras = sortCamerasByPopularity[activeSortOrder](filteredCameras);
   } else if (activeSortByType === SortByType.Price) {
-    sortedCameras = sortCamerasByPrice[activeSortOrder](cameras);
+    sortedCameras = sortCamerasByPrice[activeSortOrder](filteredCameras);
   }
 
   const isModalOpen = useAppSelector(checkModalOpen);
@@ -85,7 +110,7 @@ function CatalogPage(): JSX.Element {
         <section className="catalog">
           <div className="container">
             <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
-            {camerasToRender.length > 0 ? (
+            {cameras.length > 0 ? (
               <div className="page-content__columns">
                 <div className="catalog__aside">
                   <div className="catalog-filter">
@@ -97,9 +122,18 @@ function CatalogPage(): JSX.Element {
                     activeSortByType={activeSortByType}
                     activeSortOrder={activeSortOrder}
                   />
-                  <CatalogCamerasList cameras={camerasToRender} />
-                  {cameras.length > MAX_CAMERAS_ON_PAGE && (
-                    <Pagination cameras={cameras} currentPage={currentPage} />
+                  {camerasToRender.length > 0 ? (
+                    <CatalogCamerasList cameras={camerasToRender} />
+                  ) : (
+                    <div className="title title--h3" style={{ marginTop: 100 }}>
+                      Камеры по указанным параметрам не найдены
+                    </div>
+                  )}
+                  {sortedCameras.length > MAX_CAMERAS_ON_PAGE && (
+                    <Pagination
+                      cameras={sortedCameras}
+                      currentPage={currentPage}
+                    />
                   )}
                 </div>
               </div>
