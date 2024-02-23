@@ -31,7 +31,10 @@ import {
   sortCamerasByPrice,
 } from '../../utils/utils';
 import { useEffect } from 'react';
-import { resetAppProcess } from '../../store/app-process/app-process.slice';
+import {
+  resetAppProcess,
+  resetFilters,
+} from '../../store/app-process/app-process.slice';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Banner from '../../components/banner/banner';
 import CatalogCamerasList from '../../components/catalog-cameras-list/catalog-cameras-list';
@@ -93,10 +96,11 @@ function CatalogPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(resetAppProcess());
+    dispatch(resetFilters());
   }, [dispatch]);
 
   if (
-    cemerasFetchingStatus === RequestStatus.Pending &&
+    cemerasFetchingStatus === RequestStatus.Pending ||
     promosFetchingStatus === RequestStatus.Pending
   ) {
     return <Loader />;

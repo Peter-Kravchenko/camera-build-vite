@@ -5,7 +5,7 @@ import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, TIMEOUT_DELAY } from '../../const';
 import { filterCameras } from '../../utils/utils';
-import { TCamera } from '../../types/cameras';
+import { TCamera, TCameras } from '../../types/cameras';
 
 const searchValuePattern = /^[a-zA-Zа-яА-Я-0-9\s]+$/;
 
@@ -13,9 +13,9 @@ function SearchForm() {
   const cameras = useAppSelector(getCameras);
   const navigate = useNavigate();
 
-  const [camerasList, setCamerasList] = useState(cameras);
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [camerasList, setCamerasList] = useState<TCameras>(cameras);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -32,13 +32,17 @@ function SearchForm() {
     } else {
       setIsOpen(false);
     }
+  }, [searchValue, camerasList]);
+
+  useEffect(() => {
     const debounce = setTimeout(() => {
       setCamerasList(filterCameras(searchValue, cameras));
     }, TIMEOUT_DELAY);
+
     return () => {
       clearTimeout(debounce);
     };
-  }, [searchValue, cameras, camerasList]);
+  }, [searchValue, cameras]);
 
   return (
     <div className={cn('form-search', { 'list-opened': isOpen })}>
