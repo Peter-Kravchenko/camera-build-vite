@@ -83,6 +83,10 @@ export const makeFakeStore = (
     reviewsQtyOnPage: 3,
     sortByType: SortByType.Popularity,
     sortOrder: SortOrder.Up,
+    activePrice: [0, 1000000],
+    activeCategory: null,
+    activeType: [],
+    activeLevel: [],
   },
   MODAL: {
     isModalOpen: false,
@@ -90,6 +94,7 @@ export const makeFakeStore = (
     isModalAddToBasketSuccessOpen: false,
     isModalAddReviewOpen: false,
     isModalAddReviewSuccessOpen: false,
+    isModalRemoveFromBasketOpen: false,
   },
   CAMERAS: { cameras: [], fetchingStatus: RequestStatus.Idle },
   CAMERA: { camera: null, fetchingStatus: RequestStatus.Idle },

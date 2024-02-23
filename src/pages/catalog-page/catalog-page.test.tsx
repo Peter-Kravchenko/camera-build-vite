@@ -1,12 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
-import { makeFakeStore } from '../../utils/mocks';
+import { makeFakeCameras, makeFakeStore } from '../../utils/mocks';
 import { RequestStatus } from '../../const';
 import CatalogPage from './catalog-page';
 
 describe('Component: CatalogPage', () => {
   it('should render correctly', () => {
-    const { withStoreComponent } = withStore(<CatalogPage />, makeFakeStore());
+    const mockCameras = makeFakeCameras();
+    const { withStoreComponent } = withStore(
+      <CatalogPage />,
+      makeFakeStore({
+        CAMERAS: {
+          cameras: mockCameras,
+          fetchingStatus: RequestStatus.Success,
+        },
+      })
+    );
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);

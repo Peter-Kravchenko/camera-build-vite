@@ -19,6 +19,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
 
     const result = appProcess.reducer(expectedState, emptyAction);
@@ -36,6 +40,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
 
     const result = appProcess.reducer(undefined, emptyAction);
@@ -51,6 +59,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
     const expectedState = {
       currentPage: mockCurrentPage,
@@ -58,6 +70,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
 
     const result = appProcess.reducer(
@@ -76,6 +92,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
     const expectedState = {
       currentPage: 1,
@@ -83,6 +103,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
 
     const result = appProcess.reducer(
@@ -101,6 +125,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: mockReviewsQtyOnPage,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
     const expectedReviewsQtyOnPage = mockReviewsQtyOnPage + 3;
 
@@ -116,6 +144,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 12,
       sortByType: SortByType.Price,
       sortOrder: SortOrder.Up,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
     const expectedState = {
       currentPage: 1,
@@ -123,6 +155,10 @@ describe('AppProcess slice', () => {
       reviewsQtyOnPage: 3,
       sortByType: SortByType.Popularity,
       sortOrder: SortOrder.Down,
+      activePrice: [0, 1000000],
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     };
 
     const result = appProcess.reducer(initialState, resetAppProcess());

@@ -77,7 +77,7 @@ function CatalogPage(): JSX.Element {
     );
   }
 
-  let sortedCameras = filteredCameras;
+  let sortedCameras: TCameras = filteredCameras;
 
   if (activeSortByType === SortByType.Popularity) {
     sortedCameras = sortCamerasByPopularity[activeSortOrder](filteredCameras);
