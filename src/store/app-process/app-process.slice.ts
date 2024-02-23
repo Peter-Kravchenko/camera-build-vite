@@ -17,8 +17,8 @@ const initialState: TAppProcess = {
   currentPage: DEFAULT_PAGE,
   similarSliderIndex: DEFAULT_SLIDER_INDEX,
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
-  sortByType: SortByType.Popularity,
-  sortOrder: SortOrder.Down,
+  sortByType: null,
+  sortOrder: null,
   activePrice: [0, 1000000],
   activeCategory: null,
   activeType: [],
@@ -39,9 +39,15 @@ export const appProcess = createSlice({
       state.reviewsQtyOnPage += REVIEWS_ON_SHOW_MORE_CLICK;
     },
     setSortByType: (state, action: PayloadAction<SortByType>) => {
+      if (state.sortOrder === null) {
+        state.sortOrder = SortOrder.Down;
+      }
       state.sortByType = action.payload;
     },
     setSortOrder: (state, action: PayloadAction<SortOrder>) => {
+      if (state.sortByType === null) {
+        state.sortByType = SortByType.Price;
+      }
       state.sortOrder = action.payload;
     },
     setActivePrice: (state, action: PayloadAction<[number, number]>) => {
@@ -78,11 +84,11 @@ export const appProcess = createSlice({
       state.activeLevel = [];
     },
     resetAppProcess: (state) => {
-      state.currentPage = DEFAULT_PAGE;
-      state.similarSliderIndex = DEFAULT_SLIDER_INDEX;
-      state.reviewsQtyOnPage = REVIEWS_ON_FIRST_LOAD;
-      state.sortByType = SortByType.Popularity;
-      state.sortOrder = SortOrder.Down;
+      state.currentPage = initialState.currentPage;
+      state.similarSliderIndex = initialState.similarSliderIndex;
+      state.reviewsQtyOnPage = initialState.reviewsQtyOnPage;
+      state.sortByType = initialState.sortByType;
+      state.sortOrder = initialState.sortOrder;
     },
   },
 });

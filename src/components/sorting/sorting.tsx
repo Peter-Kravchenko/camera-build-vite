@@ -8,8 +8,8 @@ import {
 import { getSortByTypeName, getSortOrderName } from '../../utils/utils';
 
 type SortProps = {
-  activeSortByType: SortByType;
-  activeSortOrder: SortOrder;
+  activeSortByType: SortByType | null;
+  activeSortOrder: SortOrder | null;
 };
 
 function Sorting({
@@ -30,8 +30,8 @@ function Sorting({
                   type="radio"
                   id={type}
                   name="sort"
-                  defaultChecked={type === activeSortByType}
-                  onClick={() => dispatch(setSortByType(type as SortByType))}
+                  checked={type === activeSortByType}
+                  onChange={() => dispatch(setSortByType(type as SortByType))}
                 />
                 <label htmlFor={type}>{getSortByTypeName(type)}</label>
               </div>
@@ -51,8 +51,8 @@ function Sorting({
                   id={order}
                   name="sort-icon"
                   aria-label={getSortOrderName(order)}
-                  defaultChecked={order === activeSortOrder}
-                  onClick={() => dispatch(setSortOrder(order as SortOrder))}
+                  checked={order === activeSortOrder}
+                  onChange={() => dispatch(setSortOrder(order as SortOrder))}
                 />
                 <label htmlFor={order}>
                   <svg width={16} height={14} aria-hidden="true">

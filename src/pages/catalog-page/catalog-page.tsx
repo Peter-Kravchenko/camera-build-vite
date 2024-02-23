@@ -79,10 +79,12 @@ function CatalogPage(): JSX.Element {
 
   let sortedCameras: TCameras = filteredCameras;
 
-  if (activeSortByType === SortByType.Popularity) {
-    sortedCameras = sortCamerasByPopularity[activeSortOrder](filteredCameras);
-  } else if (activeSortByType === SortByType.Price) {
-    sortedCameras = sortCamerasByPrice[activeSortOrder](filteredCameras);
+  if (activeSortByType && activeSortOrder) {
+    if (activeSortByType === SortByType.Popularity) {
+      sortedCameras = sortCamerasByPopularity[activeSortOrder](filteredCameras);
+    } else if (activeSortByType === SortByType.Price) {
+      sortedCameras = sortCamerasByPrice[activeSortOrder](filteredCameras);
+    }
   }
 
   const isModalOpen = useAppSelector(checkModalOpen);

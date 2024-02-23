@@ -19,8 +19,8 @@ export type TAppProcess = {
   currentPage: number;
   similarSliderIndex: number;
   reviewsQtyOnPage: number;
-  sortByType: SortByType;
-  sortOrder: SortOrder;
+  sortByType: SortByType | null;
+  sortOrder: SortOrder | null;
   activePrice: [number, number];
   activeCategory: Category | null;
   activeType: Type[];
