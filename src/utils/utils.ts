@@ -132,30 +132,42 @@ export const getCategoryUrl = (category: Category) => {
     case Category.Camera:
       return 'cam';
     case Category.Camcorder:
-      return 'camc';
+      return 'vid';
   }
 };
 
 export const getTypeUrl = (type: Type) => {
   switch (type) {
     case Type.Digital:
-      return 'dig';
+      return 'digit';
     case Type.Film:
-      return 'fil';
+      return 'film';
     case Type.Instant:
-      return 'ins';
+      return 'inst';
     case Type.Collectors:
-      return 'col';
+      return 'coll';
   }
 };
 
 export const getLevelUrl = (level: Level) => {
   switch (level) {
     case Level.Zero:
-      return 'zer';
+      return '0';
     case Level.Amateur:
-      return 'ama';
+      return '1';
     case Level.Professional:
-      return 'pro';
+      return '2';
   }
+};
+
+export const filterCameras = (
+  searchText: string,
+  cameras: TCameras
+): TCameras => {
+  if (searchText === '') {
+    return [];
+  }
+  return cameras.filter((product) =>
+    product.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 };

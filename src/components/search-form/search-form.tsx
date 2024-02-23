@@ -2,40 +2,47 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
-import { TCamera } from '../../types/cameras';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, TIMEOUT_DELAY } from '../../const';
+import { filterCameras } from '../../utils/utils';
+import { TCamera } from '../../types/cameras';
+
+const searchValuePattern = /^[a-zA-Zа-яА-Я-0-9\s]+$/;
 
 function SearchForm() {
   const cameras = useAppSelector(getCameras);
   const navigate = useNavigate();
 
+  const [camerasList, setCamerasList] = useState(cameras);
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-
-  let matchedCams: TCamera[] = cameras;
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
-
-  if (searchValue) {
-    matchedCams = cameras.filter((camera) =>
-      camera.name.toLocaleLowerCase().match(searchValue.toLowerCase())
-    );
-  }
+  const handleSelectItem = (camera: TCamera) => {
+    navigate(AppRoute.Product.replace(':id', `${camera.id}`));
+    setIsOpen(false);
+    setSearchValue('');
+  };
 
   useEffect(() => {
-    if (matchedCams.length) {
+    if (camerasList.length > 0 && searchValuePattern.test(searchValue)) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
     }
-  }, [matchedCams.length, searchValue]);
+    const debounce = setTimeout(() => {
+      setCamerasList(filterCameras(searchValue, cameras));
+    }, TIMEOUT_DELAY);
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [searchValue, cameras, camerasList]);
 
   return (
     <div className={cn('form-search', { 'list-opened': isOpen })}>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <label>
           <svg
             className="form-search__icon"
@@ -50,25 +57,23 @@ function SearchForm() {
             type="text"
             value={searchValue}
             onChange={handleFormChange}
-            onBlur={() => {
-              setTimeout(() => {
-                setIsOpen(false);
-              }, 300);
-            }}
             autoComplete="off"
             placeholder="Поиск по сайту"
           />
         </label>
         <ul className="form-search__select-list">
-          {matchedCams.map((camera) => (
+          {camerasList.map((camera) => (
             <li
               key={camera.id}
               className="form-search__select-item"
-              tabIndex={-1}
+              tabIndex={0}
               onClick={() => {
-                navigate(AppRoute.Product.replace(':id', `${camera.id}`));
-                setIsOpen(false);
-                setSearchValue('');
+                handleSelectItem(camera);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSelectItem(camera);
+                }
               }}
             >
               {camera.name}
