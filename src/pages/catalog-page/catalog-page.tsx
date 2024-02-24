@@ -136,7 +136,7 @@ function CatalogPage(): JSX.Element {
                     <CatalogCamerasList cameras={camerasToRender} />
                   ) : (
                     <div className="title title--h3" style={{ marginTop: 100 }}>
-                      Камеры по указанным параметрам не найдены
+                      По вашему запросу ничего не найдено
                     </div>
                   )}
                   {sortedCameras.length > MAX_CAMERAS_ON_PAGE && (

@@ -24,16 +24,16 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
 
   const handleBackButtonClick = () => {
     const prevPage = firstPage - 1;
-    navigate(`${AppRoute.Catalog}?page=${prevPage}`);
+    navigate({ pathname: AppRoute.Catalog, search: `?page=${prevPage}` });
   };
 
   const handlePageButtonClick = (page: number) => {
-    navigate(`${AppRoute.Catalog}?page=${page}`);
+    navigate({ pathname: AppRoute.Catalog, search: `?page=${page}` });
   };
 
   const handleForwardButtonClick = () => {
     const nextPage = lastPage + 1;
-    navigate(`${AppRoute.Catalog}?page=${nextPage}`);
+    navigate({ pathname: AppRoute.Catalog, search: `page=${nextPage}` });
   };
 
   usePageNavigation(totalPages, currentPage);

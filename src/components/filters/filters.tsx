@@ -48,7 +48,7 @@ function Filters({
       </fieldset>
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Категория</legend>
-        {Object.entries(Category).map(([key, category]) => (
+        {Object.entries(Category).map(([name, category]) => (
           <div key={category} className="custom-checkbox catalog-filter__item">
             <label>
               <input
@@ -60,7 +60,7 @@ function Filters({
                 }}
                 checked={category === activeFilterCategory}
                 type="checkbox"
-                name={key}
+                name={name}
               />
               <span className="custom-checkbox__icon" />
               <span className="custom-checkbox__label">
@@ -72,7 +72,7 @@ function Filters({
       </fieldset>
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Тип камеры</legend>
-        {Object.entries(Type).map(([key, type]) => (
+        {Object.entries(Type).map(([name, type]) => (
           <div key={type} className="custom-checkbox catalog-filter__item">
             <label>
               <input
@@ -82,7 +82,7 @@ function Filters({
                 }}
                 checked={activeFilterType?.includes(type)}
                 type="checkbox"
-                name={key}
+                name={name}
                 disabled={
                   activeFilterCategory === Category.Camcorder &&
                   (type === Type.Collectors || type === Type.Instant)

@@ -160,7 +160,7 @@ export const getLevelUrl = (level: Level) => {
   }
 };
 
-export const filterCameras = (
+export const searchCameras = (
   searchText: string,
   cameras: TCameras
 ): TCameras => {

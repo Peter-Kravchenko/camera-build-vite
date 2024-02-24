@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, TIMEOUT_DELAY } from '../../const';
-import { filterCameras } from '../../utils/utils';
+import { searchCameras } from '../../utils/utils';
 import { TCamera, TCameras } from '../../types/cameras';
 
 const searchValuePattern = /^[a-zA-Zа-яА-Я-0-9\s]+$/;
@@ -27,7 +27,11 @@ function SearchForm() {
   };
 
   useEffect(() => {
-    if (camerasList.length > 0 && searchValuePattern.test(searchValue)) {
+    if (
+      searchValue.length > 2 &&
+      camerasList.length > 0 &&
+      searchValuePattern.test(searchValue)
+    ) {
       setIsOpen(true);
     } else {
       setIsOpen(false);
@@ -36,7 +40,7 @@ function SearchForm() {
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      setCamerasList(filterCameras(searchValue, cameras));
+      setCamerasList(searchCameras(searchValue, cameras));
     }, TIMEOUT_DELAY);
 
     return () => {

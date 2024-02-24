@@ -121,6 +121,9 @@ function BasketActionModal({
             <Link
               to={AppRoute.Catalog}
               className="btn btn--transparent modal__btn modal__btn--half-width"
+              onClick={() => {
+                closeModal();
+              }}
             >
               Продолжить покупки
             </Link>

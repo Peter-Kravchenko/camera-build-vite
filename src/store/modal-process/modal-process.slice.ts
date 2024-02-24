@@ -22,6 +22,7 @@ export const modalProcess = createSlice({
     closeAddToBasketModal: (state) => {
       state.isModalOpen = false;
       state.isModalAddToBasketOpen = false;
+      state.isModalRemoveFromBasketOpen = false;
     },
     openAddToBasketSuccessModal: (state) => {
       state.isModalOpen = true;
