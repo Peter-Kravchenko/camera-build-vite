@@ -1,9 +1,4 @@
-import {
-  MAX_CAMERAS_ON_PAGE,
-  PageBlock,
-  RequestStatus,
-  SortByType,
-} from '../../const';
+import { MAX_CAMERAS_ON_PAGE, PageBlock, RequestStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import {
   getCameras,
@@ -20,15 +15,16 @@ import { checkModalOpen } from '../../store/modal-process/modal-process.selector
 import {
   getActiveCategory,
   getActiveLevel,
+  getActivePrice,
   getActiveType,
   getCurrentPage,
   getSortByType,
   getSortOrder,
 } from '../../store/app-process/app-process.selectors';
 import {
+  filterCameras,
   getCamerasFromCurrentPage,
-  sortCamerasByPopularity,
-  sortCamerasByPrice,
+  sortCameras,
 } from '../../utils/utils';
 import { useEffect } from 'react';
 import {
@@ -52,6 +48,7 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
+  const activeFilterPrice = useAppSelector(getActivePrice);
   const activeFilterType = useAppSelector(getActiveType);
   const activeFilterLevel = useAppSelector(getActiveLevel);
   const activeFilterCategory = useAppSelector(getActiveCategory);
@@ -59,37 +56,23 @@ function CatalogPage(): JSX.Element {
   const activeSortByType = useAppSelector(getSortByType);
   const activeSortOrder = useAppSelector(getSortOrder);
 
-  let filteredCameras: TCameras = cameras;
-
-  if (activeFilterCategory) {
-    filteredCameras = filteredCameras.filter(
-      (camera) => camera.category === activeFilterCategory
-    );
-  }
-  if (activeFilterType.length) {
-    filteredCameras = filteredCameras.filter((camera) =>
-      activeFilterType.includes(camera.type)
-    );
-  }
-  if (activeFilterLevel.length) {
-    filteredCameras = filteredCameras.filter((camera) =>
-      activeFilterLevel.includes(camera.level)
-    );
-  }
-
-  let sortedCameras: TCameras = filteredCameras;
-
-  if (activeSortByType && activeSortOrder) {
-    if (activeSortByType === SortByType.Popularity) {
-      sortedCameras = sortCamerasByPopularity[activeSortOrder](filteredCameras);
-    } else if (activeSortByType === SortByType.Price) {
-      sortedCameras = sortCamerasByPrice[activeSortOrder](filteredCameras);
-    }
-  }
-
   const isModalOpen = useAppSelector(checkModalOpen);
 
   const currentPage = useAppSelector(getCurrentPage);
+
+  const filteredCameras: TCameras = filterCameras(
+    cameras,
+    activeFilterCategory,
+    activeFilterType,
+    activeFilterLevel
+  );
+
+  const sortedCameras: TCameras = sortCameras(
+    filteredCameras,
+    activeSortByType,
+    activeSortOrder
+  );
+
   const camerasToRender = getCamerasFromCurrentPage(
     sortedCameras,
     currentPage,
@@ -121,6 +104,7 @@ function CatalogPage(): JSX.Element {
                 <div className="catalog__aside">
                   <div className="catalog-filter">
                     <Filters
+                      activeFilterPrice={activeFilterPrice}
                       activeFilterCategory={activeFilterCategory}
                       activeFilterType={activeFilterType}
                       activeFilterLevel={activeFilterLevel}

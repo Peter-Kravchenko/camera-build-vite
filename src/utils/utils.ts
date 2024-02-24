@@ -75,38 +75,75 @@ export const sortReviewByDate = {
   decreace: (reviews: TReviews) => [...reviews].sort(sortDecrease),
 };
 
-export const sortCamerasByPriceDecrease = (
-  cameraA: TCamera,
-  cameraB: TCamera
-) => cameraB.price - cameraA.price;
+const sortCamerasByPriceDecrease = (cameraA: TCamera, cameraB: TCamera) =>
+  cameraB.price - cameraA.price;
 
-export const sortCamerasByPriceIncrease = (
-  cameraA: TCamera,
-  cameraB: TCamera
-) => cameraA.price - cameraB.price;
+const sortCamerasByPriceIncrease = (cameraA: TCamera, cameraB: TCamera) =>
+  cameraA.price - cameraB.price;
 
-export const sortCamerasByPrice = {
+const sortCamerasByPrice = {
   [SortOrder.Up]: (cameras: TCameras) =>
     [...cameras].sort(sortCamerasByPriceIncrease),
   [SortOrder.Down]: (cameras: TCameras) =>
     [...cameras].sort(sortCamerasByPriceDecrease),
 };
 
-export const sortCamerasByPopularityDecrease = (
-  cameraA: TCamera,
-  cameraB: TCamera
-) => cameraB.rating - cameraA.rating;
+const sortCamerasByPopularityDecrease = (cameraA: TCamera, cameraB: TCamera) =>
+  cameraB.rating - cameraA.rating;
 
-export const sortCamerasByPopularityIncrease = (
-  cameraA: TCamera,
-  cameraB: TCamera
-) => cameraA.rating - cameraB.rating;
+const sortCamerasByPopularityIncrease = (cameraA: TCamera, cameraB: TCamera) =>
+  cameraA.rating - cameraB.rating;
 
-export const sortCamerasByPopularity = {
+const sortCamerasByPopularity = {
   [SortOrder.Up]: (cameras: TCameras) =>
     [...cameras].sort(sortCamerasByPopularityIncrease),
   [SortOrder.Down]: (cameras: TCameras) =>
     [...cameras].sort(sortCamerasByPopularityDecrease),
+};
+
+export const filterCameras = (
+  cameras: TCameras,
+  activeCategory: Category | null,
+  activeType: Type[],
+  activeLevel: Level[]
+): TCameras => {
+  let filteredCameras: TCameras = cameras;
+
+  if (activeCategory) {
+    filteredCameras = filteredCameras.filter(
+      (camera) => camera.category === activeCategory
+    );
+  }
+  if (activeType.length) {
+    filteredCameras = filteredCameras.filter((camera) =>
+      activeType.includes(camera.type)
+    );
+  }
+  if (activeLevel.length) {
+    filteredCameras = filteredCameras.filter((camera) =>
+      activeLevel.includes(camera.level)
+    );
+  }
+
+  return filteredCameras;
+};
+
+export const sortCameras = (
+  cameras: TCameras,
+  activeSortByType: SortByType | null,
+  activeSortOrder: SortOrder | null
+) => {
+  let sortedCameras: TCameras = cameras;
+
+  if (activeSortByType && activeSortOrder) {
+    if (activeSortByType === SortByType.Popularity) {
+      sortedCameras = sortCamerasByPopularity[activeSortOrder](cameras);
+    } else if (activeSortByType === SortByType.Price) {
+      sortedCameras = sortCamerasByPrice[activeSortOrder](cameras);
+    }
+  }
+
+  return sortedCameras;
 };
 
 export const getSortByTypeName = (sortType: SortByType) => {
