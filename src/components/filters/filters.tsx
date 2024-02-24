@@ -1,11 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, Category, Level, Type } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  getActiveCategory,
-  getActiveLevel,
-  getActiveType,
-} from '../../store/app-process/app-process.selectors';
+import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
   setActiveCategory,
@@ -19,12 +14,19 @@ import {
   getTypeUrl,
 } from '../../utils/utils';
 
-function Filters(): JSX.Element {
+type FilterProps = {
+  activeFilterCategory: Category | null;
+  activeFilterType: Type[];
+  activeFilterLevel: Level[];
+};
+
+function Filters({
+  activeFilterCategory,
+  activeFilterType,
+  activeFilterLevel,
+}: FilterProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const activeCategory = useAppSelector(getActiveCategory);
-  const activeType = useAppSelector(getActiveType);
-  const activeLevel = useAppSelector(getActiveLevel);
 
   return (
     <form action="#">
@@ -56,7 +58,7 @@ function Filters(): JSX.Element {
                     `${AppRoute.Catalog}?cat=${getCategoryUrl(category)}`
                   );
                 }}
-                checked={category === activeCategory}
+                checked={category === activeFilterCategory}
                 type="checkbox"
                 name={key}
               />
@@ -78,11 +80,11 @@ function Filters(): JSX.Element {
                   dispatch(setActiveType(type));
                   navigate(`${AppRoute.Catalog}?type=${getTypeUrl(type)}`);
                 }}
-                checked={activeType?.includes(type)}
+                checked={activeFilterType?.includes(type)}
                 type="checkbox"
                 name={key}
                 disabled={
-                  activeCategory === Category.Camcorder &&
+                  activeFilterCategory === Category.Camcorder &&
                   (type === Type.Collectors || type === Type.Instant)
                 }
               />
@@ -102,7 +104,7 @@ function Filters(): JSX.Element {
                   dispatch(setActiveLevel(level));
                   navigate(`${AppRoute.Catalog}?level=${getLevelUrl(level)}`);
                 }}
-                checked={activeLevel?.includes(level)}
+                checked={activeFilterLevel?.includes(level)}
                 type="checkbox"
                 name={key}
               />
@@ -113,7 +115,7 @@ function Filters(): JSX.Element {
         ))}
       </fieldset>
       <button
-        onClick={() => dispatch(resetFilters)}
+        onClick={() => dispatch(resetFilters())}
         className="btn catalog-filter__reset-btn"
         type="reset"
       >

@@ -120,7 +120,11 @@ function CatalogPage(): JSX.Element {
               <div className="page-content__columns">
                 <div className="catalog__aside">
                   <div className="catalog-filter">
-                    <Filters />
+                    <Filters
+                      activeFilterCategory={activeFilterCategory}
+                      activeFilterType={activeFilterType}
+                      activeFilterLevel={activeFilterLevel}
+                    />
                   </div>
                 </div>
                 <div className="catalog__content">

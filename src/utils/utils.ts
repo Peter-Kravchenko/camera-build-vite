@@ -92,12 +92,12 @@ export const sortCamerasByPrice = {
     [...cameras].sort(sortCamerasByPriceDecrease),
 };
 
-export const sortCamerasByPopularityIncrease = (
+export const sortCamerasByPopularityDecrease = (
   cameraA: TCamera,
   cameraB: TCamera
 ) => cameraB.rating - cameraA.rating;
 
-export const sortCamerasByPopularityDecrease = (
+export const sortCamerasByPopularityIncrease = (
   cameraA: TCamera,
   cameraB: TCamera
 ) => cameraA.rating - cameraB.rating;
