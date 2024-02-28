@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { AppRoute, Category, Level, Type } from '../../const';
+import { useSearchParams } from 'react-router-dom';
+import { Category, Level, Type } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
@@ -7,12 +7,7 @@ import {
   setActiveLevel,
   setActiveType,
 } from '../../store/app-process/app-process.slice';
-import {
-  getCategoryUrl,
-  getCorrectFilterCategory,
-  getLevelUrl,
-  getTypeUrl,
-} from '../../utils/utils';
+import { getCorrectFilterCategory } from '../../utils/utils';
 
 type FilterProps = {
   activeFilterCategory: Category | null;
@@ -26,7 +21,58 @@ function Filters({
   activeFilterLevel,
 }: FilterProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleCategoryChange = (category: Category) => {
+    dispatch(setActiveCategory(category));
+    if (activeFilterCategory === category) {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', category);
+    }
+    setSearchParams(searchParams);
+  };
+
+  const handleTypeChange = (type: Type) => {
+    dispatch(setActiveType(type));
+    if (activeFilterType.includes(type)) {
+      searchParams.set(
+        'type',
+        activeFilterType.filter((t) => t !== type).toString()
+      );
+
+      if (activeFilterType.length === 1) {
+        searchParams.delete('type');
+      }
+    } else {
+      searchParams.set('type', [...activeFilterType, type].toString());
+    }
+
+    setSearchParams(searchParams);
+  };
+
+  const handleleLevelChange = (level: Level) => {
+    dispatch(setActiveLevel(level));
+    if (activeFilterLevel.includes(level)) {
+      searchParams.set(
+        'level',
+        activeFilterLevel.filter((l) => l !== level).toString()
+      );
+      if (activeFilterLevel.length === 1) {
+        searchParams.delete('level');
+      }
+    } else {
+      searchParams.set('level', [...activeFilterLevel, level].toString());
+    }
+
+    setSearchParams(searchParams);
+  };
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters());
+    setSearchParams({});
+  };
 
   return (
     <form action="#">
@@ -52,12 +98,7 @@ function Filters({
           <div key={category} className="custom-checkbox catalog-filter__item">
             <label>
               <input
-                onChange={() => {
-                  dispatch(setActiveCategory(category));
-                  navigate(
-                    `${AppRoute.Catalog}?cat=${getCategoryUrl(category)}`
-                  );
-                }}
+                onChange={() => handleCategoryChange(category)}
                 checked={category === activeFilterCategory}
                 type="checkbox"
                 name={name}
@@ -76,10 +117,7 @@ function Filters({
           <div key={type} className="custom-checkbox catalog-filter__item">
             <label>
               <input
-                onChange={() => {
-                  dispatch(setActiveType(type));
-                  navigate(`${AppRoute.Catalog}?type=${getTypeUrl(type)}`);
-                }}
+                onChange={() => handleTypeChange(type)}
                 checked={activeFilterType?.includes(type)}
                 type="checkbox"
                 name={name}
@@ -100,10 +138,7 @@ function Filters({
           <div key={level} className="custom-checkbox catalog-filter__item">
             <label>
               <input
-                onChange={() => {
-                  dispatch(setActiveLevel(level));
-                  navigate(`${AppRoute.Catalog}?level=${getLevelUrl(level)}`);
-                }}
+                onChange={() => handleleLevelChange(level)}
                 checked={activeFilterLevel?.includes(level)}
                 type="checkbox"
                 name={key}
@@ -115,7 +150,7 @@ function Filters({
         ))}
       </fieldset>
       <button
-        onClick={() => dispatch(resetFilters())}
+        onClick={() => handleResetFilters()}
         className="btn catalog-filter__reset-btn"
         type="reset"
       >

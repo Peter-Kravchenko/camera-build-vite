@@ -1,9 +1,9 @@
 import cn from 'classnames';
 import { TCameras } from '../../types/cameras';
 import usePagination from '../../hooks/use-pagination';
-import usePageNavigation from '../../hooks/use-page-navigation';
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { setCurrentPage } from '../../store/app-process/app-process.slice';
 
 type PaginationProps = {
   cameras: TCameras;
@@ -11,32 +11,31 @@ type PaginationProps = {
 };
 
 function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const {
-    totalPages,
-    currentIteration,
-    totalIterations,
-    firstPage,
-    lastPage,
-    pages,
-  } = usePagination(cameras, currentPage);
+  const { currentIteration, totalIterations, firstPage, lastPage, pages } =
+    usePagination(cameras, currentPage);
 
   const handleBackButtonClick = () => {
     const prevPage = firstPage - 1;
-    navigate({ pathname: AppRoute.Catalog, search: `?page=${prevPage}` });
+    dispatch(setCurrentPage(prevPage));
+    searchParams.set('page', String(prevPage));
+    setSearchParams(searchParams);
   };
 
   const handlePageButtonClick = (page: number) => {
-    navigate({ pathname: AppRoute.Catalog, search: `?page=${page}` });
+    dispatch(setCurrentPage(page));
+    searchParams.set('page', String(page));
+    setSearchParams(searchParams);
   };
 
   const handleForwardButtonClick = () => {
     const nextPage = lastPage + 1;
-    navigate({ pathname: AppRoute.Catalog, search: `page=${nextPage}` });
+    dispatch(setCurrentPage(nextPage));
+    searchParams.set('page', String(nextPage));
+    setSearchParams(searchParams);
   };
-
-  usePageNavigation(totalPages, currentPage);
 
   return (
     <div

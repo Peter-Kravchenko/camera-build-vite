@@ -19,7 +19,10 @@ const initialState: TAppProcess = {
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
   sortByType: null,
   sortOrder: null,
-  activePrice: [0, 1000000],
+  activePrice: {
+    min: 0,
+    max: 1000000,
+  },
   activeCategory: null,
   activeType: [],
   activeLevel: [],
@@ -50,7 +53,10 @@ export const appProcess = createSlice({
       }
       state.sortOrder = action.payload;
     },
-    setActivePrice: (state, action: PayloadAction<[number, number]>) => {
+    setActivePrice: (
+      state,
+      action: PayloadAction<{ min: number; max: number }>
+    ) => {
       state.activePrice = action.payload;
     },
     setActiveCategory: (state, action: PayloadAction<Category>) => {

@@ -164,39 +164,6 @@ export const getSortOrderName = (sortOrder: SortOrder) => {
   }
 };
 
-export const getCategoryUrl = (category: Category) => {
-  switch (category) {
-    case Category.Camera:
-      return 'cam';
-    case Category.Camcorder:
-      return 'vid';
-  }
-};
-
-export const getTypeUrl = (type: Type) => {
-  switch (type) {
-    case Type.Digital:
-      return 'digit';
-    case Type.Film:
-      return 'film';
-    case Type.Instant:
-      return 'inst';
-    case Type.Collectors:
-      return 'coll';
-  }
-};
-
-export const getLevelUrl = (level: Level) => {
-  switch (level) {
-    case Level.Zero:
-      return '0';
-    case Level.Amateur:
-      return '1';
-    case Level.Professional:
-      return '2';
-  }
-};
-
 export const searchCameras = (
   searchText: string,
   cameras: TCameras

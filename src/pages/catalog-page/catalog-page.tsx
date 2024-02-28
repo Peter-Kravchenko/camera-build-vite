@@ -15,7 +15,6 @@ import { checkModalOpen } from '../../store/modal-process/modal-process.selector
 import {
   getActiveCategory,
   getActiveLevel,
-  getActivePrice,
   getActiveType,
   getCurrentPage,
   getSortByType,
@@ -48,7 +47,6 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
-  const activeFilterPrice = useAppSelector(getActivePrice);
   const activeFilterType = useAppSelector(getActiveType);
   const activeFilterLevel = useAppSelector(getActiveLevel);
   const activeFilterCategory = useAppSelector(getActiveCategory);
@@ -104,7 +102,6 @@ function CatalogPage(): JSX.Element {
                 <div className="catalog__aside">
                   <div className="catalog-filter">
                     <Filters
-                      activeFilterPrice={activeFilterPrice}
                       activeFilterCategory={activeFilterCategory}
                       activeFilterType={activeFilterType}
                       activeFilterLevel={activeFilterLevel}

@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 import { SortByType, SortOrder } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
@@ -17,6 +18,22 @@ function Sorting({
   activeSortOrder,
 }: SortProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSortTypeChange = (type: SortByType) => {
+    searchParams.set('search_type', type);
+    setSearchParams(searchParams);
+    dispatch(setSortByType(type));
+  };
+
+  const handleSortOrderChange = (order: SortOrder) => {
+    searchParams.set('search_order', order);
+    setSearchParams(searchParams);
+    dispatch(setSortOrder(order));
+  };
+
+  //  console.log(searchParams.get('search_type'));
+  //  console.log(searchParams.get('search_order'));
 
   return (
     <div className="catalog-sort">
@@ -31,7 +48,7 @@ function Sorting({
                   id={type}
                   name="sort"
                   checked={type === activeSortByType}
-                  onChange={() => dispatch(setSortByType(type as SortByType))}
+                  onChange={() => handleSortTypeChange(type)}
                 />
                 <label htmlFor={type}>{getSortByTypeName(type)}</label>
               </div>
@@ -52,7 +69,7 @@ function Sorting({
                   name="sort-icon"
                   aria-label={getSortOrderName(order)}
                   checked={order === activeSortOrder}
-                  onChange={() => dispatch(setSortOrder(order as SortOrder))}
+                  onChange={() => handleSortOrderChange(order)}
                 />
                 <label htmlFor={order}>
                   <svg width={16} height={14} aria-hidden="true">

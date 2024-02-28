@@ -21,7 +21,10 @@ export type TAppProcess = {
   reviewsQtyOnPage: number;
   sortByType: SortByType | null;
   sortOrder: SortOrder | null;
-  activePrice: [number, number];
+  activePrice: {
+    min: number;
+    max: number;
+  };
   activeCategory: Category | null;
   activeType: Type[];
   activeLevel: Level[];

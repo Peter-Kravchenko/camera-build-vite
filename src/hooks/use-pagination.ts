@@ -18,7 +18,6 @@ const usePagination = (cameras: TCameras, currentPage: number) => {
   }
 
   return {
-    totalPages,
     currentIteration,
     totalIterations,
     firstPage,
