@@ -7,17 +7,17 @@ import {
   NameSpace,
   REVIEWS_ON_FIRST_LOAD,
   REVIEWS_ON_SHOW_MORE_CLICK,
-  SortByType,
+  SortType,
   SortOrder,
   Type,
 } from '../../const';
-import { TAppProcess } from '../../types/state';
+import { TAppProcess, TPrice } from '../../types/state';
 
 const initialState: TAppProcess = {
   currentPage: DEFAULT_PAGE,
   similarSliderIndex: DEFAULT_SLIDER_INDEX,
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
-  sortByType: null,
+  sortType: null,
   sortOrder: null,
   activePrice: {
     min: 0,
@@ -41,22 +41,19 @@ export const appProcess = createSlice({
     showMoreReviews: (state) => {
       state.reviewsQtyOnPage += REVIEWS_ON_SHOW_MORE_CLICK;
     },
-    setSortByType: (state, action: PayloadAction<SortByType>) => {
+    setSortByType: (state, action: PayloadAction<SortType>) => {
       if (state.sortOrder === null) {
         state.sortOrder = SortOrder.Down;
       }
-      state.sortByType = action.payload;
+      state.sortType = action.payload;
     },
     setSortOrder: (state, action: PayloadAction<SortOrder>) => {
-      if (state.sortByType === null) {
-        state.sortByType = SortByType.Price;
+      if (state.sortType === null) {
+        state.sortType = SortType.ByPrice;
       }
       state.sortOrder = action.payload;
     },
-    setActivePrice: (
-      state,
-      action: PayloadAction<{ min: number; max: number }>
-    ) => {
+    setActivePrice: (state, action: PayloadAction<TPrice>) => {
       state.activePrice = action.payload;
     },
     setActiveCategory: (state, action: PayloadAction<Category>) => {
@@ -89,7 +86,7 @@ export const appProcess = createSlice({
       state.currentPage = initialState.currentPage;
       state.similarSliderIndex = initialState.similarSliderIndex;
       state.reviewsQtyOnPage = initialState.reviewsQtyOnPage;
-      state.sortByType = initialState.sortByType;
+      state.sortType = initialState.sortType;
       state.sortOrder = initialState.sortOrder;
     },
   },
@@ -101,6 +98,7 @@ export const {
   showMoreReviews,
   setSortByType,
   setSortOrder,
+  setActivePrice,
   setActiveCategory,
   setActiveType,
   setActiveLevel,

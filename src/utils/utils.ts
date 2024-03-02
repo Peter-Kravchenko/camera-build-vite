@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru'; // Import the Russian locale
-import { Category, Level, SortByType, SortOrder, Tab, Type } from '../const';
+import { Category, Level, SortType, SortOrder, Tab, Type } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReview, TReviews } from '../types/reviews';
 
@@ -130,15 +130,15 @@ export const filterCameras = (
 
 export const sortCameras = (
   cameras: TCameras,
-  activeSortByType: SortByType | null,
+  activeSortType: SortType | null,
   activeSortOrder: SortOrder | null
 ) => {
   let sortedCameras: TCameras = cameras;
 
-  if (activeSortByType && activeSortOrder) {
-    if (activeSortByType === SortByType.Popularity) {
+  if (activeSortType && activeSortOrder) {
+    if (activeSortType === SortType.ByPopularity) {
       sortedCameras = sortCamerasByPopularity[activeSortOrder](cameras);
-    } else if (activeSortByType === SortByType.Price) {
+    } else if (activeSortType === SortType.ByPrice) {
       sortedCameras = sortCamerasByPrice[activeSortOrder](cameras);
     }
   }
@@ -146,11 +146,11 @@ export const sortCameras = (
   return sortedCameras;
 };
 
-export const getSortByTypeName = (sortType: SortByType) => {
+export const getSortByTypeName = (sortType: SortType) => {
   switch (sortType) {
-    case SortByType.Price:
+    case SortType.ByPrice:
       return 'по цене';
-    case SortByType.Popularity:
+    case SortType.ByPopularity:
       return 'по популярности';
   }
 };

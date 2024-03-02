@@ -60,6 +60,11 @@ export enum Coupon {
   camera555 = 'camera-555',
 }
 
+export enum Price {
+  min = 'min',
+  max = 'max',
+}
+
 export enum Type {
   Digital = 'Цифровая',
   Film = 'Плёночная',
@@ -83,9 +88,9 @@ export enum Tab {
   Description = 'dsc',
 }
 
-export enum SortByType {
-  Price = 'sortPrice',
-  Popularity = 'sortPopular',
+export enum SortType {
+  ByPrice = 'price',
+  ByPopularity = 'popular',
 }
 
 export enum SortOrder {

@@ -17,7 +17,7 @@ import {
   getActiveLevel,
   getActiveType,
   getCurrentPage,
-  getSortByType,
+  getSortType,
   getSortOrder,
 } from '../../store/app-process/app-process.selectors';
 import {
@@ -51,7 +51,7 @@ function CatalogPage(): JSX.Element {
   const activeFilterLevel = useAppSelector(getActiveLevel);
   const activeFilterCategory = useAppSelector(getActiveCategory);
 
-  const activeSortByType = useAppSelector(getSortByType);
+  const activeSortType = useAppSelector(getSortType);
   const activeSortOrder = useAppSelector(getSortOrder);
 
   const isModalOpen = useAppSelector(checkModalOpen);
@@ -67,7 +67,7 @@ function CatalogPage(): JSX.Element {
 
   const sortedCameras: TCameras = sortCameras(
     filteredCameras,
-    activeSortByType,
+    activeSortType,
     activeSortOrder
   );
 
@@ -110,7 +110,7 @@ function CatalogPage(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <Sorting
-                    activeSortByType={activeSortByType}
+                    activeSortType={activeSortType}
                     activeSortOrder={activeSortOrder}
                   />
                   {camerasToRender.length > 0 ? (

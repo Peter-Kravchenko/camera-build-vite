@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { TAppState } from '../types/state';
 import { createAPI } from '../services/api';
-import { RequestStatus, SortByType, SortOrder } from '../const';
+import { RequestStatus, SortType, SortOrder } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
@@ -81,7 +81,7 @@ export const makeFakeStore = (
     currentPage: 1,
     similarSliderIndex: 0,
     reviewsQtyOnPage: 3,
-    sortByType: SortByType.Popularity,
+    sortType: SortType.ByPopularity,
     sortOrder: SortOrder.Up,
     activePrice: [0, 1000000],
     activeCategory: null,

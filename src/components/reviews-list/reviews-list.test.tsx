@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { makeFakeReviews, makeFakeStore } from '../../utils/mocks';
 import ReviewsList from './reviews-list';
-import { RequestStatus, SortByType, SortOrder } from '../../const';
+import { RequestStatus, SortType, SortOrder } from '../../const';
 
 describe('Component: ReviewsList', () => {
   it('should render correctly', () => {
@@ -45,7 +45,7 @@ describe('Component: ReviewsList', () => {
         currentPage: 1,
         reviewsQtyOnPage: 3,
         similarSliderIndex: 0,
-        sortByType: SortByType.Popularity,
+        sortType: SortType.ByPopularity,
         sortOrder: SortOrder.Down,
       },
     });

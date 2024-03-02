@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useSearchParams } from 'react-router-dom';
-import { SortByType, SortOrder } from '../../const';
+import { SortType, SortOrder } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   setSortByType,
@@ -10,18 +10,15 @@ import { getSortByTypeName, getSortOrderName } from '../../utils/utils';
 import useSortNavigation from '../../hooks/use-sort-navigation';
 
 type SortProps = {
-  activeSortByType: SortByType | null;
+  activeSortType: SortType | null;
   activeSortOrder: SortOrder | null;
 };
 
-function Sorting({
-  activeSortByType,
-  activeSortOrder,
-}: SortProps): JSX.Element {
+function Sorting({ activeSortType, activeSortOrder }: SortProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSortTypeChange = (type: SortByType) => {
+  const handleSortTypeChange = (type: SortType) => {
     searchParams.set('search_type', type);
     setSearchParams(searchParams);
     dispatch(setSortByType(type));
@@ -33,7 +30,7 @@ function Sorting({
     dispatch(setSortOrder(order));
   };
 
-  useSortNavigation(activeSortByType, activeSortOrder);
+  useSortNavigation(activeSortType, activeSortOrder);
 
   return (
     <div className="catalog-sort">
@@ -41,13 +38,13 @@ function Sorting({
         <div className="catalog-sort__inner">
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
-            {Object.values(SortByType).map((type) => (
+            {Object.values(SortType).map((type) => (
               <div key={type} className="catalog-sort__btn-text">
                 <input
                   type="radio"
                   id={type}
                   name="sort"
-                  checked={type === activeSortByType}
+                  checked={type === activeSortType}
                   onChange={() => handleSortTypeChange(type)}
                 />
                 <label htmlFor={type}>{getSortByTypeName(type)}</label>

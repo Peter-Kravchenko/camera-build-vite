@@ -2,7 +2,7 @@ import {
   Category,
   Level,
   RequestStatus,
-  SortByType,
+  SortType,
   SortOrder,
   Type,
 } from '../const';
@@ -19,12 +19,9 @@ export type TAppProcess = {
   currentPage: number;
   similarSliderIndex: number;
   reviewsQtyOnPage: number;
-  sortByType: SortByType | null;
+  sortType: SortType | null;
   sortOrder: SortOrder | null;
-  activePrice: {
-    min: number;
-    max: number;
-  };
+  activePrice: TPrice;
   activeCategory: Category | null;
   activeType: Type[];
   activeLevel: Level[];
@@ -66,4 +63,9 @@ export type TReviewsData = {
 
 export type TAddReviewData = {
   fetchingStatus: RequestStatus;
+};
+
+export type TPrice = {
+  min: number;
+  max: number;
 };

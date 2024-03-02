@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { SortByType, SortOrder } from '../const';
+import { SortType, SortOrder } from '../const';
 import {
   setSortByType,
   setSortOrder,
@@ -8,7 +8,7 @@ import {
 import { useAppDispatch } from '.';
 
 const useSortNavigation = (
-  activeSortByType: SortByType | null,
+  activeSortType: SortType | null,
   activeSortOrder: SortOrder | null
 ) => {
   const dispatch = useAppDispatch();
@@ -20,14 +20,14 @@ const useSortNavigation = (
 
     const isValidTypeParams =
       sortTypeParams &&
-      Object.values(SortByType).includes(sortTypeParams as SortByType);
+      Object.values(SortType).includes(sortTypeParams as SortType);
     const isValidOrderParams =
       sortOrderParams &&
       Object.values(SortOrder).includes(sortOrderParams as SortOrder);
 
-    if (sortTypeParams !== activeSortByType) {
+    if (sortTypeParams !== activeSortType) {
       if (isValidTypeParams) {
-        dispatch(setSortByType(sortTypeParams as SortByType));
+        dispatch(setSortByType(sortTypeParams as SortType));
       } else {
         searchParams.delete('search_type');
         setSearchParams(searchParams);
@@ -43,7 +43,7 @@ const useSortNavigation = (
       }
     }
   }, [
-    activeSortByType,
+    activeSortType,
     activeSortOrder,
     searchParams,
     setSearchParams,

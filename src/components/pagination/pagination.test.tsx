@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { makeFakeCameras } from '../../utils/mocks';
 import Pagination from './pagination';
-import { SortByType, SortOrder } from '../../const';
+import { SortType, SortOrder } from '../../const';
 
 describe('Component: Pagination', () => {
   it('should render correctly', () => {
@@ -14,7 +14,7 @@ describe('Component: Pagination', () => {
           currentPage: 1,
           reviewsQtyOnPage: 3,
           similarSliderIndex: 0,
-          sortByType: SortByType.Popularity,
+          sortType: SortType.ByPopularity,
           sortOrder: SortOrder.Down,
         },
       }

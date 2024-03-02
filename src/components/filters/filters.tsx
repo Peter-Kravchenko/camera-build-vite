@@ -1,10 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
-import { Category, Level, Type } from '../../const';
+import { Category, Level, Price, Type } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
   setActiveCategory,
   setActiveLevel,
+  setActivePrice,
   setActiveType,
 } from '../../store/app-process/app-process.slice';
 import { getCorrectFilterCategory } from '../../utils/utils';
@@ -22,8 +23,14 @@ function Filters({
   activeFilterLevel,
 }: FilterProps): JSX.Element {
   const dispatch = useAppDispatch();
-
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const handlePriceChange = (minPrice: number, maxPrice: number) => {
+    dispatch(setActivePrice({ min: minPrice, max: maxPrice }));
+    searchParams.set('min_price', String(minPrice));
+    searchParams.set('max_price', String(maxPrice));
+    setSearchParams(searchParams);
+  };
 
   const handleCategoryChange = (category: Category) => {
     dispatch(setActiveCategory(category));
@@ -90,6 +97,7 @@ function Filters({
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Цена, ₽</legend>
         <div className="catalog-filter__price-range">
+          {Object.values(Price)}
           <div className="custom-input">
             <label>
               <input type="number" name="price" placeholder="от" />
