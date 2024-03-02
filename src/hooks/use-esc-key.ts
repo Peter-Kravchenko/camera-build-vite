@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-function useEscKey(onEscKey: () => void): void {
+const useEscKey = (onEscKey: () => void) => {
   useEffect(() => {
     const handleEscKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
@@ -12,6 +12,6 @@ function useEscKey(onEscKey: () => void): void {
       document.removeEventListener('keydown', handleEscKey);
     };
   }, [onEscKey]);
-}
+};
 
 export default useEscKey;

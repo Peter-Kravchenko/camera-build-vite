@@ -8,6 +8,7 @@ import {
   setActiveType,
 } from '../../store/app-process/app-process.slice';
 import { getCorrectFilterCategory } from '../../utils/utils';
+import useFilterNavigation from '../../hooks/use-filter-navigation';
 
 type FilterProps = {
   activeFilterCategory: Category | null;
@@ -71,8 +72,17 @@ function Filters({
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
-    setSearchParams({});
+    searchParams.delete('category');
+    searchParams.delete('type');
+    searchParams.delete('level');
+    setSearchParams(searchParams);
   };
+
+  useFilterNavigation(
+    activeFilterCategory,
+    activeFilterType,
+    activeFilterLevel
+  );
 
   return (
     <form action="#">

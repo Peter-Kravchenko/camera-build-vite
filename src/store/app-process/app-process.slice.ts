@@ -60,11 +60,7 @@ export const appProcess = createSlice({
       state.activePrice = action.payload;
     },
     setActiveCategory: (state, action: PayloadAction<Category>) => {
-      if (state.activeCategory === action.payload) {
-        state.activeCategory = null;
-      } else {
-        state.activeCategory = action.payload;
-      }
+      state.activeCategory = action.payload;
     },
     setActiveType: (state, action: PayloadAction<Type>) => {
       if (state.activeType.includes(action.payload)) {

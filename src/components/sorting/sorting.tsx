@@ -7,6 +7,7 @@ import {
   setSortOrder,
 } from '../../store/app-process/app-process.slice';
 import { getSortByTypeName, getSortOrderName } from '../../utils/utils';
+import useSortNavigation from '../../hooks/use-sort-navigation';
 
 type SortProps = {
   activeSortByType: SortByType | null;
@@ -32,8 +33,7 @@ function Sorting({
     dispatch(setSortOrder(order));
   };
 
-  //  console.log(searchParams.get('search_type'));
-  //  console.log(searchParams.get('search_order'));
+  useSortNavigation(activeSortByType, activeSortOrder);
 
   return (
     <div className="catalog-sort">

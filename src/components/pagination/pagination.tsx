@@ -4,6 +4,7 @@ import usePagination from '../../hooks/use-pagination';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentPage } from '../../store/app-process/app-process.slice';
+import usePageNavigation from '../../hooks/use-page-navigation';
 
 type PaginationProps = {
   cameras: TCameras;
@@ -14,8 +15,14 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { currentIteration, totalIterations, firstPage, lastPage, pages } =
-    usePagination(cameras, currentPage);
+  const {
+    currentIteration,
+    totalIterations,
+    totalPages,
+    firstPage,
+    lastPage,
+    pages,
+  } = usePagination(cameras, currentPage);
 
   const handleBackButtonClick = () => {
     const prevPage = firstPage - 1;
@@ -36,6 +43,8 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
     searchParams.set('page', String(nextPage));
     setSearchParams(searchParams);
   };
+
+  usePageNavigation(totalPages, currentPage);
 
   return (
     <div
