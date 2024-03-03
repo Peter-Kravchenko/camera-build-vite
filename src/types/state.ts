@@ -21,7 +21,8 @@ export type TAppProcess = {
   reviewsQtyOnPage: number;
   sortType: SortType | null;
   sortOrder: SortOrder | null;
-  activePrice: TPrice;
+  activeMinPrice: TMinPrice;
+  activeMaxPrice: TMaxPrice;
   activeCategory: Category | null;
   activeType: Type[];
   activeLevel: Level[];
@@ -65,7 +66,5 @@ export type TAddReviewData = {
   fetchingStatus: RequestStatus;
 };
 
-export type TPrice = {
-  min: number;
-  max: number;
-};
+export type TMinPrice = number | null;
+export type TMaxPrice = number | null;

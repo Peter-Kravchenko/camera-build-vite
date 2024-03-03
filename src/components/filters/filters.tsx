@@ -1,23 +1,37 @@
 import { useSearchParams } from 'react-router-dom';
-import { Category, Level, Price, Type } from '../../const';
+import { Category, Level, Type } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
   setActiveCategory,
   setActiveLevel,
-  setActivePrice,
+  setActiveMaxPrice,
+  setActiveMinPrice,
   setActiveType,
 } from '../../store/app-process/app-process.slice';
-import { getCorrectFilterCategory } from '../../utils/utils';
+import {
+  getCorrectFilterCategory,
+  getMaxCamPrice,
+  getMinCamPrice,
+} from '../../utils/utils';
 import useFilterNavigation from '../../hooks/use-filter-navigation';
+import { TMaxPrice, TMinPrice } from '../../types/state';
+import { TCameras } from '../../types/cameras';
+import { useState } from 'react';
 
 type FilterProps = {
+  cameras: TCameras;
+  activeMinPrice: TMinPrice;
+  activeMaxPrice: TMaxPrice;
   activeFilterCategory: Category | null;
   activeFilterType: Type[];
   activeFilterLevel: Level[];
 };
 
 function Filters({
+  cameras,
+  activeMinPrice,
+  activeMaxPrice,
   activeFilterCategory,
   activeFilterType,
   activeFilterLevel,
@@ -25,15 +39,70 @@ function Filters({
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handlePriceChange = (minPrice: number, maxPrice: number) => {
-    dispatch(setActivePrice({ min: minPrice, max: maxPrice }));
-    searchParams.set('min_price', String(minPrice));
-    searchParams.set('max_price', String(maxPrice));
-    setSearchParams(searchParams);
+  const [priceValue, setPriceValue] = useState({
+    min: activeMinPrice,
+    max: activeMaxPrice,
+  });
+
+  // const camsPrice = setPriceByCams(cameras, activePrice.min, activePrice.max);
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    console.log(e.target);
+
+    setPriceValue({
+      ...priceValue,
+      [name]: Number(value),
+    });
   };
 
+  const handleBlurPrice = () => {
+    if (priceValue.min) {
+      const minCamPrice = getMinCamPrice(cameras, priceValue.min);
+      setPriceValue({
+        ...priceValue,
+        min: minCamPrice,
+      });
+
+      dispatch(setActiveMinPrice(priceValue.min));
+      searchParams.set('min_price', String(priceValue.min));
+      setSearchParams(searchParams);
+    }
+
+    if (priceValue.max) {
+      const maxCamPrice = getMaxCamPrice(cameras, priceValue.max);
+      setPriceValue({
+        ...priceValue,
+        max: maxCamPrice,
+      });
+
+      dispatch(setActiveMaxPrice(priceValue.max));
+      searchParams.set('max_price', String(priceValue.max));
+      setSearchParams(searchParams);
+    }
+
+    // if (priceValue.min && priceValue.max) {
+    //   if (priceValue.min > priceValue.max) {
+    //     setPriceValue({
+    //       ...priceValue,
+    //       min: priceValue.max,
+    //     });
+    //   }
+    //   if (priceValue.max < priceValue.min) {
+    //     setPriceValue({
+    //       ...priceValue,
+    //       max: priceValue.min,
+    //     });
+    //   }
+    // }
+  };
+
+  console.log('priceValue', priceValue);
+
   const handleCategoryChange = (category: Category) => {
-    dispatch(setActiveCategory(category));
+    dispatch(
+      setActiveCategory(category === activeFilterCategory ? null : category)
+    );
     if (activeFilterCategory === category) {
       searchParams.delete('category');
     } else {
@@ -79,6 +148,8 @@ function Filters({
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
+    searchParams.delete('min_price');
+    searchParams.delete('max_price');
     searchParams.delete('category');
     searchParams.delete('type');
     searchParams.delete('level');
@@ -97,15 +168,28 @@ function Filters({
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Цена, ₽</legend>
         <div className="catalog-filter__price-range">
-          {Object.values(Price)}
           <div className="custom-input">
             <label>
-              <input type="number" name="price" placeholder="от" />
+              <input
+                type="number"
+                name="min"
+                placeholder="от"
+                value={priceValue.min || ''}
+                onBlur={handleBlurPrice}
+                onChange={handlePriceChange}
+              />
             </label>
           </div>
           <div className="custom-input">
             <label>
-              <input type="number" name="priceUp" placeholder="до" />
+              <input
+                type="number"
+                name="max"
+                placeholder="до"
+                onBlur={handleBlurPrice}
+                value={priceValue.max || ''}
+                onChange={handlePriceChange}
+              />
             </label>
           </div>
         </div>

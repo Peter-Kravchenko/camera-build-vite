@@ -27,9 +27,14 @@ export const getSortOrder = createSelector(
   (state: TAppProcess) => state.sortOrder
 );
 
-export const getActivePrice = createSelector(
+export const getActiveMinPrice = createSelector(
   (state: Pick<TAppState, NameSpace.App>) => state[NameSpace.App],
-  (state: TAppProcess) => state.activePrice
+  (state: TAppProcess) => state.activeMinPrice
+);
+
+export const getActiveMaxPrice = createSelector(
+  (state: Pick<TAppState, NameSpace.App>) => state[NameSpace.App],
+  (state: TAppProcess) => state.activeMaxPrice
 );
 
 export const getActiveCategory = createSelector(

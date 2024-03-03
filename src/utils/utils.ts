@@ -3,6 +3,7 @@ import 'dayjs/locale/ru'; // Import the Russian locale
 import { Category, Level, SortType, SortOrder, Tab, Type } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReview, TReviews } from '../types/reviews';
+import { TMaxPrice, TMinPrice } from '../types/state';
 
 dayjs.locale('ru');
 
@@ -103,12 +104,24 @@ const sortCamerasByPopularity = {
 
 export const filterCameras = (
   cameras: TCameras,
+  activeMinPrice: TMinPrice | null,
+  activeMaxPrice: TMaxPrice | null,
   activeCategory: Category | null,
   activeType: Type[],
   activeLevel: Level[]
 ): TCameras => {
   let filteredCameras: TCameras = cameras;
 
+  if (activeMinPrice) {
+    filteredCameras = filteredCameras.filter(
+      (camera) => camera.price >= activeMinPrice
+    );
+  }
+  if (activeMaxPrice) {
+    filteredCameras = filteredCameras.filter(
+      (camera) => camera.price <= activeMaxPrice
+    );
+  }
   if (activeCategory) {
     filteredCameras = filteredCameras.filter(
       (camera) => camera.category === activeCategory
@@ -174,4 +187,21 @@ export const searchCameras = (
   return cameras.filter((product) =>
     product.name.toLowerCase().includes(searchText.toLowerCase())
   );
+};
+
+export const getMinCamPrice = (cameras: TCameras, minValue: number) => {
+  const minPrice = Math.min(...cameras.map((camera) => camera.price));
+  if (minPrice > minValue) {
+    return minPrice;
+  } else {
+    return minValue;
+  }
+};
+export const getMaxCamPrice = (cameras: TCameras, maxValue: number) => {
+  const maxCamPrice = Math.max(...cameras.map((camera) => camera.price));
+  if (maxCamPrice < maxValue) {
+    return maxCamPrice;
+  } else {
+    return maxValue;
+  }
 };

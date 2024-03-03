@@ -19,6 +19,8 @@ import {
   getCurrentPage,
   getSortType,
   getSortOrder,
+  getActiveMaxPrice,
+  getActiveMinPrice,
 } from '../../store/app-process/app-process.selectors';
 import {
   filterCameras,
@@ -47,6 +49,9 @@ function CatalogPage(): JSX.Element {
   const cameras = useAppSelector(getCameras);
   const cemerasFetchingStatus = useAppSelector(getCamerasFetchingStatus);
 
+  const activeMinPrice = useAppSelector(getActiveMinPrice);
+  const activeMaxPrice = useAppSelector(getActiveMaxPrice);
+
   const activeFilterType = useAppSelector(getActiveType);
   const activeFilterLevel = useAppSelector(getActiveLevel);
   const activeFilterCategory = useAppSelector(getActiveCategory);
@@ -60,6 +65,8 @@ function CatalogPage(): JSX.Element {
 
   const filteredCameras: TCameras = filterCameras(
     cameras,
+    activeMinPrice,
+    activeMaxPrice,
     activeFilterCategory,
     activeFilterType,
     activeFilterLevel
@@ -102,6 +109,9 @@ function CatalogPage(): JSX.Element {
                 <div className="catalog__aside">
                   <div className="catalog-filter">
                     <Filters
+                      cameras={cameras}
+                      activeMinPrice={activeMinPrice}
+                      activeMaxPrice={activeMaxPrice}
                       activeFilterCategory={activeFilterCategory}
                       activeFilterType={activeFilterType}
                       activeFilterLevel={activeFilterLevel}

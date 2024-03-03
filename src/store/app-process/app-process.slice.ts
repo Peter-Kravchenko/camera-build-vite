@@ -11,7 +11,7 @@ import {
   SortOrder,
   Type,
 } from '../../const';
-import { TAppProcess, TPrice } from '../../types/state';
+import { TAppProcess, TMaxPrice, TMinPrice } from '../../types/state';
 
 const initialState: TAppProcess = {
   currentPage: DEFAULT_PAGE,
@@ -19,10 +19,8 @@ const initialState: TAppProcess = {
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
   sortType: null,
   sortOrder: null,
-  activePrice: {
-    min: 0,
-    max: 1000000,
-  },
+  activeMinPrice: null,
+  activeMaxPrice: null,
   activeCategory: null,
   activeType: [],
   activeLevel: [],
@@ -53,10 +51,14 @@ export const appProcess = createSlice({
       }
       state.sortOrder = action.payload;
     },
-    setActivePrice: (state, action: PayloadAction<TPrice>) => {
-      state.activePrice = action.payload;
+    setActiveMinPrice: (state, action: PayloadAction<TMinPrice>) => {
+      state.activeMinPrice = action.payload;
     },
-    setActiveCategory: (state, action: PayloadAction<Category>) => {
+    setActiveMaxPrice: (state, action: PayloadAction<TMaxPrice>) => {
+      state.activeMaxPrice = action.payload;
+    },
+
+    setActiveCategory: (state, action: PayloadAction<Category | null>) => {
       state.activeCategory = action.payload;
     },
     setActiveType: (state, action: PayloadAction<Type>) => {
@@ -98,7 +100,8 @@ export const {
   showMoreReviews,
   setSortByType,
   setSortOrder,
-  setActivePrice,
+  setActiveMinPrice,
+  setActiveMaxPrice,
   setActiveCategory,
   setActiveType,
   setActiveLevel,
