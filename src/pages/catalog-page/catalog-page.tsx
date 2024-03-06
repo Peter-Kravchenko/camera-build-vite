@@ -23,7 +23,8 @@ import {
   getActiveMinPrice,
 } from '../../store/app-process/app-process.selectors';
 import {
-  filterCameras,
+  filterCamerasByParams,
+  filterCamerasByPrice,
   getCamerasFromCurrentPage,
   sortCameras,
 } from '../../utils/utils';
@@ -63,17 +64,21 @@ function CatalogPage(): JSX.Element {
 
   const currentPage = useAppSelector(getCurrentPage);
 
-  const filteredCameras: TCameras = filterCameras(
+  const filteredCamerasByParams: TCameras = filterCamerasByParams(
     cameras,
-    activeMinPrice,
-    activeMaxPrice,
     activeFilterCategory,
     activeFilterType,
     activeFilterLevel
   );
 
+  const filteredCamerasByPrice: TCameras = filterCamerasByPrice(
+    filteredCamerasByParams,
+    activeMinPrice,
+    activeMaxPrice
+  );
+
   const sortedCameras: TCameras = sortCameras(
-    filteredCameras,
+    filteredCamerasByPrice,
     activeSortType,
     activeSortOrder
   );
@@ -109,7 +114,7 @@ function CatalogPage(): JSX.Element {
                 <div className="catalog__aside">
                   <div className="catalog-filter">
                     <Filters
-                      cameras={cameras}
+                      cameras={filteredCamerasByParams}
                       activeMinPrice={activeMinPrice}
                       activeMaxPrice={activeMaxPrice}
                       activeFilterCategory={activeFilterCategory}

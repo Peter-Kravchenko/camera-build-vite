@@ -19,8 +19,8 @@ const initialState: TAppProcess = {
   reviewsQtyOnPage: REVIEWS_ON_FIRST_LOAD,
   sortType: null,
   sortOrder: null,
-  activeMinPrice: null,
-  activeMaxPrice: null,
+  activeMinPrice: 0,
+  activeMaxPrice: 0,
   activeCategory: null,
   activeType: [],
   activeLevel: [],
@@ -80,6 +80,8 @@ export const appProcess = createSlice({
       }
     },
     resetFilters: (state) => {
+      state.activeMinPrice = null;
+      state.activeMaxPrice = null;
       state.activeCategory = null;
       state.activeType = [];
       state.activeLevel = [];

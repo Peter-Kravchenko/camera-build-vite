@@ -109,6 +109,12 @@ export enum BasketAction {
   Remove = 'remove',
 }
 
+export enum PriceValidation {
+  Idle = 'idle',
+  Error = 'is-invalid',
+  Success = 'is-valid',
+}
+
 export const ratingMap: Record<string, string> = {
   '5': 'Отлично',
   '4': 'Хорошо',

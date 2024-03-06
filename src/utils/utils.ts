@@ -102,26 +102,14 @@ const sortCamerasByPopularity = {
     [...cameras].sort(sortCamerasByPopularityDecrease),
 };
 
-export const filterCameras = (
+export const filterCamerasByParams = (
   cameras: TCameras,
-  activeMinPrice: TMinPrice | null,
-  activeMaxPrice: TMaxPrice | null,
   activeCategory: Category | null,
   activeType: Type[],
   activeLevel: Level[]
 ): TCameras => {
   let filteredCameras: TCameras = cameras;
 
-  if (activeMinPrice) {
-    filteredCameras = filteredCameras.filter(
-      (camera) => camera.price >= activeMinPrice
-    );
-  }
-  if (activeMaxPrice) {
-    filteredCameras = filteredCameras.filter(
-      (camera) => camera.price <= activeMaxPrice
-    );
-  }
   if (activeCategory) {
     filteredCameras = filteredCameras.filter(
       (camera) => camera.category === activeCategory
@@ -135,6 +123,27 @@ export const filterCameras = (
   if (activeLevel.length) {
     filteredCameras = filteredCameras.filter((camera) =>
       activeLevel.includes(camera.level)
+    );
+  }
+
+  return filteredCameras;
+};
+
+export const filterCamerasByPrice = (
+  cameras: TCameras,
+  activeMinPrice: TMinPrice | null,
+  activeMaxPrice: TMaxPrice | null
+): TCameras => {
+  let filteredCameras: TCameras = cameras;
+
+  if (activeMinPrice) {
+    filteredCameras = filteredCameras.filter(
+      (camera) => camera.price >= activeMinPrice
+    );
+  }
+  if (activeMaxPrice) {
+    filteredCameras = filteredCameras.filter(
+      (camera) => camera.price <= activeMaxPrice
     );
   }
 
@@ -189,19 +198,33 @@ export const searchCameras = (
   );
 };
 
-export const getMinCamPrice = (cameras: TCameras, minValue: number) => {
-  const minPrice = Math.min(...cameras.map((camera) => camera.price));
-  if (minPrice > minValue) {
-    return minPrice;
+export const getMinCamPrice = (
+  catalogMinValue: number,
+  minValue: number | null
+) => {
+  if (minValue === 0) {
+    return 0;
+  } else if (minValue && catalogMinValue > minValue) {
+    return catalogMinValue;
   } else {
     return minValue;
   }
 };
-export const getMaxCamPrice = (cameras: TCameras, maxValue: number) => {
-  const maxCamPrice = Math.max(...cameras.map((camera) => camera.price));
-  if (maxCamPrice < maxValue) {
-    return maxCamPrice;
+export const getMaxCamPrice = (
+  catalogMaxValue: number,
+  maxValue: number | null
+) => {
+  if (maxValue === 0) {
+    return 0;
+  } else if (maxValue && catalogMaxValue < maxValue) {
+    return catalogMaxValue;
   } else {
     return maxValue;
   }
 };
+
+export const getCatalogMinValue = (cameras: TCameras) =>
+  Math.min(...cameras.map((camera) => camera.price));
+
+export const getCatalogMaxValue = (cameras: TCameras) =>
+  Math.max(...cameras.map((camera) => camera.price));

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { Category, Level, Type } from '../../const';
+import { Category, Level, PriceValidation, Type } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
@@ -12,12 +12,15 @@ import {
 import {
   getCorrectFilterCategory,
   getMaxCamPrice,
+  getCatalogMaxValue,
   getMinCamPrice,
+  getCatalogMinValue,
 } from '../../utils/utils';
 import useFilterNavigation from '../../hooks/use-filter-navigation';
 import { TMaxPrice, TMinPrice } from '../../types/state';
 import { TCameras } from '../../types/cameras';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import cn from 'classnames';
 
 type FilterProps = {
   cameras: TCameras;
@@ -39,65 +42,117 @@ function Filters({
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [catalogPriceValue, setCatalogPriceValue] = useState({
+    min: '',
+    max: '',
+  });
+
   const [priceValue, setPriceValue] = useState({
     min: activeMinPrice,
     max: activeMaxPrice,
   });
 
-  // const camsPrice = setPriceByCams(cameras, activePrice.min, activePrice.max);
+  const [isPriceValid, setIsPriceValid] = useState({
+    min: PriceValidation.Idle,
+    max: PriceValidation.Idle,
+  });
+
+  console.log('isMinValid', isPriceValid.min);
+  console.log('isMaxValid', isPriceValid.max);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log(e.target);
-
     setPriceValue({
       ...priceValue,
       [name]: Number(value),
     });
   };
 
-  const handleBlurPrice = () => {
-    if (priceValue.min) {
-      const minCamPrice = getMinCamPrice(cameras, priceValue.min);
-      setPriceValue({
-        ...priceValue,
-        min: minCamPrice,
-      });
+  const handleBlurMinPrice = () => {
+    const isValidMinPrice =
+      (priceValue.min && priceValue.min > 0) ||
+      (priceValue.min && priceValue.max && priceValue.min < priceValue.max);
 
-      dispatch(setActiveMinPrice(priceValue.min));
-      searchParams.set('min_price', String(priceValue.min));
+    if (priceValue.min !== 0) {
+      if (isValidMinPrice) {
+        setIsPriceValid({
+          ...isPriceValid,
+          min: PriceValidation.Success,
+        });
+        dispatch(setActiveMinPrice(priceValue.min));
+        searchParams.set('gte', String(priceValue.min));
+        setSearchParams(searchParams);
+      } else {
+        setIsPriceValid({
+          ...isPriceValid,
+          min: PriceValidation.Error,
+        });
+      }
+    } else {
+      dispatch(setActiveMinPrice(0));
+      searchParams.delete('gte');
       setSearchParams(searchParams);
-    }
-
-    if (priceValue.max) {
-      const maxCamPrice = getMaxCamPrice(cameras, priceValue.max);
-      setPriceValue({
-        ...priceValue,
-        max: maxCamPrice,
+      setIsPriceValid({
+        ...isPriceValid,
+        min: PriceValidation.Idle,
       });
-
-      dispatch(setActiveMaxPrice(priceValue.max));
-      searchParams.set('max_price', String(priceValue.max));
-      setSearchParams(searchParams);
     }
-
-    // if (priceValue.min && priceValue.max) {
-    //   if (priceValue.min > priceValue.max) {
-    //     setPriceValue({
-    //       ...priceValue,
-    //       min: priceValue.max,
-    //     });
-    //   }
-    //   if (priceValue.max < priceValue.min) {
-    //     setPriceValue({
-    //       ...priceValue,
-    //       max: priceValue.min,
-    //     });
-    //   }
-    // }
   };
 
+  const handleBlurMaxPrice = () => {
+    const isValidMaxPrice =
+      (priceValue.max && priceValue.max > 0) ||
+      (priceValue.min && priceValue.max && priceValue.max < priceValue.min);
+
+    if (priceValue.max !== 0) {
+      if (isValidMaxPrice) {
+        setIsPriceValid({
+          ...isPriceValid,
+          max: PriceValidation.Success,
+        });
+        dispatch(setActiveMaxPrice(priceValue.max));
+        searchParams.set('lte', String(priceValue.max));
+        setSearchParams(searchParams);
+      } else {
+        setIsPriceValid({
+          ...isPriceValid,
+          max: PriceValidation.Error,
+        });
+      }
+    } else {
+      dispatch(setActiveMaxPrice(0));
+      searchParams.delete('lte');
+      setSearchParams(searchParams);
+      setIsPriceValid({
+        ...isPriceValid,
+        max: PriceValidation.Idle,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const catalogMinValue = getCatalogMinValue(cameras);
+    const catalogMaxValue = getCatalogMaxValue(cameras);
+
+    const minPriceValue = getMinCamPrice(catalogMinValue, activeMinPrice);
+    const maxPriceValue = getMaxCamPrice(catalogMaxValue, activeMaxPrice);
+
+    setPriceValue({
+      min: minPriceValue,
+      max: maxPriceValue,
+    });
+
+    setCatalogPriceValue({
+      min: String(catalogMinValue),
+      max: String(catalogMaxValue),
+    });
+  }, [activeMinPrice, activeMaxPrice, cameras]);
+
+  console.log('placeholderPriceValue', catalogPriceValue);
   console.log('priceValue', priceValue);
+  console.log('activeMinPrice', activeMinPrice);
+  console.log('activeMaxPrice', activeMaxPrice);
 
   const handleCategoryChange = (category: Category) => {
     dispatch(
@@ -148,8 +203,8 @@ function Filters({
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
-    searchParams.delete('min_price');
-    searchParams.delete('max_price');
+    searchParams.delete('gte');
+    searchParams.delete('lte');
     searchParams.delete('category');
     searchParams.delete('type');
     searchParams.delete('level');
@@ -157,6 +212,8 @@ function Filters({
   };
 
   useFilterNavigation(
+    activeMinPrice,
+    activeMaxPrice,
     activeFilterCategory,
     activeFilterType,
     activeFilterLevel
@@ -168,25 +225,37 @@ function Filters({
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Цена, ₽</legend>
         <div className="catalog-filter__price-range">
-          <div className="custom-input">
+          <div
+            className={cn(
+              'custom-input',
+              { 'is-valid': isPriceValid.min === PriceValidation.Success },
+              { 'is-invalid': isPriceValid.min === PriceValidation.Error }
+            )}
+          >
             <label>
               <input
                 type="number"
                 name="min"
-                placeholder="от"
+                placeholder={catalogPriceValue.min || ''}
                 value={priceValue.min || ''}
-                onBlur={handleBlurPrice}
+                onBlur={handleBlurMinPrice}
                 onChange={handlePriceChange}
               />
             </label>
           </div>
-          <div className="custom-input">
+          <div
+            className={cn(
+              'custom-input',
+              { 'is-valid': isPriceValid.max === PriceValidation.Success },
+              { 'is-invalid': isPriceValid.max === PriceValidation.Error }
+            )}
+          >
             <label>
               <input
                 type="number"
                 name="max"
-                placeholder="до"
-                onBlur={handleBlurPrice}
+                placeholder={catalogPriceValue.max || ''}
+                onBlur={handleBlurMaxPrice}
                 value={priceValue.max || ''}
                 onChange={handlePriceChange}
               />
@@ -225,7 +294,7 @@ function Filters({
                 name={name}
                 disabled={
                   activeFilterCategory === Category.Camcorder &&
-                  (type === Type.Collectors || type === Type.Instant)
+                  (type === Type.Film || type === Type.Instant)
                 }
               />
               <span className="custom-checkbox__icon" />
