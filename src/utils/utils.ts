@@ -198,10 +198,7 @@ export const searchCameras = (
   );
 };
 
-export const getMinCamPrice = (
-  catalogMinValue: number,
-  minValue: number | null
-) => {
+export const getMinCamPrice = (catalogMinValue: number, minValue: number) => {
   if (minValue === 0) {
     return 0;
   } else if (minValue && catalogMinValue > minValue) {
@@ -210,10 +207,7 @@ export const getMinCamPrice = (
     return minValue;
   }
 };
-export const getMaxCamPrice = (
-  catalogMaxValue: number,
-  maxValue: number | null
-) => {
+export const getMaxCamPrice = (catalogMaxValue: number, maxValue: number) => {
   if (maxValue === 0) {
     return 0;
   } else if (maxValue && catalogMaxValue < maxValue) {

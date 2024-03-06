@@ -80,8 +80,8 @@ export const appProcess = createSlice({
       }
     },
     resetFilters: (state) => {
-      state.activeMinPrice = null;
-      state.activeMaxPrice = null;
+      state.activeMinPrice = 0;
+      state.activeMaxPrice = 0;
       state.activeCategory = null;
       state.activeType = [];
       state.activeLevel = [];

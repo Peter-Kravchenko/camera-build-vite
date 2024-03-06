@@ -57,12 +57,8 @@ function Filters({
     max: PriceValidation.Idle,
   });
 
-  console.log('isMinValid', isPriceValid.min);
-  console.log('isMaxValid', isPriceValid.max);
-
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(e.target);
     setPriceValue({
       ...priceValue,
       [name]: Number(value),
@@ -70,12 +66,17 @@ function Filters({
   };
 
   const handleBlurMinPrice = () => {
-    const isValidMinPrice =
-      (priceValue.min && priceValue.min > 0) ||
-      (priceValue.min && priceValue.max && priceValue.min < priceValue.max);
+    const isNotValidMinPrice =
+      priceValue.min < 0 ||
+      (priceValue.min > priceValue.max && priceValue.max !== 0);
 
     if (priceValue.min !== 0) {
-      if (isValidMinPrice) {
+      if (isNotValidMinPrice) {
+        setIsPriceValid({
+          ...isPriceValid,
+          min: PriceValidation.Error,
+        });
+      } else {
         setIsPriceValid({
           ...isPriceValid,
           min: PriceValidation.Success,
@@ -83,11 +84,6 @@ function Filters({
         dispatch(setActiveMinPrice(priceValue.min));
         searchParams.set('gte', String(priceValue.min));
         setSearchParams(searchParams);
-      } else {
-        setIsPriceValid({
-          ...isPriceValid,
-          min: PriceValidation.Error,
-        });
       }
     } else {
       dispatch(setActiveMinPrice(0));
@@ -101,12 +97,19 @@ function Filters({
   };
 
   const handleBlurMaxPrice = () => {
-    const isValidMaxPrice =
-      (priceValue.max && priceValue.max > 0) ||
-      (priceValue.min && priceValue.max && priceValue.max < priceValue.min);
+    const isNotValidMaxPrice =
+      priceValue.max < 0 ||
+      (priceValue.max < priceValue.min && priceValue.min !== 0);
 
     if (priceValue.max !== 0) {
-      if (isValidMaxPrice) {
+      if (isNotValidMaxPrice) {
+        {
+          setIsPriceValid({
+            ...isPriceValid,
+            max: PriceValidation.Error,
+          });
+        }
+      } else {
         setIsPriceValid({
           ...isPriceValid,
           max: PriceValidation.Success,
@@ -114,11 +117,6 @@ function Filters({
         dispatch(setActiveMaxPrice(priceValue.max));
         searchParams.set('lte', String(priceValue.max));
         setSearchParams(searchParams);
-      } else {
-        setIsPriceValid({
-          ...isPriceValid,
-          max: PriceValidation.Error,
-        });
       }
     } else {
       dispatch(setActiveMaxPrice(0));
@@ -148,11 +146,6 @@ function Filters({
       max: String(catalogMaxValue),
     });
   }, [activeMinPrice, activeMaxPrice, cameras]);
-
-  console.log('placeholderPriceValue', catalogPriceValue);
-  console.log('priceValue', priceValue);
-  console.log('activeMinPrice', activeMinPrice);
-  console.log('activeMaxPrice', activeMaxPrice);
 
   const handleCategoryChange = (category: Category) => {
     dispatch(
@@ -209,6 +202,10 @@ function Filters({
     searchParams.delete('type');
     searchParams.delete('level');
     setSearchParams(searchParams);
+    setIsPriceValid({
+      min: PriceValidation.Idle,
+      max: PriceValidation.Idle,
+    });
   };
 
   useFilterNavigation(

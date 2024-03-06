@@ -66,5 +66,5 @@ export type TAddReviewData = {
   fetchingStatus: RequestStatus;
 };
 
-export type TMinPrice = number | null;
-export type TMaxPrice = number | null;
+export type TMinPrice = number;
+export type TMaxPrice = number;
