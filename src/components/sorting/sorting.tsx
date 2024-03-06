@@ -33,7 +33,7 @@ function Sorting({ activeSortType, activeSortOrder }: SortProps): JSX.Element {
   useSortNavigation(activeSortType, activeSortOrder);
 
   return (
-    <div className="catalog-sort">
+    <div className="catalog-sort" data-testid="sorting">
       <form action="#">
         <div className="catalog-sort__inner">
           <p className="title title--h5">Сортировать:</p>
@@ -41,9 +41,10 @@ function Sorting({ activeSortType, activeSortOrder }: SortProps): JSX.Element {
             {Object.values(SortType).map((type) => (
               <div key={type} className="catalog-sort__btn-text">
                 <input
+                  tabIndex={0}
                   type="radio"
                   id={type}
-                  name="sort"
+                  name={`sort ${type}`}
                   checked={type === activeSortType}
                   onChange={() => handleSortTypeChange(type)}
                 />
@@ -61,9 +62,10 @@ function Sorting({ activeSortType, activeSortOrder }: SortProps): JSX.Element {
                 )}
               >
                 <input
+                  tabIndex={0}
                   type="radio"
                   id={order}
-                  name="sort-icon"
+                  name={`sort-icon ${order}`}
                   aria-label={getSortOrderName(order)}
                   checked={order === activeSortOrder}
                   onChange={() => handleSortOrderChange(order)}

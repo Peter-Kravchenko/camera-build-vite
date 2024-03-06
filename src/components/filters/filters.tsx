@@ -217,7 +217,7 @@ function Filters({
   );
 
   return (
-    <form action="#">
+    <form action="#" data-testid="filters">
       <h2 className="visually-hidden">Фильтр</h2>
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Цена, ₽</legend>

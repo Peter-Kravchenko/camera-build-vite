@@ -16,6 +16,7 @@ describe('Component: BasketActionModal', () => {
           isModalAddToBasketSuccessOpen: false,
           isModalAddReviewOpen: false,
           isModalAddReviewSuccessOpen: false,
+          isModalRemoveFromBasketOpen: false,
         },
         CAMERA: {
           camera: mockCamera,
@@ -40,6 +41,7 @@ describe('Component: BasketActionModal', () => {
           isModalAddToBasketSuccessOpen: false,
           isModalAddReviewOpen: false,
           isModalAddReviewSuccessOpen: false,
+          isModalRemoveFromBasketOpen: false,
         },
         CAMERA: {
           camera: mockCamera,

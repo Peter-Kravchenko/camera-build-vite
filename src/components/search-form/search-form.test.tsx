@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import Layout from './layout';
-import { withHistory, withStore } from '../../utils/mock-component';
+import { withStore, withHistory } from '../../utils/mock-component';
 import { makeFakeStore } from '../../utils/mocks';
+import SearchForm from './search-form';
 
-describe('Component: Layout', () => {
+describe('Component: SearchForm', () => {
   it('should render correctly', () => {
     const mockStore = makeFakeStore();
-    const { withStoreComponent } = withStore(<Layout />, mockStore);
+    const { withStoreComponent } = withStore(<SearchForm />, mockStore);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 
-    expect(screen.getByTestId('layout')).toBeInTheDocument();
+    expect(screen.getByTestId('search-form')).toBeInTheDocument();
   });
 });

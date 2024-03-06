@@ -3,7 +3,7 @@ import {
   getReviewsQtyOnPage,
   getSimilarSliderIndex,
 } from './app-process.selectors';
-import { NameSpace, SortType, SortOrder } from '../../const';
+import { NameSpace } from '../../const';
 
 describe('AppProcess selectors', () => {
   const state = {
@@ -11,8 +11,13 @@ describe('AppProcess selectors', () => {
       currentPage: 1,
       similarSliderIndex: 0,
       reviewsQtyOnPage: 3,
-      sortByType: SortType.ByPopularity,
-      sortOrder: SortOrder.Down,
+      sortType: null,
+      sortOrder: null,
+      activeMinPrice: 0,
+      activeMaxPrice: 0,
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
     },
   };
   it('should return currentPage from state', () => {

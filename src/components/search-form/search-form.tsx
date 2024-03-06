@@ -42,14 +42,16 @@ function SearchForm() {
     const debounce = setTimeout(() => {
       setCamerasList(searchCameras(searchValue, cameras));
     }, TIMEOUT_DELAY);
-
     return () => {
       clearTimeout(debounce);
     };
   }, [searchValue, cameras]);
 
   return (
-    <div className={cn('form-search', { 'list-opened': isOpen })}>
+    <div
+      className={cn('form-search', { 'list-opened': isOpen })}
+      data-testid="search-form"
+    >
       <form onSubmit={(e) => e.preventDefault()}>
         <label>
           <svg
