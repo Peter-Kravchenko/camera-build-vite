@@ -9,9 +9,14 @@ import usePageNavigation from '../../hooks/use-page-navigation';
 type PaginationProps = {
   cameras: TCameras;
   currentPage: number;
+  camerasOnPage: boolean;
 };
 
-function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
+function Pagination({
+  cameras,
+  currentPage,
+  camerasOnPage,
+}: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -44,7 +49,7 @@ function Pagination({ cameras, currentPage }: PaginationProps): JSX.Element {
     setSearchParams(searchParams);
   };
 
-  usePageNavigation(totalPages, currentPage);
+  usePageNavigation(totalPages, currentPage, camerasOnPage);
 
   return (
     <div

@@ -3,6 +3,7 @@ import { Category, Level, PriceValidation, Type } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
+  resetTypeFilmAndInstant,
   setActiveCategory,
   setActiveLevel,
   setActiveMaxPrice,
@@ -151,6 +152,26 @@ function Filters({
     dispatch(
       setActiveCategory(category === activeFilterCategory ? null : category)
     );
+    if (
+      (category === Category.Camcorder &&
+        activeFilterType.includes(Type.Film)) ||
+      activeFilterType.includes(Type.Instant)
+    ) {
+      dispatch(resetTypeFilmAndInstant());
+      if (activeFilterType.length === 1) {
+        searchParams.delete('type');
+      } else {
+        searchParams.set(
+          'type',
+          activeFilterType
+            .filter(
+              (activeType) =>
+                activeType !== Type.Film && activeType !== Type.Instant
+            )
+            .toString()
+        );
+      }
+    }
     if (activeFilterCategory === category) {
       searchParams.delete('category');
     } else {
@@ -164,7 +185,7 @@ function Filters({
     if (activeFilterType.includes(type)) {
       searchParams.set(
         'type',
-        activeFilterType.filter((t) => t !== type).toString()
+        activeFilterType.filter((activeType) => activeType !== type).toString()
       );
 
       if (activeFilterType.length === 1) {
@@ -182,7 +203,9 @@ function Filters({
     if (activeFilterLevel.includes(level)) {
       searchParams.set(
         'level',
-        activeFilterLevel.filter((l) => l !== level).toString()
+        activeFilterLevel
+          .filter((activeLevel) => activeLevel !== level)
+          .toString()
       );
       if (activeFilterLevel.length === 1) {
         searchParams.delete('level');
@@ -194,7 +217,7 @@ function Filters({
     setSearchParams(searchParams);
   };
 
-  const handleResetFilters = () => {
+  const handleResetFiltersClick = () => {
     dispatch(resetFilters());
     searchParams.delete('gte');
     searchParams.delete('lte');
@@ -318,7 +341,7 @@ function Filters({
         ))}
       </fieldset>
       <button
-        onClick={() => handleResetFilters()}
+        onClick={() => handleResetFiltersClick()}
         className="btn catalog-filter__reset-btn"
         type="reset"
       >

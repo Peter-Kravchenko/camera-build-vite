@@ -7,7 +7,7 @@ describe('Component: Pagination', () => {
   it('should render correctly', () => {
     const mockCameras = makeFakeCameras();
     const { withStoreComponent } = withStore(
-      <Pagination cameras={mockCameras} currentPage={1} />,
+      <Pagination cameras={mockCameras} currentPage={1} camerasOnPage />,
       {
         APP: {
           currentPage: 1,

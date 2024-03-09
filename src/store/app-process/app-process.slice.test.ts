@@ -1,7 +1,10 @@
+import { Category, Level, Type } from '../../const';
 import { makeFakeRandomNumber } from '../../utils/mocks';
 import {
   appProcess,
   resetAppProcess,
+  resetFilters,
+  resetTypeFilmAndInstant,
   setCurrentPage,
   setSimilarSliderIndex,
   showMoreReviews,
@@ -141,6 +144,68 @@ describe('AppProcess slice', () => {
     const result = appProcess.reducer(initialState, showMoreReviews());
 
     expect(result.reviewsQtyOnPage).toBe(expectedReviewsQtyOnPage);
+  });
+
+  it('should reset type film and instant filters with "resetTypeFilmAndInstant" action', () => {
+    const initialState = {
+      currentPage: 1,
+      similarSliderIndex: 0,
+      reviewsQtyOnPage: 3,
+      sortType: null,
+      sortOrder: null,
+      activeMinPrice: 0,
+      activeMaxPrice: 0,
+      activeCategory: null,
+      activeType: [Type.Film, Type.Instant],
+      activeLevel: [],
+    };
+    const expectedState = {
+      currentPage: 1,
+      similarSliderIndex: 0,
+      reviewsQtyOnPage: 3,
+      sortType: null,
+      sortOrder: null,
+      activeMinPrice: 0,
+      activeMaxPrice: 0,
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
+    };
+
+    const result = appProcess.reducer(initialState, resetTypeFilmAndInstant());
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should reset filters with "resetFilters" action', () => {
+    const initialState = {
+      currentPage: 1,
+      similarSliderIndex: 0,
+      reviewsQtyOnPage: 3,
+      sortType: null,
+      sortOrder: null,
+      activeMinPrice: 10,
+      activeMaxPrice: 100000,
+      activeCategory: Category.Camera,
+      activeType: [Type.Film, Type.Instant],
+      activeLevel: [Level.Amateur, Level.Professional],
+    };
+    const expectedState = {
+      currentPage: 1,
+      similarSliderIndex: 0,
+      reviewsQtyOnPage: 3,
+      sortType: null,
+      sortOrder: null,
+      activeMinPrice: 0,
+      activeMaxPrice: 0,
+      activeCategory: null,
+      activeType: [],
+      activeLevel: [],
+    };
+
+    const result = appProcess.reducer(initialState, resetFilters());
+
+    expect(result).toEqual(expectedState);
   });
 
   it('should reset state with "resetAppProcess" action', () => {

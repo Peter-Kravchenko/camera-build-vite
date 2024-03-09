@@ -139,6 +139,7 @@ function CatalogPage(): JSX.Element {
                     <Pagination
                       cameras={sortedCameras}
                       currentPage={currentPage}
+                      camerasOnPage={camerasToRender.length > 0}
                     />
                   )}
                 </div>

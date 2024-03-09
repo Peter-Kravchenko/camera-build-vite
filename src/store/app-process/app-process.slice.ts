@@ -79,6 +79,13 @@ export const appProcess = createSlice({
         state.activeLevel = [...state.activeLevel, action.payload];
       }
     },
+
+    resetTypeFilmAndInstant: (state) => {
+      state.activeType = state.activeType.filter(
+        (type) => type !== Type.Film && type !== Type.Instant
+      );
+    },
+
     resetFilters: (state) => {
       state.activeMinPrice = 0;
       state.activeMaxPrice = 0;
@@ -107,6 +114,7 @@ export const {
   setActiveCategory,
   setActiveType,
   setActiveLevel,
+  resetTypeFilmAndInstant,
   resetFilters,
   resetAppProcess,
 } = appProcess.actions;
