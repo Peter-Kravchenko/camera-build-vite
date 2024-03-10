@@ -1,5 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
-import { Category, Level, PriceValidation, Type } from '../../const';
+import {
+  Category,
+  DEFAULT_PAGE,
+  Level,
+  PriceValidation,
+  Type,
+} from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
   resetFilters,
@@ -9,6 +15,7 @@ import {
   setActiveMaxPrice,
   setActiveMinPrice,
   setActiveType,
+  setCurrentPage,
 } from '../../store/app-process/app-process.slice';
 import {
   getCorrectFilterCategory,
@@ -67,6 +74,9 @@ function Filters({
   };
 
   const handleBlurMinPrice = () => {
+    dispatch(setCurrentPage(DEFAULT_PAGE));
+    searchParams.set('page', String(DEFAULT_PAGE));
+    setSearchParams(searchParams);
     const isNotValidMinPrice =
       priceValue.min < 0 ||
       (priceValue.min > priceValue.max && priceValue.max !== 0);
@@ -98,6 +108,9 @@ function Filters({
   };
 
   const handleBlurMaxPrice = () => {
+    dispatch(setCurrentPage(DEFAULT_PAGE));
+    searchParams.set('page', String(DEFAULT_PAGE));
+    setSearchParams(searchParams);
     const isNotValidMaxPrice =
       priceValue.max < 0 ||
       (priceValue.max < priceValue.min && priceValue.min !== 0);
@@ -149,6 +162,9 @@ function Filters({
   }, [activeMinPrice, activeMaxPrice, cameras]);
 
   const handleCategoryChange = (category: Category) => {
+    dispatch(setCurrentPage(DEFAULT_PAGE));
+    searchParams.set('page', String(DEFAULT_PAGE));
+    setSearchParams(searchParams);
     dispatch(
       setActiveCategory(category === activeFilterCategory ? null : category)
     );
@@ -181,6 +197,9 @@ function Filters({
   };
 
   const handleTypeChange = (type: Type) => {
+    dispatch(setCurrentPage(DEFAULT_PAGE));
+    searchParams.set('page', String(DEFAULT_PAGE));
+    setSearchParams(searchParams);
     dispatch(setActiveType(type));
     if (activeFilterType.includes(type)) {
       searchParams.set(
@@ -199,6 +218,9 @@ function Filters({
   };
 
   const handleleLevelChange = (level: Level) => {
+    dispatch(setCurrentPage(DEFAULT_PAGE));
+    searchParams.set('page', String(DEFAULT_PAGE));
+    setSearchParams(searchParams);
     dispatch(setActiveLevel(level));
     if (activeFilterLevel.includes(level)) {
       searchParams.set(

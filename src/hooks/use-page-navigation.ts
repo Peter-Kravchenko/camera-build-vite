@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from '.';
 import { useEffect } from 'react';
 import { setCurrentPage } from '../store/app-process/app-process.slice';
-import { TIMEOUT_DELAY } from '../const';
+import { DEFAULT_PAGE, TIMEOUT_DELAY } from '../const';
 
 const usePageNavigation = (
   totalPages: number,
@@ -14,8 +14,8 @@ const usePageNavigation = (
 
   setTimeout(() => {
     if (!camerasOnPage) {
-      dispatch(setCurrentPage(1));
-      searchParams.set('page', String(1));
+      dispatch(setCurrentPage(DEFAULT_PAGE));
+      searchParams.set('page', String(DEFAULT_PAGE));
       setSearchParams(searchParams);
     }
   }, TIMEOUT_DELAY);
