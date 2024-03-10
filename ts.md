@@ -1,0 +1,2 @@
+- Сервер доступен по адресу: `https://camera-shop.accelerator.htmlacademy.pro/`
+- Спецификация API: `[https://camera-shop.accelerator.htmlacademy.pro/spec/camera-shop](https://camera-shop.accelerator.htmlacademy.pro/spec/camera-shop#tag--camera)`
