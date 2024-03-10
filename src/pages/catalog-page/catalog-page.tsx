@@ -8,7 +8,7 @@ import {
   getPromos,
   getPromosFetchingStatus,
 } from '../../store/promos-data/promos-data.selectors';
-import Filters from '../../components/filters/filters';
+import FiltersData from '../../components/filters/filters-data/filters-data';
 import Sorting from '../../components/sorting/sorting';
 
 import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
@@ -113,7 +113,7 @@ function CatalogPage(): JSX.Element {
               <div className="page-content__columns">
                 <div className="catalog__aside">
                   <div className="catalog-filter">
-                    <Filters
+                    <FiltersData
                       cameras={filteredCamerasByParams}
                       activeMinPrice={activeMinPrice}
                       activeMaxPrice={activeMaxPrice}
