@@ -54,7 +54,7 @@ function PriceFilter({
     max: activeMaxPrice,
   });
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePriceValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPriceValue({
       ...priceValue,
@@ -62,20 +62,26 @@ function PriceFilter({
     });
   };
 
-  const handleBlurMinPrice = () => {
+  const handleMinPrice = () => {
     dispatch(setCurrentPage(DEFAULT_PAGE));
     searchParams.set('page', String(DEFAULT_PAGE));
     setSearchParams(searchParams);
     const isNotValidMinPrice =
       priceValue.min < 0 ||
+      priceValue.min > Number(catalogPriceValue.max) ||
       (priceValue.min > priceValue.max && priceValue.max !== 0);
 
-    if (priceValue.min !== 0) {
+    if (priceValue.min === 0) {
+      dispatch(setActiveMinPrice(0));
+      searchParams.delete('gte');
+      setSearchParams(searchParams);
+      setIsPriceValid({
+        ...isPriceValid,
+        min: PriceValidation.Idle,
+      });
+    } else {
       if (isNotValidMinPrice) {
-        setIsPriceValid({
-          ...isPriceValid,
-          min: PriceValidation.Error,
-        });
+        setPriceValue({ ...priceValue, min: Number(catalogPriceValue.min) });
       } else {
         setIsPriceValid({
           ...isPriceValid,
@@ -85,18 +91,18 @@ function PriceFilter({
         searchParams.set('gte', String(priceValue.min));
         setSearchParams(searchParams);
       }
-    } else {
-      dispatch(setActiveMinPrice(0));
-      searchParams.delete('gte');
-      setSearchParams(searchParams);
-      setIsPriceValid({
-        ...isPriceValid,
-        min: PriceValidation.Idle,
-      });
     }
   };
 
-  const handleBlurMaxPrice = () => {
+  const handleMinPriceKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleMinPrice();
+    }
+  };
+
+  const handleMinPriceBlur = () => handleMinPrice();
+
+  const handleMaxPrice = () => {
     dispatch(setCurrentPage(DEFAULT_PAGE));
     searchParams.set('page', String(DEFAULT_PAGE));
     setSearchParams(searchParams);
@@ -104,13 +110,18 @@ function PriceFilter({
       priceValue.max < 0 ||
       (priceValue.max < priceValue.min && priceValue.min !== 0);
 
-    if (priceValue.max !== 0) {
+    if (priceValue.max === 0) {
+      dispatch(setActiveMaxPrice(0));
+      searchParams.delete('lte');
+      setSearchParams(searchParams);
+      setIsPriceValid({
+        ...isPriceValid,
+        max: PriceValidation.Idle,
+      });
+    } else {
       if (isNotValidMaxPrice) {
         {
-          setIsPriceValid({
-            ...isPriceValid,
-            max: PriceValidation.Error,
-          });
+          setPriceValue({ ...priceValue, max: Number(catalogPriceValue.max) });
         }
       } else {
         setIsPriceValid({
@@ -121,16 +132,16 @@ function PriceFilter({
         searchParams.set('lte', String(priceValue.max));
         setSearchParams(searchParams);
       }
-    } else {
-      dispatch(setActiveMaxPrice(0));
-      searchParams.delete('lte');
-      setSearchParams(searchParams);
-      setIsPriceValid({
-        ...isPriceValid,
-        max: PriceValidation.Idle,
-      });
     }
   };
+
+  const handleMaxPriceKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleMaxPrice();
+    }
+  };
+
+  const handleMaxPriceBlur = () => handleMaxPrice();
 
   useEffect(() => {
     const catalogMinValue = getCatalogMinValue(cameras);
@@ -168,8 +179,9 @@ function PriceFilter({
               name="min"
               placeholder={catalogPriceValue.min || ''}
               value={priceValue.min || ''}
-              onBlur={handleBlurMinPrice}
-              onChange={handlePriceChange}
+              onBlur={handleMinPriceBlur}
+              onKeyDown={handleMinPriceKeydown}
+              onChange={handlePriceValueChange}
             />
           </label>
         </div>
@@ -185,9 +197,10 @@ function PriceFilter({
               type="number"
               name="max"
               placeholder={catalogPriceValue.max || ''}
-              onBlur={handleBlurMaxPrice}
               value={priceValue.max || ''}
-              onChange={handlePriceChange}
+              onBlur={handleMaxPriceBlur}
+              onKeyDown={handleMaxPriceKeydown}
+              onChange={handlePriceValueChange}
             />
           </label>
         </div>

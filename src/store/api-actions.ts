@@ -6,6 +6,7 @@ import { TCamera, TCameras } from '../types/cameras';
 import { APIRoute, NameSpace } from '../const';
 import { TAddReview, TReview, TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
+import { TCoupon } from '../types/coupons';
 
 type TExtra = {
   dispatch: TAppDispatch;
@@ -79,6 +80,18 @@ export const addReview = createAsyncThunk<TReview, TAddReview, TExtra>(
   async (reviewData, { extra: api }) => {
     const { data } = await api
       .post<TReview>(APIRoute.AddReview, reviewData)
+      .catch((err: AxiosError) => {
+        throw toast.error(err.message);
+      });
+    return data;
+  }
+);
+
+export const checkCoupons = createAsyncThunk<TCoupon, string, TExtra>(
+  `${NameSpace.Coupons}/checkCoupons`,
+  async (coupon, { extra: api }) => {
+    const { data } = await api
+      .post<TCoupon>(APIRoute.Coupons, { coupon })
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });

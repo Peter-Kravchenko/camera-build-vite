@@ -54,7 +54,7 @@ export enum RequestStatus {
   Rejected = 'Rejected',
 }
 
-export enum Coupon {
+export enum Coupons {
   camera333 = 'camera-333',
   camera444 = 'camera-444',
   camera555 = 'camera-555',

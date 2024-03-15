@@ -1,6 +1,7 @@
-import { Coupon } from '../const';
+import { Coupons } from '../const';
+import { TCamera } from './cameras';
 
 export type TOrders = {
-  camerasIds: number[];
-  coupon: Coupon | string;
+  camerasIds: TCamera['id'][];
+  coupon: Coupons | string;
 };

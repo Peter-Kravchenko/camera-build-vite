@@ -1,5 +1,5 @@
-import { Coupon } from '../const';
+import { Coupons } from '../const';
 
-export type TCoupons = {
-  coupon: Coupon;
+export type TCoupon = {
+  coupon: Coupons;
 };
