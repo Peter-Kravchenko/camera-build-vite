@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchCamera } from '../../../store/api-actions';
 import { openAddToBasketModal } from '../../../store/modal-process/modal-process.slice';
 import { TCamera } from '../../../types/cameras';
 import { AppRoute } from '../../../const';
+import { getOrders } from '../../../store/order-data/order-data.selectors';
 
 type BuyButtonProps = {
   id: TCamera['id'];
@@ -12,7 +13,9 @@ type BuyButtonProps = {
 function BuyButton({ id }: BuyButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const isInBasket = false; // Заглушка, пока не будет реализована логика добавления в корзину
+  const isInBasket = useAppSelector(getOrders).some(
+    (camera) => camera.id === id
+  );
 
   return isInBasket ? (
     <Link

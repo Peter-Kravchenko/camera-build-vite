@@ -1,4 +1,23 @@
-function OrderSummary() {
+import cn from 'classnames';
+import { useState } from 'react';
+import { ValidationMap } from '../../const';
+import { TOrders } from '../../types/orders';
+import { addSpaceInPrice } from '../../utils/utils';
+
+type OrderSummaryProps = {
+  orders: TOrders;
+};
+
+function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
+  const [validatePromo, setValidatePromo] = useState(ValidationMap.Idle);
+
+  const totalPrice = 1;
+  // const totalPrice = orders.reduce(
+  //   (acc, order) =>
+  //     order.quantity ? acc + order.price * order.quantity : acc + order.price,
+  //   0
+  // );
+
   return (
     <div className="basket__summary">
       <div className="basket__promo">
@@ -7,7 +26,12 @@ function OrderSummary() {
         </p>
         <div className="basket-form">
           <form action="#">
-            <div className="custom-input">
+            <div
+              className={cn('custom-input', {
+                'is-valid': validatePromo === ValidationMap.Success,
+                'is-invalid': validatePromo === ValidationMap.Error,
+              })}
+            >
               <label>
                 <span className="custom-input__label">Промокод</span>
                 <input
@@ -19,7 +43,14 @@ function OrderSummary() {
               <p className="custom-input__error">Промокод неверный</p>
               <p className="custom-input__success">Промокод принят!</p>
             </div>
-            <button className="btn" type="submit">
+            <button
+              className="btn"
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                //dispatch применить промокод
+              }}
+            >
               Применить
             </button>
           </form>
@@ -28,7 +59,9 @@ function OrderSummary() {
       <div className="basket__summary-order">
         <p className="basket__summary-item">
           <span className="basket__summary-text">Всего:</span>
-          <span className="basket__summary-value">111 390 ₽</span>
+          <span className="basket__summary-value">
+            {addSpaceInPrice(totalPrice)} ₽
+          </span>
         </p>
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>

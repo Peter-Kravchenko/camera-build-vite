@@ -87,11 +87,23 @@ export const addReview = createAsyncThunk<TReview, TAddReview, TExtra>(
   }
 );
 
-export const checkCoupons = createAsyncThunk<TCoupon, string, TExtra>(
+export const checkCoupon = createAsyncThunk<TCoupon, string, TExtra>(
   `${NameSpace.Coupons}/checkCoupons`,
   async (coupon, { extra: api }) => {
     const { data } = await api
       .post<TCoupon>(APIRoute.Coupons, { coupon })
+      .catch((err: AxiosError) => {
+        throw toast.error(err.message);
+      });
+    return data;
+  }
+);
+
+export const postOrder = createAsyncThunk<TCoupon, undefined, TExtra>(
+  `${NameSpace.Order}/fetchOrders`,
+  async (_arg, { extra: api }) => {
+    const { data } = await api
+      .post<TCoupon>(APIRoute.Orders)
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });

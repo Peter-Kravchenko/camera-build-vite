@@ -35,7 +35,7 @@ export enum NameSpace {
   Camera = 'CAMERA',
   Cameras = 'CAMERAS',
   Coupons = 'COUPONS',
-  Orders = 'ORDERS',
+  Order = 'ORDER',
   Promos = 'PROMOS',
   Reviews = 'REVIEWS',
   Similar = 'SIMILAR',
@@ -109,7 +109,7 @@ export enum BasketAction {
   Remove = 'remove',
 }
 
-export enum PriceValidation {
+export enum ValidationMap {
   Idle = 'idle',
   Error = 'is-invalid',
   Success = 'is-valid',

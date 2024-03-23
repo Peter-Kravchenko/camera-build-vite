@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../../utils/mock-component';
 import { makeFakeCameras, makeFakeStore } from '../../../utils/mocks';
 import PriceFilter from './price-filter';
-import { PriceValidation } from '../../../const';
+import { ValidationMap } from '../../../const';
 
 describe('Component: PriceFilter', () => {
   it('should render correctly', () => {
@@ -13,7 +13,7 @@ describe('Component: PriceFilter', () => {
         cameras={mockCameras}
         activeMinPrice={0}
         activeMaxPrice={0}
-        isPriceValid={{ min: PriceValidation.Idle, max: PriceValidation.Idle }}
+        isPriceValid={{ min: ValidationMap.Idle, max: ValidationMap.Idle }}
         setIsPriceValid={vi.fn()}
       />,
       mockStore

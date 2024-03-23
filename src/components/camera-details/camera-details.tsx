@@ -40,7 +40,7 @@ function CameraDetails({ camera }: CameraDetailsProps): JSX.Element {
               <span className="visually-hidden">Цена:</span>
               {addSpaceInPrice(camera.price)} ₽
             </p>
-            <AddToBasketButton />
+            <AddToBasketButton id={camera.id} />
             <TabsData camera={camera} />
           </div>
         </div>

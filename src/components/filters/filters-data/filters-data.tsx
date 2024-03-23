@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { Category, Level, PriceValidation, Type } from '../../../const';
+import { Category, Level, ValidationMap, Type } from '../../../const';
 import { useAppDispatch } from '../../../hooks';
 import { resetFilters } from '../../../store/app-process/app-process.slice';
 import useFilterNavigation from '../../../hooks/use-filter-navigation';
@@ -32,8 +32,8 @@ function FiltersData({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [isPriceValid, setIsPriceValid] = useState({
-    min: PriceValidation.Idle,
-    max: PriceValidation.Idle,
+    min: ValidationMap.Idle,
+    max: ValidationMap.Idle,
   });
 
   const handleResetFiltersClick = () => {
@@ -45,8 +45,8 @@ function FiltersData({
     searchParams.delete('level');
     setSearchParams(searchParams);
     setIsPriceValid({
-      min: PriceValidation.Idle,
-      max: PriceValidation.Idle,
+      min: ValidationMap.Idle,
+      max: ValidationMap.Idle,
     });
   };
 

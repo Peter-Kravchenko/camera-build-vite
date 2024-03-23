@@ -16,6 +16,10 @@ import {
 } from '../../../utils/utils';
 import { toast } from 'react-toastify';
 import Loader from '../../loader/loader';
+import {
+  addToBasket,
+  removeFromBasket,
+} from '../../../store/order-data/order-data.slice';
 
 type BasketActionModalProps = {
   basketAction: BasketAction;
@@ -93,6 +97,7 @@ function BasketActionModal({
             data-testid="add-to-basket-modal"
             autoFocus
             onClick={() => {
+              dispatch(addToBasket(camera));
               closeModal();
               openSuccessModal();
             }}
@@ -110,6 +115,7 @@ function BasketActionModal({
               data-testid="remove-from-basket-modal"
               autoFocus
               onClick={() => {
+                dispatch(removeFromBasket(camera.id));
                 toast.info('Товар был удален из корзины.');
                 closeModal();
               }}
@@ -119,7 +125,7 @@ function BasketActionModal({
               Удалить
             </button>
             <Link
-              to={AppRoute.Catalog}
+              to={AppRoute.Order}
               className="btn btn--transparent modal__btn modal__btn--half-width"
               onClick={() => {
                 closeModal();

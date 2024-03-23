@@ -1,13 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { openAddToBasketModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
+import { getOrders } from '../../../store/order-data/order-data.selectors';
+import { TCamera } from '../../../types/cameras';
 
-function AddToBasketButton() {
+type AddToBasketButtonProps = {
+  id: TCamera['id'];
+};
+
+function AddToBasketButton({ id }: AddToBasketButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isInBasket = false; // Заглушка, пока не будет реализована логика добавления в корзину
+  const isInBasket = useAppSelector(getOrders).some(
+    (camera) => camera.id === id
+  );
 
   return isInBasket ? (
     <button

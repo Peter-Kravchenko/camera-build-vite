@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { DEFAULT_PAGE, PriceValidation } from '../../../const';
+import { DEFAULT_PAGE, ValidationMap } from '../../../const';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks';
@@ -22,15 +22,15 @@ type TPriceFilterProps = {
   activeMinPrice: TMinPrice;
   activeMaxPrice: TMaxPrice;
   isPriceValid: {
-    min: PriceValidation;
-    max: PriceValidation;
+    min: ValidationMap;
+    max: ValidationMap;
   };
   setIsPriceValid: ({
     min,
     max,
   }: {
-    min: PriceValidation;
-    max: PriceValidation;
+    min: ValidationMap;
+    max: ValidationMap;
   }) => void;
 };
 
@@ -77,7 +77,7 @@ function PriceFilter({
       setSearchParams(searchParams);
       setIsPriceValid({
         ...isPriceValid,
-        min: PriceValidation.Idle,
+        min: ValidationMap.Idle,
       });
     } else {
       if (isNotValidMinPrice) {
@@ -85,7 +85,7 @@ function PriceFilter({
       } else {
         setIsPriceValid({
           ...isPriceValid,
-          min: PriceValidation.Success,
+          min: ValidationMap.Success,
         });
         dispatch(setActiveMinPrice(priceValue.min));
         searchParams.set('gte', String(priceValue.min));
@@ -116,7 +116,7 @@ function PriceFilter({
       setSearchParams(searchParams);
       setIsPriceValid({
         ...isPriceValid,
-        max: PriceValidation.Idle,
+        max: ValidationMap.Idle,
       });
     } else {
       if (isNotValidMaxPrice) {
@@ -126,7 +126,7 @@ function PriceFilter({
       } else {
         setIsPriceValid({
           ...isPriceValid,
-          max: PriceValidation.Success,
+          max: ValidationMap.Success,
         });
         dispatch(setActiveMaxPrice(priceValue.max));
         searchParams.set('lte', String(priceValue.max));
@@ -169,8 +169,8 @@ function PriceFilter({
         <div
           className={cn(
             'custom-input',
-            { 'is-valid': isPriceValid.min === PriceValidation.Success },
-            { 'is-invalid': isPriceValid.min === PriceValidation.Error }
+            { 'is-valid': isPriceValid.min === ValidationMap.Success },
+            { 'is-invalid': isPriceValid.min === ValidationMap.Error }
           )}
         >
           <label>
@@ -188,8 +188,8 @@ function PriceFilter({
         <div
           className={cn(
             'custom-input',
-            { 'is-valid': isPriceValid.max === PriceValidation.Success },
-            { 'is-invalid': isPriceValid.max === PriceValidation.Error }
+            { 'is-valid': isPriceValid.max === ValidationMap.Success },
+            { 'is-invalid': isPriceValid.max === ValidationMap.Error }
           )}
         >
           <label>

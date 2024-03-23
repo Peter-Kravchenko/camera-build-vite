@@ -5,9 +5,11 @@ import {
   SortType,
   SortOrder,
   Type,
+  Coupons,
 } from '../const';
 import store from '../store';
 import { TCamera, TCameras } from './cameras';
+import { TOrders } from './orders';
 import { TPromos } from './promos';
 import { TReviews } from './reviews';
 
@@ -68,3 +70,11 @@ export type TAddReviewData = {
 
 export type TMinPrice = number;
 export type TMaxPrice = number;
+
+export type TOrderData = {
+  orders: TOrders;
+  camerasIds: TCamera['id'] | null;
+  coupon: Coupons | null;
+  couponFetchingStatus: RequestStatus;
+  orderFetchingStatus: RequestStatus;
+};

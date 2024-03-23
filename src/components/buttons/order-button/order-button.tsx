@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
+import { useAppSelector } from '../../../hooks';
+import { getOrders } from '../../../store/order-data/order-data.selectors';
 
 function OrderButton() {
-  const basketCount = 0; // Заглушка, пока не будет реализована логика подсчета количества карточек в корзине
+  const basketCount = useAppSelector(getOrders).length;
 
   return (
     <Link to={AppRoute.Order} className="header__basket-link">

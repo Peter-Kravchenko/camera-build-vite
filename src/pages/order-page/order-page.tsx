@@ -5,9 +5,12 @@ import OrderSummary from '../../components/order-summary/order-summary';
 import { PageBlock } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
+import { getOrders } from '../../store/order-data/order-data.selectors';
 
 function OrderPage(): JSX.Element {
   const isModalOpen = useAppSelector(checkModalOpen);
+
+  const orders = useAppSelector(getOrders);
 
   return (
     <main>
@@ -16,8 +19,14 @@ function OrderPage(): JSX.Element {
         <section className="basket">
           <div className="container">
             <h1 className="title title--h2">Корзина</h1>
-            <OrderList />
-            <OrderSummary />
+            {orders.length ? (
+              <>
+                <OrderList orders={orders} />
+                <OrderSummary orders={orders} />
+              </>
+            ) : (
+              <h1>Корзина пуста</h1>
+            )}
           </div>
         </section>
       </div>
