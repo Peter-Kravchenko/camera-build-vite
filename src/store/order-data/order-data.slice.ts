@@ -29,28 +29,16 @@ export const orderData = createSlice({
       localStorage.setItem('orders', JSON.stringify(data));
     },
 
-    increaseQuantity: (state, action: PayloadAction<TOrder['id']>) => {
+    changeQuantity: (state, action: PayloadAction<[TOrder['id'], number]>) => {
       const data = (state.orders = state.orders.map((camera) => {
-        if (camera.id === action.payload) {
-          return { ...camera, quantity: camera.quantity + 1 };
+        if (camera.id === action.payload[0]) {
+          return { ...camera, quantity: action.payload[1] };
         }
         return camera;
       }));
       state.orders = data;
       localStorage.setItem('orders', JSON.stringify(data));
     },
-
-    decreaseQuantity: (state, action: PayloadAction<TOrder['id']>) => {
-      const data = (state.orders = state.orders.map((camera) => {
-        if (camera.id === action.payload) {
-          return { ...camera, quantity: camera.quantity - 1 };
-        }
-        return camera;
-      }));
-      state.orders = data;
-      localStorage.setItem('orders', JSON.stringify(data));
-    },
-
     removeFromBasket: (state, action: PayloadAction<TCamera['id']>) => {
       const data = (state.orders = state.orders.filter(
         (camera) => camera.id !== action.payload
@@ -60,10 +48,15 @@ export const orderData = createSlice({
 
       localStorage.setItem('orders', JSON.stringify(data));
     },
-
     clearBasket: (state) => {
       state.orders = [];
       localStorage.removeItem('orders');
+    },
+    resetCouponFetchingStatus: (state) => {
+      state.couponFetchingStatus = RequestStatus.Idle;
+    },
+    resetOrderFetchingStatus: (state) => {
+      state.orderFetchingStatus = RequestStatus.Idle;
     },
   },
   extraReducers(builder) {
@@ -80,8 +73,9 @@ export const orderData = createSlice({
       .addCase(checkCoupon.pending, (state) => {
         state.couponFetchingStatus = RequestStatus.Pending;
       })
-      .addCase(checkCoupon.fulfilled, (state) => {
+      .addCase(checkCoupon.fulfilled, (state, action) => {
         state.couponFetchingStatus = RequestStatus.Success;
+        state.coupon = action.payload;
       })
       .addCase(checkCoupon.rejected, (state) => {
         state.couponFetchingStatus = RequestStatus.Rejected;
@@ -92,8 +86,9 @@ export const orderData = createSlice({
 export const {
   loadOrder,
   addToBasket,
-  increaseQuantity,
-  decreaseQuantity,
+  changeQuantity,
   removeFromBasket,
   clearBasket,
+  resetCouponFetchingStatus,
+  resetOrderFetchingStatus,
 } = orderData.actions;

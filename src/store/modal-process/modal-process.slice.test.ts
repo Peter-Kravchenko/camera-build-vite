@@ -11,6 +11,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -29,6 +30,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -44,6 +46,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -52,6 +55,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -70,6 +74,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -78,6 +83,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -96,6 +102,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -104,6 +111,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -122,6 +130,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -130,6 +139,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: true,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -148,6 +158,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -156,6 +167,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: true,
     };
 
@@ -174,6 +186,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -182,6 +195,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -200,6 +214,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -208,6 +223,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -226,6 +242,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -234,6 +251,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -252,6 +270,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: true,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -278,6 +297,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: true,
     };
     const expectedState = {
@@ -286,6 +306,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 
@@ -304,6 +325,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: true,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
     const expectedState = {
@@ -312,6 +334,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 

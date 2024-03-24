@@ -1,22 +1,65 @@
 import cn from 'classnames';
-import { useState } from 'react';
-import { ValidationMap } from '../../const';
+import { useEffect, useState } from 'react';
+import { RequestStatus, ValidationMap } from '../../const';
 import { TOrders } from '../../types/orders';
 import { addSpaceInPrice } from '../../utils/utils';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { checkCoupon, postOrder } from '../../store/api-actions';
+import {
+  getCoupon,
+  getCouponFetchingStatus,
+  getOrderFetchingStatus,
+} from '../../store/order-data/order-data.selectors';
+import {
+  clearBasket,
+  resetCouponFetchingStatus,
+  resetOrderFetchingStatus,
+} from '../../store/order-data/order-data.slice';
+import { toast } from 'react-toastify';
+import { openOrderSuccessModal } from '../../store/modal-process/modal-process.slice';
 
 type OrderSummaryProps = {
   orders: TOrders;
 };
 
 function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const [couponValue, setCouponValue] = useState(''); //todo валидация значения купона
   const [validatePromo, setValidatePromo] = useState(ValidationMap.Idle);
 
-  const totalPrice = 1;
-  // const totalPrice = orders.reduce(
-  //   (acc, order) =>
-  //     order.quantity ? acc + order.price * order.quantity : acc + order.price,
-  //   0
-  // );
+  const coupon = useAppSelector(getCoupon);
+  console.log(coupon);
+
+  const couponFetchingStatus = useAppSelector(getCouponFetchingStatus);
+  const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
+
+  const totalPrice = orders.reduce(
+    (acc, order) =>
+      order.quantity ? acc + order.price * order.quantity : acc + order.price,
+    0
+  );
+
+  useEffect(() => {
+    if (couponFetchingStatus === RequestStatus.Success) {
+      setValidatePromo(ValidationMap.Success);
+    }
+    if (couponFetchingStatus === RequestStatus.Rejected) {
+      setValidatePromo(ValidationMap.Error);
+    }
+
+    dispatch(resetCouponFetchingStatus());
+  }, [couponFetchingStatus, dispatch]);
+
+  useEffect(() => {
+    if (orderFetchingStatus === RequestStatus.Success) {
+      //  dispatch(clearBasket());
+      toast.success('Заказ успешно оформлен');
+      dispatch(openOrderSuccessModal());
+    }
+
+    dispatch(resetOrderFetchingStatus());
+  }, [orderFetchingStatus, dispatch]);
 
   return (
     <div className="basket__summary">
@@ -38,6 +81,10 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
                   type="text"
                   name="promo"
                   placeholder="Введите промокод"
+                  value={couponValue}
+                  onChange={(e) => {
+                    setCouponValue(e.target.value);
+                  }}
                 />
               </label>
               <p className="custom-input__error">Промокод неверный</p>
@@ -48,8 +95,9 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                //dispatch применить промокод
+                dispatch(checkCoupon(couponValue));
               }}
+              disabled={couponFetchingStatus === RequestStatus.Pending}
             >
               Применить
             </button>
@@ -66,7 +114,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>
           <span className="basket__summary-value basket__summary-value--bonus">
-            0 ₽
+            {addSpaceInPrice(coupon ? (totalPrice / 100) * coupon : 0)} ₽
           </span>
         </p>
         <p className="basket__summary-item">
@@ -74,10 +122,26 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
             К оплате:
           </span>
           <span className="basket__summary-value basket__summary-value--total">
-            111 390 ₽
+            {addSpaceInPrice(
+              coupon ? totalPrice - (totalPrice / 100) * coupon : totalPrice
+            )}{' '}
+            ₽
           </span>
         </p>
-        <button className="btn btn--purple" type="submit">
+        <button
+          className="btn btn--purple"
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(
+              postOrder({
+                camerasIds: orders.map((order) => order.id),
+                coupon: couponValue,
+              })
+            );
+          }}
+          disabled={orderFetchingStatus === RequestStatus.Pending}
+        >
           Оформить заказ
         </button>
       </div>

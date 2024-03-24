@@ -4,7 +4,10 @@ import { useAppSelector } from '../../../hooks';
 import { getOrders } from '../../../store/order-data/order-data.selectors';
 
 function OrderButton() {
-  const basketCount = useAppSelector(getOrders).length;
+  const basketCount = useAppSelector(getOrders).reduce(
+    (acc, order) => acc + order.quantity,
+    0
+  );
 
   return (
     <Link to={AppRoute.Order} className="header__basket-link">

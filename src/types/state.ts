@@ -5,7 +5,6 @@ import {
   SortType,
   SortOrder,
   Type,
-  Coupons,
 } from '../const';
 import store from '../store';
 import { TCamera, TCameras } from './cameras';
@@ -36,6 +35,7 @@ export type TModalData = {
   isModalAddToBasketSuccessOpen: boolean;
   isModalAddReviewOpen: boolean;
   isModalAddReviewSuccessOpen: boolean;
+  isModalOrderSuccessOpen: boolean;
   isModalRemoveFromBasketOpen: boolean;
 };
 
@@ -74,7 +74,7 @@ export type TMaxPrice = number;
 export type TOrderData = {
   orders: TOrders;
   camerasIds: TCamera['id'] | null;
-  coupon: Coupons | null;
+  coupon: string | null;
   couponFetchingStatus: RequestStatus;
   orderFetchingStatus: RequestStatus;
 };

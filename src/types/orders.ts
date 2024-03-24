@@ -9,5 +9,5 @@ export type TOrders = TOrder[];
 
 export type TOrderData = {
   camerasIds: TCamera['id'][];
-  coupon: Coupons | string;
+  coupon: Coupons | string | null;
 };

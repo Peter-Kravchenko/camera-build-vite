@@ -3,10 +3,11 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { TAppDispatch, TAppState } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TCamera, TCameras } from '../types/cameras';
-import { APIRoute, NameSpace } from '../const';
+import { APIRoute, Coupons, NameSpace } from '../const';
 import { TAddReview, TReview, TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
 import { TCoupon } from '../types/coupons';
+import { TOrderData } from '../types/orders';
 
 type TExtra = {
   dispatch: TAppDispatch;
@@ -87,11 +88,11 @@ export const addReview = createAsyncThunk<TReview, TAddReview, TExtra>(
   }
 );
 
-export const checkCoupon = createAsyncThunk<TCoupon, string, TExtra>(
+export const checkCoupon = createAsyncThunk<number, string, TExtra>(
   `${NameSpace.Coupons}/checkCoupons`,
   async (coupon, { extra: api }) => {
     const { data } = await api
-      .post<TCoupon>(APIRoute.Coupons, { coupon })
+      .post<string>(APIRoute.Coupons, { coupon })
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });
@@ -99,14 +100,13 @@ export const checkCoupon = createAsyncThunk<TCoupon, string, TExtra>(
   }
 );
 
-export const postOrder = createAsyncThunk<TCoupon, undefined, TExtra>(
+export const postOrder = createAsyncThunk<void, TOrderData, TExtra>(
   `${NameSpace.Order}/fetchOrders`,
-  async (_arg, { extra: api }) => {
-    const { data } = await api
-      .post<TCoupon>(APIRoute.Orders)
+  async ({ camerasIds, coupon }, { extra: api }) => {
+    await api
+      .post<TOrderData>(APIRoute.Orders, { camerasIds, coupon })
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });
-    return data;
   }
 );

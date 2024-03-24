@@ -9,6 +9,7 @@ import {
   checkAddToBasketModalOpen,
   checkAddToBasketSuccessModalOpen,
   checkModalOpen,
+  checkOrderSuccessModalOpen,
   checkRemoveFromBasketModalOpen,
 } from '../../../store/modal-process/modal-process.selectors';
 import AddReviewModal from '../add-review-modal/add-review-modal';
@@ -18,6 +19,7 @@ import AddToBasketSuccessModal from '../add-to-basket-success-modal/add-to-baske
 import useModalFocus from '../../../hooks/use-modal-focus';
 import { BasketAction } from '../../../const';
 import useScrollLock from '../../../hooks/use-scroll-lock';
+import OrderSuccessModal from '../order-success-modal/order-success-modal';
 
 function ModalData() {
   const dispatch = useAppDispatch();
@@ -32,6 +34,7 @@ function ModalData() {
   const isModalAddReviewSuccessOpen = useAppSelector(
     checkAddReviewSuccessModalOpen
   );
+  const isModalOrederSuccessOpen = useAppSelector(checkOrderSuccessModalOpen);
   const isAnyModalOpen = useAppSelector(checkModalOpen);
   const modalFocusRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +65,7 @@ function ModalData() {
         {isModalAddToBasketSuccessOpen && <AddToBasketSuccessModal />}
         {isModalAddReviewOpen && <AddReviewModal />}
         {isModalAddReviewSuccessOpen && <AddReviewSuccessModal />}
+        {isModalOrederSuccessOpen && <OrderSuccessModal />}
       </div>
     </div>
   );

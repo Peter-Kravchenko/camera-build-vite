@@ -27,6 +27,11 @@ export const checkModalOpen = createSelector(
   (state: TModalData) => state.isModalOpen
 );
 
+export const checkOrderSuccessModalOpen = createSelector(
+  (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
+  (state: TModalData) => state.isModalOrderSuccessOpen
+);
+
 export const checkRemoveFromBasketModalOpen = createSelector(
   (state: Pick<TAppState, NameSpace.Modal>) => state[NameSpace.Modal],
   (state: TModalData) => state.isModalRemoveFromBasketOpen

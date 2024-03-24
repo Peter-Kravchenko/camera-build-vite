@@ -1,11 +1,9 @@
+import { useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { fetchCamera } from '../../store/api-actions';
 import { openRemoveFromBasketModal } from '../../store/modal-process/modal-process.slice';
 import { addSpaceInPrice } from '../../utils/utils';
-import {
-  decreaseQuantity,
-  increaseQuantity,
-} from '../../store/order-data/order-data.slice';
+import { changeQuantity } from '../../store/order-data/order-data.slice';
 import { TOrder } from '../../types/orders';
 
 type OrderCardProps = {
@@ -14,6 +12,8 @@ type OrderCardProps = {
 
 function OrderCard({ order: order }: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const [quantity, setQuantity] = useState(order.quantity);
 
   return (
     <li className="basket-item">
@@ -51,7 +51,11 @@ function OrderCard({ order: order }: OrderCardProps): JSX.Element {
         <button
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
-          onClick={() => dispatch(decreaseQuantity(order.id))}
+          onClick={() => (
+            setQuantity(quantity - 1),
+            dispatch(changeQuantity([order.id, quantity]))
+          )}
+          disabled={quantity === 1}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow" />
@@ -61,18 +65,35 @@ function OrderCard({ order: order }: OrderCardProps): JSX.Element {
         <input
           type="number"
           id={`counter${order.id}`}
-          value={order.quantity}
+          value={quantity}
           min={1}
           max={99}
           aria-label="количество товара"
-          onChange={() => {
-            console.log('change');
+          onBlur={() => dispatch(changeQuantity([order.id, quantity]))}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              dispatch(changeQuantity([order.id, quantity]));
+            }
+          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            if (Number(e.target.value) > 99) {
+              setQuantity(99);
+            }
+            if (Number(e.target.value) < 1) {
+              setQuantity(1);
+            } else {
+              setQuantity(Number(e.target.value));
+            }
           }}
         />
         <button
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
-          onClick={() => dispatch(increaseQuantity(order.id))}
+          onClick={() => (
+            setQuantity(quantity + 1),
+            dispatch(changeQuantity([order.id, quantity]))
+          )}
+          disabled={quantity === 99}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow" />
