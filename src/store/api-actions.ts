@@ -3,7 +3,7 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { TAppDispatch, TAppState } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TCamera, TCameras } from '../types/cameras';
-import { APIRoute, Coupons, NameSpace } from '../const';
+import { APIRoute, NameSpace } from '../const';
 import { TAddReview, TReview, TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
 import { TCoupon } from '../types/coupons';
@@ -88,25 +88,23 @@ export const addReview = createAsyncThunk<TReview, TAddReview, TExtra>(
   }
 );
 
-export const checkCoupon = createAsyncThunk<number, string, TExtra>(
+export const checkCoupon = createAsyncThunk<number, TCoupon, TExtra>(
   `${NameSpace.Coupons}/checkCoupons`,
   async (coupon, { extra: api }) => {
+    const { data } = await api.post<number>(APIRoute.Coupons, { coupon });
+    return data;
+  }
+);
+//todo вернуть и внести в localSrore промокод
+
+export const postOrder = createAsyncThunk<string, TOrderData, TExtra>(
+  `${NameSpace.Order}/fetchOrders`,
+  async ({ camerasIds, coupon }, { extra: api }) => {
     const { data } = await api
-      .post<string>(APIRoute.Coupons, { coupon })
+      .post<string>(APIRoute.Orders, { camerasIds, coupon })
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });
     return data;
-  }
-);
-
-export const postOrder = createAsyncThunk<void, TOrderData, TExtra>(
-  `${NameSpace.Order}/fetchOrders`,
-  async ({ camerasIds, coupon }, { extra: api }) => {
-    await api
-      .post<TOrderData>(APIRoute.Orders, { camerasIds, coupon })
-      .catch((err: AxiosError) => {
-        throw toast.error(err.message);
-      });
   }
 );

@@ -23,6 +23,12 @@ export const orderData = createSlice({
         state.orders = JSON.parse(orderInLocalStorage) as TOrders;
       }
     },
+    loadCoupon: (state) => {
+      const couponInLocalStorage = localStorage.getItem('coupon');
+      if (couponInLocalStorage) {
+        state.coupon = JSON.parse(couponInLocalStorage) as number;
+      }
+    },
     addToBasket: (state, action: PayloadAction<TCamera>) => {
       const data = [...state.orders, { ...action.payload, quantity: 1 }];
       state.orders = data;
@@ -43,9 +49,7 @@ export const orderData = createSlice({
       const data = (state.orders = state.orders.filter(
         (camera) => camera.id !== action.payload
       ));
-
       state.orders = data;
-
       localStorage.setItem('orders', JSON.stringify(data));
     },
     clearBasket: (state) => {
@@ -76,6 +80,7 @@ export const orderData = createSlice({
       .addCase(checkCoupon.fulfilled, (state, action) => {
         state.couponFetchingStatus = RequestStatus.Success;
         state.coupon = action.payload;
+        localStorage.setItem('coupon', JSON.stringify(state.coupon));
       })
       .addCase(checkCoupon.rejected, (state) => {
         state.couponFetchingStatus = RequestStatus.Rejected;
@@ -85,6 +90,7 @@ export const orderData = createSlice({
 
 export const {
   loadOrder,
+  loadCoupon,
   addToBasket,
   changeQuantity,
   removeFromBasket,

@@ -9,11 +9,12 @@ import App from './components/app/app';
 
 import 'react-toastify/dist/ReactToastify.css';
 import browserHistory from './browser-history';
-import { loadOrder } from './store/order-data/order-data.slice';
+import { loadCoupon, loadOrder } from './store/order-data/order-data.slice';
 
 store.dispatch(fetchCameras());
 store.dispatch(fetchPromos());
 store.dispatch(loadOrder());
+store.dispatch(loadCoupon());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -114,7 +114,10 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>
           <span className="basket__summary-value basket__summary-value--bonus">
-            {addSpaceInPrice(coupon ? (totalPrice / 100) * coupon : 0)} ₽
+            {addSpaceInPrice(
+              Math.round(coupon ? (totalPrice / 100) * coupon : 0)
+            )}{' '}
+            ₽
           </span>
         </p>
         <p className="basket__summary-item">
@@ -148,5 +151,4 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
     </div>
   );
 }
-
 export default OrderSummary;
