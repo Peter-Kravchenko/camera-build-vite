@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
 import { TOrderData } from '../../types/state';
-import { checkCoupon, postOrder } from '../api-actions';
+import { postCoupon, postOrder } from '../api-actions';
 import { TOrder, TOrders } from '../../types/orders';
 import { TCamera } from '../../types/cameras';
 
@@ -74,15 +74,15 @@ export const orderData = createSlice({
       .addCase(postOrder.rejected, (state) => {
         state.orderFetchingStatus = RequestStatus.Rejected;
       })
-      .addCase(checkCoupon.pending, (state) => {
+      .addCase(postCoupon.pending, (state) => {
         state.couponFetchingStatus = RequestStatus.Pending;
       })
-      .addCase(checkCoupon.fulfilled, (state, action) => {
+      .addCase(postCoupon.fulfilled, (state, action) => {
         state.couponFetchingStatus = RequestStatus.Success;
         state.coupon = action.payload;
         localStorage.setItem('coupon', JSON.stringify(state.coupon));
       })
-      .addCase(checkCoupon.rejected, (state) => {
+      .addCase(postCoupon.rejected, (state) => {
         state.couponFetchingStatus = RequestStatus.Rejected;
       });
   },

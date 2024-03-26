@@ -6,7 +6,7 @@ import { TCamera, TCameras } from '../types/cameras';
 import { APIRoute, NameSpace } from '../const';
 import { TAddReview, TReview, TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
-import { TCoupon } from '../types/coupons';
+import { TCoupon, TCouponData } from '../types/coupons';
 import { TOrderData } from '../types/orders';
 
 type TExtra = {
@@ -88,11 +88,11 @@ export const addReview = createAsyncThunk<TReview, TAddReview, TExtra>(
   }
 );
 
-export const checkCoupon = createAsyncThunk<number, TCoupon, TExtra>(
+export const postCoupon = createAsyncThunk<TCouponData, TCoupon, TExtra>(
   `${NameSpace.Coupons}/checkCoupons`,
   async (coupon, { extra: api }) => {
     const { data } = await api.post<number>(APIRoute.Coupons, { coupon });
-    return data;
+    return { coupon, discount: data };
   }
 );
 

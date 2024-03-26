@@ -8,6 +8,7 @@ import {
 } from '../const';
 import store from '../store';
 import { TCamera, TCameras } from './cameras';
+import { TCouponData } from './coupons';
 import { TOrders } from './orders';
 import { TPromos } from './promos';
 import { TReviews } from './reviews';
@@ -74,7 +75,7 @@ export type TMaxPrice = number;
 export type TOrderData = {
   orders: TOrders;
   camerasIds: TCamera['id'] | null;
-  coupon: number | null;
+  coupon: TCouponData | null;
   couponFetchingStatus: RequestStatus;
   orderFetchingStatus: RequestStatus;
 };

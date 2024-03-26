@@ -4,7 +4,7 @@ import { RequestStatus, ValidationMap } from '../../const';
 import { TOrders } from '../../types/orders';
 import { addSpaceInPrice } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { checkCoupon, postOrder } from '../../store/api-actions';
+import { postCoupon, postOrder } from '../../store/api-actions';
 import {
   getCoupon,
   getCouponFetchingStatus,
@@ -24,22 +24,22 @@ type OrderSummaryProps = {
 
 function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const coupon = useAppSelector(getCoupon);
 
-  const [couponValue, setCouponValue] = useState(''); //todo валидация значения купона
+  const [couponValue, setCouponValue] = useState(coupon?.coupon || '');
   const [validatePromo, setValidatePromo] = useState(ValidationMap.Idle);
 
-  const discount = useAppSelector(getCoupon);
   const totalPrice = orders.reduce(
     (acc, order) =>
       order.quantity ? acc + order.price * order.quantity : acc + order.price,
     0
   );
 
-  const totalDiscount = discount
-    ? Math.round((totalPrice / 100) * discount)
+  const totalDiscount = coupon
+    ? Math.round((totalPrice / 100) * coupon.discount)
     : 0;
 
-  console.log(discount);
+  console.log(coupon);
 
   const couponFetchingStatus = useAppSelector(getCouponFetchingStatus);
   const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
@@ -102,7 +102,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                dispatch(checkCoupon(couponValue));
+                dispatch(postCoupon(couponValue));
               }}
               disabled={couponFetchingStatus === RequestStatus.Pending}
             >
@@ -121,7 +121,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>
           <span className="basket__summary-value basket__summary-value--bonus">
-            {discount ? addSpaceInPrice(totalDiscount) : 0} ₽
+            {coupon ? addSpaceInPrice(totalDiscount) : 0} ₽
           </span>
         </p>
         <p className="basket__summary-item">
@@ -129,9 +129,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
             К оплате:
           </span>
           <span className="basket__summary-value basket__summary-value--total">
-            {addSpaceInPrice(
-              discount ? totalPrice - totalDiscount : totalPrice
-            )}{' '}
+            {addSpaceInPrice(coupon ? totalPrice - totalDiscount : totalPrice)}{' '}
             ₽
           </span>
         </p>
