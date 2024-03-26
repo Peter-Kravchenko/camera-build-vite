@@ -28,17 +28,21 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
   const [couponValue, setCouponValue] = useState(''); //todo валидация значения купона
   const [validatePromo, setValidatePromo] = useState(ValidationMap.Idle);
 
-  const coupon = useAppSelector(getCoupon);
-  console.log(coupon);
-
-  const couponFetchingStatus = useAppSelector(getCouponFetchingStatus);
-  const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
-
+  const discount = useAppSelector(getCoupon);
   const totalPrice = orders.reduce(
     (acc, order) =>
       order.quantity ? acc + order.price * order.quantity : acc + order.price,
     0
   );
+
+  const totalDiscount = discount
+    ? Math.round((totalPrice / 100) * discount)
+    : 0;
+
+  console.log(discount);
+
+  const couponFetchingStatus = useAppSelector(getCouponFetchingStatus);
+  const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
 
   useEffect(() => {
     if (couponFetchingStatus === RequestStatus.Success) {
@@ -83,7 +87,10 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
                   placeholder="Введите промокод"
                   value={couponValue}
                   onChange={(e) => {
-                    setCouponValue(e.target.value);
+                    const validValue = e.target.value
+                      .replaceAll(' ', '')
+                      .toLowerCase();
+                    setCouponValue(validValue);
                   }}
                 />
               </label>
@@ -114,10 +121,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>
           <span className="basket__summary-value basket__summary-value--bonus">
-            {addSpaceInPrice(
-              Math.round(coupon ? (totalPrice / 100) * coupon : 0)
-            )}{' '}
-            ₽
+            {discount ? addSpaceInPrice(totalDiscount) : 0} ₽
           </span>
         </p>
         <p className="basket__summary-item">
@@ -126,7 +130,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
           </span>
           <span className="basket__summary-value basket__summary-value--total">
             {addSpaceInPrice(
-              coupon ? totalPrice - (totalPrice / 100) * coupon : totalPrice
+              discount ? totalPrice - totalDiscount : totalPrice
             )}{' '}
             ₽
           </span>

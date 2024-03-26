@@ -95,7 +95,6 @@ export const checkCoupon = createAsyncThunk<number, TCoupon, TExtra>(
     return data;
   }
 );
-//todo вернуть и внести в localSrore промокод
 
 export const postOrder = createAsyncThunk<string, TOrderData, TExtra>(
   `${NameSpace.Order}/fetchOrders`,

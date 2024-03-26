@@ -72,21 +72,23 @@ function OrderCard({ order: order }: OrderCardProps): JSX.Element {
           onBlur={() => {
             if (quantity > 99) {
               setQuantity(99);
+              dispatch(changeQuantity([order.id, 99]));
             }
             if (quantity < 1) {
               setQuantity(1);
+              dispatch(changeQuantity([order.id, 1]));
             }
-            dispatch(changeQuantity([order.id, quantity]));
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               if (quantity > 99) {
                 setQuantity(99);
+                dispatch(changeQuantity([order.id, 99]));
               }
               if (quantity < 1) {
                 setQuantity(1);
+                dispatch(changeQuantity([order.id, 1]));
               }
-              dispatch(changeQuantity([order.id, quantity]));
             }
           }}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
