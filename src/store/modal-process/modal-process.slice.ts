@@ -71,6 +71,7 @@ export const modalProcess = createSlice({
       state.isModalAddToBasketSuccessOpen = false;
       state.isModalAddReviewOpen = false;
       state.isModalAddReviewSuccessOpen = false;
+      state.isModalOrderSuccessOpen = false;
       state.isModalRemoveFromBasketOpen = false;
     },
   },

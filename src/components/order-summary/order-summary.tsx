@@ -1,11 +1,17 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
-import { RequestStatus, ValidationMap } from '../../const';
+import {
+  Coupons,
+  couponsArray,
+  RequestStatus,
+  ValidationMap,
+} from '../../const';
 import { TOrders } from '../../types/orders';
 import { addSpaceInPrice } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCoupon, postOrder } from '../../store/api-actions';
 import {
+  getCamerasIds,
   getCoupon,
   getCouponFetchingStatus,
   getOrderFetchingStatus,
@@ -24,6 +30,9 @@ type OrderSummaryProps = {
 
 function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const camerasIds = useAppSelector(getCamerasIds);
+  console.log('camerasIds', camerasIds);
+
   const coupon = useAppSelector(getCoupon);
 
   const [couponValue, setCouponValue] = useState(coupon?.coupon || '');
@@ -39,8 +48,6 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
     ? Math.round((totalPrice / 100) * coupon.discount)
     : 0;
 
-  console.log(coupon);
-
   const couponFetchingStatus = useAppSelector(getCouponFetchingStatus);
   const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
 
@@ -51,7 +58,6 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
     if (couponFetchingStatus === RequestStatus.Rejected) {
       setValidatePromo(ValidationMap.Error);
     }
-
     dispatch(resetCouponFetchingStatus());
   }, [couponFetchingStatus, dispatch]);
 
@@ -90,6 +96,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
                     const validValue = e.target.value
                       .replaceAll(' ', '')
                       .toLowerCase();
+                    setValidatePromo(ValidationMap.Idle);
                     setCouponValue(validValue);
                   }}
                 />
@@ -121,7 +128,11 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>
           <span className="basket__summary-value basket__summary-value--bonus">
-            {coupon ? addSpaceInPrice(totalDiscount) : 0} ₽
+            {couponsArray.includes(couponValue) &&
+            validatePromo === ValidationMap.Success
+              ? addSpaceInPrice(totalDiscount)
+              : 0}{' '}
+            ₽
           </span>
         </p>
         <p className="basket__summary-item">
@@ -129,7 +140,12 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
             К оплате:
           </span>
           <span className="basket__summary-value basket__summary-value--total">
-            {addSpaceInPrice(coupon ? totalPrice - totalDiscount : totalPrice)}{' '}
+            {addSpaceInPrice(
+              couponsArray.includes(couponValue) &&
+                validatePromo === ValidationMap.Success
+                ? totalPrice - totalDiscount
+                : totalPrice
+            )}{' '}
             ₽
           </span>
         </p>
@@ -138,10 +154,12 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
           type="submit"
           onClick={(e) => {
             e.preventDefault();
+            console.log('couponValue', couponValue);
+
             dispatch(
               postOrder({
-                camerasIds: orders.map((order) => order.id),
-                coupon: couponValue,
+                camerasIds,
+                coupon: couponsArray.includes(couponValue) ? couponValue : null,
               })
             );
           }}

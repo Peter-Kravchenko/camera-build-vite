@@ -1,10 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { TAppState, TOrderData } from '../../types/state';
+import { TOrder } from '../../types/orders';
 
 export const getOrders = createSelector(
   (state: Pick<TAppState, NameSpace.Order>) => state[NameSpace.Order],
   (state: TOrderData) => state.orders
+);
+
+export const getCamerasIds = createSelector(
+  (state: Pick<TAppState, NameSpace.Order>) => state[NameSpace.Order],
+  (state: TOrderData) =>
+    state.orders.flatMap((order) =>
+      Array<TOrder['id']>(order.quantity).fill(order.id)
+    )
 );
 
 export const getCoupon = createSelector(

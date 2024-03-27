@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/index';
-import { closeAddReviewSuccessModal } from '../../../store/modal-process/modal-process.slice';
+import { closeOrderSuccessModal } from '../../../store/modal-process/modal-process.slice';
 import { AppRoute } from '../../../const';
 
 function OrderSuccessModal() {
@@ -8,7 +8,7 @@ function OrderSuccessModal() {
   const navigate = useNavigate();
 
   const closeModal = () => {
-    dispatch(closeAddReviewSuccessModal());
+    dispatch(closeOrderSuccessModal());
   };
 
   return (

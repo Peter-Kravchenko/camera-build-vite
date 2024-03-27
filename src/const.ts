@@ -133,3 +133,5 @@ export const commonReviewConfig = {
     message: 'Максимум 160 символов',
   },
 };
+
+export const couponsArray = ['camera-333', 'camera-444', 'camera-555'];

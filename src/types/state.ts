@@ -74,7 +74,6 @@ export type TMaxPrice = number;
 
 export type TOrderData = {
   orders: TOrders;
-  camerasIds: TCamera['id'] | null;
   coupon: TCouponData | null;
   couponFetchingStatus: RequestStatus;
   orderFetchingStatus: RequestStatus;

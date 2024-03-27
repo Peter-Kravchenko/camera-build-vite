@@ -4,10 +4,10 @@ import { TOrderData } from '../../types/state';
 import { postCoupon, postOrder } from '../api-actions';
 import { TOrder, TOrders } from '../../types/orders';
 import { TCamera } from '../../types/cameras';
+import { TCouponData } from '../../types/coupons';
 
 const initialState: TOrderData = {
   orders: [],
-  camerasIds: null,
   coupon: null,
   couponFetchingStatus: RequestStatus.Idle,
   orderFetchingStatus: RequestStatus.Idle,
@@ -26,7 +26,7 @@ export const orderData = createSlice({
     loadCoupon: (state) => {
       const couponInLocalStorage = localStorage.getItem('coupon');
       if (couponInLocalStorage) {
-        state.coupon = JSON.parse(couponInLocalStorage) as number;
+        state.coupon = JSON.parse(couponInLocalStorage) as TCouponData;
       }
     },
     addToBasket: (state, action: PayloadAction<TCamera>) => {
