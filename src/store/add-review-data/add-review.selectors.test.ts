@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { NameSpace, RequestStatus } from '../../const';
 import { getAddReviewFetchingStatus } from './add-review.selectors';
 

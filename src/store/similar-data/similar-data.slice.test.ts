@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { RequestStatus } from '../../const';
 import { makeFakeCamera, makeFakeCameras } from '../../utils/mocks';
 import { fetchSimilar } from '../api-actions';

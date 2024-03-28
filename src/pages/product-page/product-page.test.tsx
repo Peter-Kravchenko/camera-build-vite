@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import {

@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../../utils/mock-component';
 import BasketActionModal from './basket-action-modal';
@@ -16,6 +17,7 @@ describe('Component: BasketActionModal', () => {
           isModalAddToBasketSuccessOpen: false,
           isModalAddReviewOpen: false,
           isModalAddReviewSuccessOpen: false,
+          isModalOrderSuccessOpen: false,
           isModalRemoveFromBasketOpen: false,
         },
         CAMERA: {
@@ -41,6 +43,7 @@ describe('Component: BasketActionModal', () => {
           isModalAddToBasketSuccessOpen: false,
           isModalAddReviewOpen: false,
           isModalAddReviewSuccessOpen: false,
+          isModalOrderSuccessOpen: false,
           isModalRemoveFromBasketOpen: false,
         },
         CAMERA: {

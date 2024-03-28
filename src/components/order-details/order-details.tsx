@@ -1,11 +1,6 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
-import {
-  Coupons,
-  couponsArray,
-  RequestStatus,
-  ValidationMap,
-} from '../../const';
+import { couponsArray, RequestStatus, ValidationMap } from '../../const';
 import { TOrders } from '../../types/orders';
 import { addSpaceInPrice } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -28,11 +23,10 @@ type OrderSummaryProps = {
   orders: TOrders;
 };
 
-function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
+function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const camerasIds = useAppSelector(getCamerasIds);
-  console.log('camerasIds', camerasIds);
 
+  const camerasIds = useAppSelector(getCamerasIds);
   const coupon = useAppSelector(getCoupon);
 
   const [couponValue, setCouponValue] = useState(coupon?.coupon || '');
@@ -43,7 +37,6 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
       order.quantity ? acc + order.price * order.quantity : acc + order.price,
     0
   );
-
   const totalDiscount = coupon
     ? Math.round((totalPrice / 100) * coupon.discount)
     : 0;
@@ -63,7 +56,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
 
   useEffect(() => {
     if (orderFetchingStatus === RequestStatus.Success) {
-      //  dispatch(clearBasket());
+      dispatch(clearBasket());
       toast.success('Заказ успешно оформлен');
       dispatch(openOrderSuccessModal());
     }
@@ -72,7 +65,7 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
   }, [orderFetchingStatus, dispatch]);
 
   return (
-    <div className="basket__summary">
+    <div className="basket__summary" data-testid="order-details">
       <div className="basket__promo">
         <p className="title title--h4">
           Если у вас есть промокод на скидку, примените его в этом поле
@@ -154,8 +147,6 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
           type="submit"
           onClick={(e) => {
             e.preventDefault();
-            console.log('couponValue', couponValue);
-
             dispatch(
               postOrder({
                 camerasIds,
@@ -171,4 +162,4 @@ function OrderSummary({ orders }: OrderSummaryProps): JSX.Element {
     </div>
   );
 }
-export default OrderSummary;
+export default OrderDetails;

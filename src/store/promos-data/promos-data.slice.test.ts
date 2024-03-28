@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { RequestStatus } from '../../const';
 import { makeFakePromos } from '../../utils/mocks';
 import { fetchPromos } from '../api-actions';

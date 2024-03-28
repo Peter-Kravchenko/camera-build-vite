@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { createAPI } from '../services/api';

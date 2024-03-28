@@ -3,10 +3,12 @@ import { Action } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { TAppState } from '../types/state';
 import { createAPI } from '../services/api';
-import { RequestStatus } from '../const';
+import { RequestStatus, couponsArray } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
+import { TOrder, TOrders } from '../types/orders';
+import { TCoupon, TCouponData } from '../types/coupons';
 
 export type TAppThunkDispatch = ThunkDispatch<
   TAppState,
@@ -73,6 +75,20 @@ export const makeFakeReview = () => ({
 export const makeFakeReviews = (): TReviews =>
   Array.from({ length: 5 }).map(makeFakeReview);
 
+export const makeFakeOrder = (): TOrder => {
+  const mockCamera = makeFakeCamera();
+  return { ...mockCamera, quantity: datatype.number({ min: 1, max: 99 }) };
+};
+
+export const makeFakeOrders = (): TOrders =>
+  Array.from({ length: 5 }).map(makeFakeOrder);
+
+export const makeFakeCoupon = (): TCoupon =>
+  getRandomArrayElement(couponsArray);
+
+export const makeFakeDiscount = (): TCouponData['discount'] =>
+  datatype.number({ min: 0, max: 100 });
+
 export const makeFakeStore = (
   initialState?: Partial<TAppState>
 ): TAppState => ({
@@ -95,6 +111,7 @@ export const makeFakeStore = (
     isModalAddToBasketSuccessOpen: false,
     isModalAddReviewOpen: false,
     isModalAddReviewSuccessOpen: false,
+    isModalOrderSuccessOpen: false,
     isModalRemoveFromBasketOpen: false,
   },
   CAMERAS: { cameras: [], fetchingStatus: RequestStatus.Idle },
@@ -102,5 +119,11 @@ export const makeFakeStore = (
   PROMOS: { promos: [], fetchingStatus: RequestStatus.Idle },
   SIMILAR: { similar: [], fetchingStatus: RequestStatus.Idle },
   REVIEWS: { reviews: [], fetchingStatus: RequestStatus.Idle },
+  ORDER: {
+    orders: [],
+    coupon: null,
+    orderFetchingStatus: RequestStatus.Idle,
+    couponFetchingStatus: RequestStatus.Idle,
+  },
   ...(initialState ?? {}),
 });

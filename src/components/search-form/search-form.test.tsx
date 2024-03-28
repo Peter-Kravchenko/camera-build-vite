@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { withStore, withHistory } from '../../utils/mock-component';
 import { makeFakeStore } from '../../utils/mocks';

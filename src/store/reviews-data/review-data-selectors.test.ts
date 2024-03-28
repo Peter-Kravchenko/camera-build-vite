@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { NameSpace, RequestStatus } from '../../const';
 import { makeFakeReviews } from '../../utils/mocks';
 import { getReviews, getReviewsFetchingStatus } from './reviews-data.selectors';

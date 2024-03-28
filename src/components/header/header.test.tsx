@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import Header from './header';

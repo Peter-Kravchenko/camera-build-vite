@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import CameraRating from './camera-rating';
 import { CardType } from '../../const';

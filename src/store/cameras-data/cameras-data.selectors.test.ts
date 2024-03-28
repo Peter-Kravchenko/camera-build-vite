@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { NameSpace, RequestStatus } from '../../const';
 import { makeFakeCameras } from '../../utils/mocks';
 import { getCameras, getCamerasFetchingStatus } from './cameras-data.selectors';

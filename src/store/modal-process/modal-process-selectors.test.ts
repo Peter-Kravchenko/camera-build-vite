@@ -1,9 +1,11 @@
+import { describe } from 'vitest';
 import { NameSpace } from '../../const';
 import {
   checkAddReviewModalOpen,
   checkAddReviewSuccessModalOpen,
   checkAddToBasketModalOpen,
   checkAddToBasketSuccessModalOpen,
+  checkOrderSuccessModalOpen,
 } from './modal-process.selectors';
 
 describe('ModalProcess selectors', () => {
@@ -14,6 +16,7 @@ describe('ModalProcess selectors', () => {
       isModalAddToBasketSuccessOpen: true,
       isModalAddReviewOpen: true,
       isModalAddReviewSuccessOpen: true,
+      isModalOrderSuccessOpen: true,
       isModalRemoveFromBasketOpen: true,
     },
   };
@@ -36,6 +39,11 @@ describe('ModalProcess selectors', () => {
     const { isModalAddReviewSuccessOpen } = state[NameSpace.Modal];
     const result = checkAddReviewSuccessModalOpen(state);
     expect(result).toEqual(isModalAddReviewSuccessOpen);
+  });
+  it('should return isModalOrderSuccessOpen', () => {
+    const { isModalOrderSuccessOpen } = state[NameSpace.Modal];
+    const result = checkOrderSuccessModalOpen(state);
+    expect(result).toEqual(isModalOrderSuccessOpen);
   });
   it('should return isModalOpen', () => {
     const { isModalOpen } = state[NameSpace.Modal];

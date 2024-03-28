@@ -7,7 +7,7 @@ type OrderListProps = {
 
 function OrderList({ orders }: OrderListProps): JSX.Element {
   return (
-    <ul className="basket__list">
+    <ul className="basket__list" data-testid="order-list">
       {orders.map((order) => (
         <OrderCard key={order.id} order={order} />
       ))}

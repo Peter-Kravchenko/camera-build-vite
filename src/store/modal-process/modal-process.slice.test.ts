@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { modalProcess } from './modal-process.slice';
 
 describe('ModalProcess slice', () => {
@@ -279,6 +280,7 @@ describe('ModalProcess slice', () => {
       isModalAddToBasketSuccessOpen: false,
       isModalAddReviewOpen: false,
       isModalAddReviewSuccessOpen: false,
+      isModalOrderSuccessOpen: false,
       isModalRemoveFromBasketOpen: false,
     };
 

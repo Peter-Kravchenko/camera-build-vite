@@ -1,18 +1,19 @@
+import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../../utils/mock-component';
-import AddReviewSuccessModal from './order-success-modal';
 import { makeFakeStore } from '../../../utils/mocks';
+import OrderSuccessModal from './order-success-modal';
 
-describe('Component: AddToBasketSuccessModal', () => {
+describe('Component: OrderSuccessModal', () => {
   it('should render correctly', () => {
     const { withStoreComponent } = withStore(
-      <AddReviewSuccessModal />,
+      <OrderSuccessModal />,
       makeFakeStore()
     );
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 
-    expect(screen.getByTestId('add-review-success-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('order-success-modal')).toBeInTheDocument();
   });
 });

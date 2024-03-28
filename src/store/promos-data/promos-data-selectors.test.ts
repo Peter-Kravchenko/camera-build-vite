@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { NameSpace, RequestStatus } from '../../const';
 import { makeFakePromos } from '../../utils/mocks';
 import { getPromos, getPromosFetchingStatus } from './promos-data.selectors';

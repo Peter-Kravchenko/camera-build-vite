@@ -1,7 +1,7 @@
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import ModalData from '../../components/modals/modal-data/modal-data';
 import OrderList from '../../components/order-list/order-list';
-import OrderSummary from '../../components/order-summary/order-summary';
+import OrderDetails from '../../components/order-details/order-details';
 import { PageBlock } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { checkModalOpen } from '../../store/modal-process/modal-process.selectors';
@@ -22,7 +22,7 @@ function OrderPage(): JSX.Element {
             {orders.length ? (
               <>
                 <OrderList orders={orders} />
-                <OrderSummary orders={orders} />
+                <OrderDetails orders={orders} />
               </>
             ) : (
               <h1>Корзина пуста</h1>

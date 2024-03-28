@@ -12,7 +12,7 @@ function OrderSuccessModal() {
   };
 
   return (
-    <div className="modal__content" data-testid="add-review-success-modal">
+    <div className="modal__content" data-testid="order-success-modal">
       <p className="title title--h4">Спасибо за покупку</p>
       <svg className="modal__icon" width={80} height={78} aria-hidden="true">
         <use xlinkHref="#icon-review-success" />

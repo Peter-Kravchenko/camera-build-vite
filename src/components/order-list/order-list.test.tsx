@@ -1,20 +1,21 @@
 import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
-import Similar from './similar';
-import { makeFakeCameras, makeFakeStore } from '../../utils/mocks';
+import { makeFakeOrders, makeFakeStore } from '../../utils/mocks';
+import OrderList from './order-list';
 
-describe('Component: Similar', () => {
+describe('Component: OrderList', () => {
   it('should render correctly', () => {
-    const mockSimilar = makeFakeCameras();
+    const mockOrders = makeFakeOrders();
+    const mockStore = makeFakeStore();
     const { withStoreComponent } = withStore(
-      <Similar similar={mockSimilar} />,
-      makeFakeStore()
+      <OrderList orders={mockOrders} />,
+      mockStore
     );
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 
-    expect(screen.getByTestId('similar')).toBeInTheDocument();
+    expect(screen.getByTestId('order-list')).toBeInTheDocument();
   });
 });

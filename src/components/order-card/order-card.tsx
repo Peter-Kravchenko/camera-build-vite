@@ -12,10 +12,8 @@ type OrderCardProps = {
 function OrderCard({ order }: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  console.log(`${order.name}`, order.quantity);
-
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid="order-card">
       <div className="basket-item__img">
         <picture>
           <source

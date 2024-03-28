@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { makeFakeReviews, makeFakeStore } from '../../utils/mocks';
@@ -18,7 +19,7 @@ describe('Component: ReviewsList', () => {
     expect(screen.getByTestId('reviews-list')).toBeInTheDocument();
   });
 
-  it('should render empty list', () => {
+  it('should render empty list, when reviews length = 0', () => {
     const { withStoreComponent } = withStore(
       <ReviewsList reviews={[]} />,
       makeFakeStore({
