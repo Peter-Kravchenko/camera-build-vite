@@ -16,7 +16,6 @@ import {
   resetCouponFetchingStatus,
   resetOrderFetchingStatus,
 } from '../../store/order-data/order-data.slice';
-import { toast } from 'react-toastify';
 import { openOrderSuccessModal } from '../../store/modal-process/modal-process.slice';
 
 type OrderSummaryProps = {
@@ -30,7 +29,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
   const coupon = useAppSelector(getCoupon);
 
   const [couponValue, setCouponValue] = useState(coupon?.coupon || '');
-  const [validatePromo, setValidatePromo] = useState(ValidationMap.Idle);
+  const [validCoupon, setValidCoupon] = useState(ValidationMap.Idle);
 
   const totalPrice = orders.reduce(
     (acc, order) =>
@@ -45,11 +44,17 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
   const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
 
   useEffect(() => {
+    if (couponsArray.includes(couponValue)) {
+      setValidCoupon(ValidationMap.Success);
+    }
+  }, []);
+
+  useEffect(() => {
     if (couponFetchingStatus === RequestStatus.Success) {
-      setValidatePromo(ValidationMap.Success);
+      setValidCoupon(ValidationMap.Success);
     }
     if (couponFetchingStatus === RequestStatus.Rejected) {
-      setValidatePromo(ValidationMap.Error);
+      setValidCoupon(ValidationMap.Error);
     }
     dispatch(resetCouponFetchingStatus());
   }, [couponFetchingStatus, dispatch]);
@@ -57,7 +62,6 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
   useEffect(() => {
     if (orderFetchingStatus === RequestStatus.Success) {
       dispatch(clearBasket());
-      toast.success('Заказ успешно оформлен');
       dispatch(openOrderSuccessModal());
     }
 
@@ -74,8 +78,8 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
           <form action="#">
             <div
               className={cn('custom-input', {
-                'is-valid': validatePromo === ValidationMap.Success,
-                'is-invalid': validatePromo === ValidationMap.Error,
+                'is-valid': validCoupon === ValidationMap.Success,
+                'is-invalid': validCoupon === ValidationMap.Error,
               })}
             >
               <label>
@@ -89,7 +93,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
                     const validValue = e.target.value
                       .replaceAll(' ', '')
                       .toLowerCase();
-                    setValidatePromo(ValidationMap.Idle);
+                    setValidCoupon(ValidationMap.Idle);
                     setCouponValue(validValue);
                   }}
                 />
@@ -120,9 +124,14 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
         </p>
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>
-          <span className="basket__summary-value basket__summary-value--bonus">
+          <span
+            className={cn('basket__summary-value', {
+              'basket__summary-value--bonus':
+                validCoupon === ValidationMap.Success,
+            })}
+          >
             {couponsArray.includes(couponValue) &&
-            validatePromo === ValidationMap.Success
+            validCoupon === ValidationMap.Success
               ? addSpaceInPrice(totalDiscount)
               : 0}{' '}
             ₽
@@ -135,7 +144,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
           <span className="basket__summary-value basket__summary-value--total">
             {addSpaceInPrice(
               couponsArray.includes(couponValue) &&
-                validatePromo === ValidationMap.Success
+                validCoupon === ValidationMap.Success
                 ? totalPrice - totalDiscount
                 : totalPrice
             )}{' '}
@@ -150,7 +159,11 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
             dispatch(
               postOrder({
                 camerasIds,
-                coupon: couponsArray.includes(couponValue) ? couponValue : null,
+                coupon:
+                  couponsArray.includes(couponValue) &&
+                  validCoupon === ValidationMap.Success
+                    ? couponValue
+                    : null,
               })
             );
           }}
