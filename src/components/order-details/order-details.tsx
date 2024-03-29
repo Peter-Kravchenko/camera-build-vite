@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
-import { couponsArray, RequestStatus, ValidationMap } from '../../const';
+import { coupons, RequestStatus, ValidationMap } from '../../const';
 import { TOrders } from '../../types/orders';
 import { addSpaceInPrice } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -43,8 +43,32 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
   const couponFetchingStatus = useAppSelector(getCouponFetchingStatus);
   const orderFetchingStatus = useAppSelector(getOrderFetchingStatus);
 
+  const handleCouponChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const validValue = e.target.value.replaceAll(' ', '').toLowerCase();
+    setValidCoupon(ValidationMap.Idle);
+    setCouponValue(validValue);
+  };
+
+  const handleCouponClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(postCoupon(couponValue));
+  };
+
+  const handleOrderClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(
+      postOrder({
+        camerasIds,
+        coupon:
+          coupons.includes(couponValue) && validCoupon === ValidationMap.Success
+            ? couponValue
+            : null,
+      })
+    );
+  };
+
   useEffect(() => {
-    if (couponsArray.includes(couponValue)) {
+    if (coupons.includes(couponValue)) {
       setValidCoupon(ValidationMap.Success);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,13 +114,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
                   name="promo"
                   placeholder="Введите промокод"
                   value={couponValue}
-                  onChange={(e) => {
-                    const validValue = e.target.value
-                      .replaceAll(' ', '')
-                      .toLowerCase();
-                    setValidCoupon(ValidationMap.Idle);
-                    setCouponValue(validValue);
-                  }}
+                  onChange={handleCouponChange}
                 />
               </label>
               <p className="custom-input__error">Промокод неверный</p>
@@ -105,10 +123,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
             <button
               className="btn"
               type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(postCoupon(couponValue));
-              }}
+              onClick={handleCouponClick}
               disabled={couponFetchingStatus === RequestStatus.Pending}
             >
               Применить
@@ -131,7 +146,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
                 validCoupon === ValidationMap.Success,
             })}
           >
-            {couponsArray.includes(couponValue) &&
+            {coupons.includes(couponValue) &&
             validCoupon === ValidationMap.Success
               ? addSpaceInPrice(totalDiscount)
               : 0}{' '}
@@ -144,7 +159,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
           </span>
           <span className="basket__summary-value basket__summary-value--total">
             {addSpaceInPrice(
-              couponsArray.includes(couponValue) &&
+              coupons.includes(couponValue) &&
                 validCoupon === ValidationMap.Success
                 ? totalPrice - totalDiscount
                 : totalPrice
@@ -155,19 +170,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
         <button
           className="btn btn--purple"
           type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            dispatch(
-              postOrder({
-                camerasIds,
-                coupon:
-                  couponsArray.includes(couponValue) &&
-                  validCoupon === ValidationMap.Success
-                    ? couponValue
-                    : null,
-              })
-            );
-          }}
+          onClick={handleOrderClick}
           disabled={orderFetchingStatus === RequestStatus.Pending}
         >
           Оформить заказ

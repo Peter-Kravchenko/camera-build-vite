@@ -8,6 +8,7 @@ export const MAX_SIMILAR_CAMERAS_ON_PAGE = 3;
 export const REVIEWS_ON_FIRST_LOAD = 3;
 export const REVIEWS_ON_SHOW_MORE_CLICK = 3;
 export const stars: number[] = [1, 2, 3, 4, 5];
+export const coupons: string[] = ['camera-333', 'camera-444', 'camera-555'];
 
 export enum AppRoute {
   Catalog = '/',
@@ -54,7 +55,7 @@ export enum RequestStatus {
   Rejected = 'Rejected',
 }
 
-export enum Coupons {
+export enum Coupon {
   camera333 = 'camera-333',
   camera444 = 'camera-444',
   camera555 = 'camera-555',
@@ -133,5 +134,3 @@ export const commonReviewConfig = {
     message: 'Максимум 160 символов',
   },
 };
-
-export const couponsArray = ['camera-333', 'camera-444', 'camera-555'];

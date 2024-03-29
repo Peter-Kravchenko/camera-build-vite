@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { TAppState } from '../types/state';
 import { createAPI } from '../services/api';
-import { RequestStatus, couponsArray } from '../const';
+import { RequestStatus, coupons } from '../const';
 import { TCamera, TCameras } from '../types/cameras';
 import { TReviews } from '../types/reviews';
 import { TPromos } from '../types/promos';
@@ -83,8 +83,7 @@ export const makeFakeOrder = (): TOrder => {
 export const makeFakeOrders = (): TOrders =>
   Array.from({ length: 5 }).map(makeFakeOrder);
 
-export const makeFakeCoupon = (): TCoupon =>
-  getRandomArrayElement(couponsArray);
+export const makeFakeCoupon = (): TCoupon => getRandomArrayElement(coupons);
 
 export const makeFakeDiscount = (): TCouponData['discount'] =>
   datatype.number({ min: 0, max: 100 });
