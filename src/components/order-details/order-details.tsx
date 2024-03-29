@@ -47,6 +47,7 @@ function OrderDetails({ orders }: OrderSummaryProps): JSX.Element {
     if (couponsArray.includes(couponValue)) {
       setValidCoupon(ValidationMap.Success);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

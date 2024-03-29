@@ -65,30 +65,16 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
           min={1}
           max={99}
           aria-label="количество товара"
-          onBlur={() => {
-            if (order.quantity > 99) {
-              dispatch(changeQuantity([order.id, 99]));
-            }
-            if (order.quantity < 1) {
+          onChange={(e) => {
+            const targetValue = Number(e.target.value);
+            if (targetValue < 1) {
               dispatch(changeQuantity([order.id, 1]));
-            } else {
-              dispatch(changeQuantity([order.id, order.quantity]));
             }
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              if (order.quantity > 99) {
-                dispatch(changeQuantity([order.id, 99]));
-              }
-              if (order.quantity < 1) {
-                dispatch(changeQuantity([order.id, 1]));
-              } else {
-                dispatch(changeQuantity([order.id, order.quantity]));
-              }
+            if (targetValue > 99) {
+              dispatch(changeQuantity([order.id, 99]));
+            } else if (targetValue >= 1 && targetValue <= 99) {
+              dispatch(changeQuantity([order.id, targetValue]));
             }
-          }}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            dispatch(changeQuantity([order.id, Number(e.target.value)]));
           }}
         />
         <button
