@@ -34,7 +34,16 @@ export const orderData = createSlice({
       state.orders = data;
       localStorage.setItem('orders', JSON.stringify(data));
     },
-
+    increaseQuantity: (state, action: PayloadAction<TOrder['id']>) => {
+      const data = (state.orders = state.orders.map((camera) => {
+        if (camera.id === action.payload) {
+          return { ...camera, quantity: camera.quantity + 1 };
+        }
+        return camera;
+      }));
+      state.orders = data;
+      localStorage.setItem('orders', JSON.stringify(data));
+    },
     changeQuantity: (state, action: PayloadAction<[TOrder['id'], number]>) => {
       const data = (state.orders = state.orders.map((camera) => {
         if (camera.id === action.payload[0]) {
@@ -54,7 +63,9 @@ export const orderData = createSlice({
     },
     clearBasket: (state) => {
       state.orders = [];
+      state.coupon = null;
       localStorage.removeItem('orders');
+      localStorage.removeItem('coupon');
     },
     resetCouponFetchingStatus: (state) => {
       state.couponFetchingStatus = RequestStatus.Idle;
@@ -92,6 +103,7 @@ export const {
   loadOrder,
   loadCoupon,
   addToBasket,
+  increaseQuantity,
   changeQuantity,
   removeFromBasket,
   clearBasket,

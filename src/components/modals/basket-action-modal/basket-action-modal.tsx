@@ -18,8 +18,10 @@ import { toast } from 'react-toastify';
 import Loader from '../../loader/loader';
 import {
   addToBasket,
+  increaseQuantity,
   removeFromBasket,
 } from '../../../store/order-data/order-data.slice';
+import { getOrders } from '../../../store/order-data/order-data.selectors';
 
 type BasketActionModalProps = {
   basketAction: BasketAction;
@@ -32,6 +34,9 @@ function BasketActionModal({
 
   const camera = useAppSelector(getCamera);
   const cameraFetchingStatus = useAppSelector(getCameraFetchingStatus);
+  const isInBasket = useAppSelector(getOrders).some(
+    (order) => order.id === camera?.id
+  );
 
   const closeModal = () => {
     dispatch(closeAddToBasketModal());
@@ -97,9 +102,15 @@ function BasketActionModal({
             data-testid="add-to-basket-modal"
             autoFocus
             onClick={() => {
-              dispatch(addToBasket(camera));
-              closeModal();
-              openSuccessModal();
+              if (isInBasket) {
+                dispatch(increaseQuantity(camera.id));
+                closeModal();
+                openSuccessModal();
+              } else {
+                dispatch(addToBasket(camera));
+                closeModal();
+                openSuccessModal();
+              }
             }}
             className="btn btn--purple modal__btn modal__btn--fit-width"
             type="button"
