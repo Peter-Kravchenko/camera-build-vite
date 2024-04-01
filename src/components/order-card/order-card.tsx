@@ -13,18 +13,13 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleDecreaseQtyClick = () => {
-    if (order.quantity > 1) {
-      dispatch(changeQuantity([order.id, order.quantity - 1]));
-    } else if (order.quantity === 1) {
-      dispatch(fetchCamera(order.id));
-      dispatch(openRemoveFromBasketModal());
-    }
+    dispatch(changeQuantity([order.id, order.quantity - 1]));
   };
   const handleIncreaseQtyClick = () =>
     dispatch(changeQuantity([order.id, order.quantity + 1]));
 
   const handleOrderQtyValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = Number(e.target.value);
+    const targetValue = parseInt(e.target.value, 10);
     if (targetValue < 1) {
       dispatch(changeQuantity([order.id, 1]));
     }
@@ -77,6 +72,7 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={handleDecreaseQtyClick}
+          disabled={order.quantity === 1}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow" />
