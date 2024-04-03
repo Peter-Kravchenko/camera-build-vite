@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { fetchCamera } from '../../store/api-actions';
 import { openRemoveFromBasketModal } from '../../store/modal-process/modal-process.slice';
@@ -12,21 +13,47 @@ type OrderCardProps = {
 function OrderCard({ order }: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleDecreaseQtyClick = () => {
-    dispatch(changeQuantity([order.id, order.quantity - 1]));
-  };
-  const handleIncreaseQtyClick = () =>
-    dispatch(changeQuantity([order.id, order.quantity + 1]));
+  const [quantity, setQuantity] = useState(order.quantity);
 
-  const handleOrderQtyValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = parseInt(e.target.value, 10);
-    if (targetValue < 1) {
+  const handleDecreaseQtyClick = () => {
+    setQuantity(quantity - 1);
+    dispatch(changeQuantity([order.id, quantity - 1]));
+  };
+  const handleIncreaseQtyClick = () => {
+    setQuantity(quantity + 1);
+    dispatch(changeQuantity([order.id, quantity + 1]));
+  };
+
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === '0') {
+      console.log('nulll');
+      setQuantity(1);
+      //setQuantity(1);
+    } else {
+      setQuantity(parseInt(e.target.value, 10));
+    }
+  };
+
+  const handleQtyValue = () => {
+    if (quantity < 1) {
+      setQuantity(1);
       dispatch(changeQuantity([order.id, 1]));
     }
-    if (targetValue > 99) {
+    if (quantity > 99) {
+      setQuantity(99);
       dispatch(changeQuantity([order.id, 99]));
-    } else if (targetValue >= 1 && targetValue <= 99) {
-      dispatch(changeQuantity([order.id, targetValue]));
+    } else if (quantity >= 1 && quantity <= 99) {
+      dispatch(changeQuantity([order.id, quantity]));
+    }
+  };
+
+  const handleQtyValueBlur = () => {
+    handleQtyValue();
+  };
+
+  const handleQtyValueKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleQtyValue();
     }
   };
 
@@ -82,9 +109,11 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
         <input
           type="number"
           id={`counter${order.id}`}
-          value={order.quantity}
+          value={quantity}
           aria-label="количество товара"
-          onChange={handleOrderQtyValue}
+          onChange={handleValueChange}
+          onBlur={handleQtyValueBlur}
+          onKeyDown={handleQtyValueKeyDown}
         />
         <button
           className="btn-icon btn-icon--next"

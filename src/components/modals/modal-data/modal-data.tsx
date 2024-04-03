@@ -50,7 +50,8 @@ function ModalData() {
     <div
       ref={modalFocusRef}
       className={cn('modal is-active', {
-        'modal--narrow': isModalAddReviewSuccessOpen,
+        'modal--narrow':
+          isModalAddReviewSuccessOpen || isModalAddToBasketSuccessOpen,
       })}
       data-testid="modal-data"
     >
