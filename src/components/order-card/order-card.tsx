@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { fetchCamera } from '../../store/api-actions';
 import { openRemoveFromBasketModal } from '../../store/modal-process/modal-process.slice';
 import { addSpaceInPrice } from '../../utils/utils';
 import { changeQuantity } from '../../store/order-data/order-data.slice';
 import { TOrder } from '../../types/orders';
+import { get } from 'react-hook-form';
 
 type OrderCardProps = {
   order: TOrder;
@@ -12,48 +13,25 @@ type OrderCardProps = {
 
 function OrderCard({ order }: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  const [quantity, setQuantity] = useState(order.quantity);
+  const valueRef = useRef<HTMLInputElement>(null);
 
   const handleDecreaseQtyClick = () => {
-    setQuantity(quantity - 1);
-    dispatch(changeQuantity([order.id, quantity - 1]));
+    dispatch(changeQuantity([order.id, order.quantity - 1]));
   };
   const handleIncreaseQtyClick = () => {
-    setQuantity(quantity + 1);
-    dispatch(changeQuantity([order.id, quantity + 1]));
+    dispatch(changeQuantity([order.id, order.quantity + 1]));
   };
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === '0') {
-      console.log('nulll');
-      setQuantity(1);
-      //setQuantity(1);
-    } else {
-      setQuantity(parseInt(e.target.value, 10));
-    }
-  };
-
-  const handleQtyValue = () => {
-    if (quantity < 1) {
-      setQuantity(1);
-      dispatch(changeQuantity([order.id, 1]));
-    }
-    if (quantity > 99) {
-      setQuantity(99);
-      dispatch(changeQuantity([order.id, 99]));
-    } else if (quantity >= 1 && quantity <= 99) {
-      dispatch(changeQuantity([order.id, quantity]));
-    }
-  };
-
-  const handleQtyValueBlur = () => {
-    handleQtyValue();
-  };
-
-  const handleQtyValueKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleQtyValue();
+  const handleQtyChange = (qty: number) => {
+    if (valueRef.current) {
+      if (qty < 0) {
+        dispatch(changeQuantity([order.id, 0]));
+      } else if (qty > 99) {
+        dispatch(changeQuantity([order.id, 99]));
+      } else if (0 <= qty && qty <= 99) {
+        valueRef.current.value = String(qty);
+        dispatch(changeQuantity([order.id, qty]));
+      }
     }
   };
 
@@ -99,7 +77,7 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={handleDecreaseQtyClick}
-          disabled={order.quantity === 1}
+          disabled={order.quantity <= 1}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow" />
@@ -107,13 +85,24 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
         </button>
         <label className="visually-hidden" htmlFor={`counter${order.id}`} />
         <input
+          ref={valueRef}
           type="number"
           id={`counter${order.id}`}
-          value={quantity}
+          value={order.quantity}
           aria-label="количество товара"
-          onChange={handleValueChange}
-          onBlur={handleQtyValueBlur}
-          onKeyDown={handleQtyValueKeyDown}
+          onChange={(e) => {
+            handleQtyChange(Math.floor(Number(e.target.value)));
+          }}
+          onBlur={() => {
+            if (valueRef.current?.value === '0') {
+              handleQtyChange(1);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && valueRef.current?.value === '0') {
+              handleQtyChange(1);
+            }
+          }}
         />
         <button
           className="btn-icon btn-icon--next"
