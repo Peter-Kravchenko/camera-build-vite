@@ -5,7 +5,6 @@ import { openRemoveFromBasketModal } from '../../store/modal-process/modal-proce
 import { addSpaceInPrice } from '../../utils/utils';
 import { changeQuantity } from '../../store/order-data/order-data.slice';
 import { TOrder } from '../../types/orders';
-import { get } from 'react-hook-form';
 
 type OrderCardProps = {
   order: TOrder;
