@@ -12,7 +12,7 @@ type OrderCardProps = {
 
 function OrderCard({ order }: OrderCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const valueRef = useRef<HTMLInputElement>(null);
+  const quantutyRef = useRef<HTMLInputElement>(null);
 
   const handleDecreaseQtyClick = () => {
     dispatch(changeQuantity([order.id, order.quantity - 1]));
@@ -22,13 +22,13 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
   };
 
   const handleQtyChange = (qty: number) => {
-    if (valueRef.current) {
+    if (quantutyRef.current) {
       if (qty < 0) {
         dispatch(changeQuantity([order.id, 0]));
       } else if (qty > 99) {
         dispatch(changeQuantity([order.id, 99]));
       } else if (0 <= qty && qty <= 99) {
-        valueRef.current.value = String(qty);
+        quantutyRef.current.value = String(qty);
         dispatch(changeQuantity([order.id, qty]));
       }
     }
@@ -84,7 +84,7 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
         </button>
         <label className="visually-hidden" htmlFor={`counter${order.id}`} />
         <input
-          ref={valueRef}
+          ref={quantutyRef}
           type="number"
           id={`counter${order.id}`}
           value={order.quantity}
@@ -93,12 +93,12 @@ function OrderCard({ order }: OrderCardProps): JSX.Element {
             handleQtyChange(Math.floor(Number(e.target.value)));
           }}
           onBlur={() => {
-            if (valueRef.current?.value === '0') {
+            if (quantutyRef.current?.value === '0') {
               handleQtyChange(1);
             }
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && valueRef.current?.value === '0') {
+            if (e.key === 'Enter' && quantutyRef.current?.value === '0') {
               handleQtyChange(1);
             }
           }}
